@@ -50,6 +50,9 @@ elif env['parallelization'] in ['charm']:
     # TODO works with which solvers?
     sourceFilesCharm = ['blocks/SWE_DimensionalSplittingCharm.ci']
     sourceFiles = ['blocks/SWE_DimensionalSplittingCharm.cpp']
+# Chameleon
+elif env['parallelization'] in ['chameleon']:
+    sourceFiles = ['blocks/SWE_DimensionalSplittingChameleon.cpp']
 # Other Code without CUDA
 elif env['parallelization'] not in ['cuda', 'mpi_with_cuda']:
     if env['solver'] == 'rusanov':
@@ -132,6 +135,8 @@ elif env['parallelization'] in ['upcxx']:
 elif env['parallelization'] in ['charm']:
     sourceFilesCharm.append(['examples/swe_charm.ci'])
     sourceFiles.append(['examples/swe_charm.cpp'])
+elif env['parallelization'] in ['chameleon']:
+    sourceFiles.append(['examples/swe_chameleon.cpp'])
 else:
     print(sys.stderr, '** The selected configuration is not implemented.')
     Exit(1)

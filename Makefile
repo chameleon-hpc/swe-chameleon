@@ -21,6 +21,12 @@ simulate_charm:
 simulate_charm_test:
 	./charmrun +p4 ./build/SWE_gnu_release_charm_hybrid -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/radial_charm
 
+simulate_chameleon:
+	./build/SWE_gnu_release_chameleon_omp_hybrid -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/charm -b /home/jurek/storage/tsunami/tohu_bath.nc -d /home/jurek/storage/tsunami/tohu_displ.nc
+
+simulate_chameleon_test:
+	./build/SWE_gnu_release_chameleon_omp_hybrid -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/radial_charm
+
 debug_charm_test:
 	/home/jurek/repository/tum/ccs_tools/bin/charmdebug +p4 ./build/SWE_gnu_release_charm_hybrid -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/charm
 
@@ -43,6 +49,8 @@ upcxx:
 charm:
 	scons writeNetCDF=True openmp=true solver=hybrid parallelization=charm asagi=true asagiDir=${ASAGI_PATH}
 
+chameleon:
+	scons writeNetCDF=True openmp=true solver=hybrid parallelization=chameleon asagi=true asagiDir=${ASAGI_PATH}
 
 
 
