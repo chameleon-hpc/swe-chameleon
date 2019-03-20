@@ -50,8 +50,7 @@ charm:
 	scons writeNetCDF=True openmp=true solver=hybrid parallelization=charm asagi=true asagiDir=${ASAGI_PATH}
 
 chameleon:
-	scons writeNetCDF=True openmp=true solver=hybrid parallelization=chameleon asagi=true asagiDir=${ASAGI_PATH}
-
+	scons writeNetCDF=True openmp=true solver=hybrid parallelization=chameleon
 
 
 

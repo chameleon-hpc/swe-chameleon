@@ -108,7 +108,8 @@ vars.AddVariables(
                      'level of parallelization',
                      'none',
                      allowed_values=('none', 'cuda', 'mpi_with_cuda',
-                                     'mpi', 'ampi', 'charm', 'upcxx')
+                                     'mpi', 'ampi', 'charm', 'upcxx',
+                                     'chameleon')
                      ),
         BoolVariable('openmp',
                      'compile with OpenMP parallelization enabled',
