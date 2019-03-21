@@ -73,7 +73,7 @@ SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(int nx, int ny, flo
 
 	// Initialize writer
 	BoundarySize boundarySize = {{1, 1, 1, 1}};
-	writer = new NetCdfWriter(outputFilename, b, boundarySize, nx, ny, dx, dy, originX, originY);
+	writer = new VtkWriter(outputFilename, b, boundarySize, nx, ny, dx, dy, originX, originY);
 
 	// output at t=0
 	writeTimestep();

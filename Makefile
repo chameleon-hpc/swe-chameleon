@@ -44,10 +44,10 @@ mpi:
 upcxx_hybrid:
 	scons writeNetCDF=True openmp=True solver=hybrid parallelization=upcxx asagi=true asagiDir=${ASAGI_PATH} netCDFDir=${NETCDF_BASE}
 upcxx:
-	scons writeNetCDF=True openmp=false solver=hybrid parallelization=upcxx asagi=true asagiDir=${ASAGI_PATH}
+	scons openmp=false solver=hybrid parallelization=upcxx
 
 charm:
-	scons writeNetCDF=True openmp=true solver=hybrid parallelization=charm asagi=true asagiDir=${ASAGI_PATH}
+	scons openmp=true solver=hybrid parallelization=charm
 
 chameleon:
 	scons openmp=true solver=hybrid parallelization=chameleon

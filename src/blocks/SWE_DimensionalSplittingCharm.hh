@@ -15,7 +15,8 @@
 #endif
 #include "examples/swe_charm.decl.h"
 #include "types/Boundary.hh"
-#include "writer/NetCdfWriter.hh"
+//#include "writer/NetCdfWriter.hh"
+#include "writer/VtkWriter.hh"
 #include "tools/Float2DNative.hh"
 #include "solvers/Hybrid.hpp"
 
@@ -55,7 +56,7 @@ class SWE_DimensionalSplittingCharm : public CBase_SWE_DimensionalSplittingCharm
 
 		solver::Hybrid<float> solver;
 		float *checkpointInstantOfTime;
-		NetCdfWriter *writer;
+		VtkWriter *writer;
 		float currentSimulationTime;
 		int currentCheckpoint;
 
