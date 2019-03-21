@@ -22,17 +22,17 @@
  *
  * @section DESCRIPTION
  *
- * Implementation of SWE_DimensionalSplitting.hh
+ * Implementation of SWE_DimensionalSplittingChameleon.hh
  *
  */
-#include "SWE_DimensionalSplitting.hh"
+#include "SWE_DimensionalSplittingChameleon.hh"
 
 #include <cassert>
 #include <algorithm>
 #include <omp.h>
 
 /*
- * Constructor of a SWE_DimensionalSplitting Block.
+ * Constructor of a SWE_DimensionalSplittingChameleon Block.
  * Computational domain is [1,...,nx]*[1,...,ny]
  * Ghost layer consists of two additional rows and columns
  *
@@ -50,7 +50,7 @@
  * @param l_dx Cell width
  * @param l_dy Cell height
  */
-SWE_DimensionalSplitting::SWE_DimensionalSplitting (int nx, int ny, float dx, float dy, float originX, float originY) :
+SWE_DimensionalSplittingChameleon::SWE_DimensionalSplittingChameleon (int nx, int ny, float dx, float dy, float originX, float originY) :
 	/*
 	 * Important note concerning grid allocations:
 	 * Since index shifts all over the place are bug-prone and maintenance unfriendly,
@@ -93,7 +93,7 @@ SWE_DimensionalSplitting::SWE_DimensionalSplitting (int nx, int ny, float dx, fl
 		computeTimeWall = 0.;
 	}
 
-void SWE_DimensionalSplitting::setGhostLayer() {
+void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 	SWE_Block::applyBoundaryConditions();
 }
 
@@ -102,7 +102,7 @@ void SWE_DimensionalSplitting::setGhostLayer() {
  * The member variable #maxTimestep will be updated with the
  * maximum allowed time step size
  */
-void SWE_DimensionalSplitting::computeNumericalFluxes() {
+void SWE_DimensionalSplittingChameleon::computeNumericalFluxes() {
 	// Start compute clocks
 	computeClock = clock();
 	clock_gettime(CLOCK_MONOTONIC, &startTime);
@@ -110,8 +110,9 @@ void SWE_DimensionalSplitting::computeNumericalFluxes() {
 	//maximum (linearized) wave speed within one iteration
 	float maxHorizontalWaveSpeed = (float) 0.;
 	float maxVerticalWaveSpeed = (float) 0.;
+	solver::Hybrid<float> localSolver = solver;
 
-	#pragma omp parallel private(solver)
+	#pragma omp parallel private(localSolver)
 	{
 		// x-sweep, compute the actual domain plus ghost rows above and below
 		// iterate over cells on the x-axis, leave out the last column (two cells per computation)
@@ -119,7 +120,7 @@ void SWE_DimensionalSplitting::computeNumericalFluxes() {
 		for (int x = 0; x < nx + 1; x++) {
 			// iterate over all rows, including ghost layer
 			for (int y = 0; y < ny + 2; y++) {
-				solver.computeNetUpdates (
+				localSolver.computeNetUpdates (
 						h[x][y], h[x + 1][y],
 						hu[x][y], hu[x + 1][y],
 						b[x][y], b[x + 1][y],
@@ -149,7 +150,7 @@ void SWE_DimensionalSplitting::computeNumericalFluxes() {
 		#pragma omp for reduction(max : maxVerticalWaveSpeed) collapse(2)
 		for (int x = 1; x < nx + 1; x++) {
 			for (int y = 0; y < ny + 1; y++) {
-				solver.computeNetUpdates (
+				localSolver.computeNetUpdates (
 						h[x][y], h[x][y + 1],
 						hv[x][y], hv[x][y + 1],
 						b[x][y], b[x][y + 1],
@@ -184,7 +185,7 @@ void SWE_DimensionalSplitting::computeNumericalFluxes() {
  * @param dt time step width used in the update. The timestep has to be equal to maxTimestep calculated by computeNumericalFluxes(),
  * since this is the step width used for the intermediary updates after the x-sweep.
  */
-void SWE_DimensionalSplitting::updateUnknowns (float dt) {
+void SWE_DimensionalSplittingChameleon::updateUnknowns (float dt) {
 	// Start compute clocks
 	computeClock = clock();
 	clock_gettime(CLOCK_MONOTONIC, &startTime);

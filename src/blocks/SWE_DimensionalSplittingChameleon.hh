@@ -27,8 +27,8 @@
  *
  */
 
-#ifndef SWEDIMENSIONALSPLITTING_HH_
-#define SWEDIMENSIONALSPLITTING_HH_
+#ifndef SWEDIMENSIONALSPLITTINGCHAMELEON_HH_
+#define SWEDIMENSIONALSPLITTINGCHAMELEON_HH_
 
 #include "blocks/SWE_Block.hh"
 #include "scenarios/SWE_Scenario.hh"
@@ -38,11 +38,11 @@
 
 #include "solvers/Hybrid.hpp"
 
-class SWE_DimensionalSplitting : public SWE_Block<Float2DNative> {
+class SWE_DimensionalSplittingChameleon : public SWE_Block<Float2DNative> {
 	public:
 		// Constructor/Destructor
-		SWE_DimensionalSplitting(int cellCountHorizontal, int cellCountVertical, float cellSizeHorizontal, float cellSizeVertical, float originX, float originY);
-		~SWE_DimensionalSplitting() {};
+		SWE_DimensionalSplittingChameleon(int cellCountHorizontal, int cellCountVertical, float cellSizeHorizontal, float cellSizeVertical, float originX, float originY);
+		~SWE_DimensionalSplittingChameleon() {};
 
 		// Interface methods
 		void setGhostLayer();

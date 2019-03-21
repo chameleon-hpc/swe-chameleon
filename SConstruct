@@ -287,6 +287,14 @@ if env['parallelization'] in ['charm', 'ampi']:
                            src_suffix='.ci')
     env.Append(BUILDERS={'charmBuilder': charmBuilder})
 
+################################
+# Chameleon specific
+################################
+
+if env['parallelization'] in ['chameleon']:
+    env.Append(CCFLAGS=['-std=c++11'])
+    env.Append(CCFLAGS=['-lchameleon'])
+
 #####################################
 # Precompiler/Compiler/Linker flags #
 #####################################
@@ -316,6 +324,8 @@ elif env['parallelization'] == 'ampi':
     env['CXX'] = charmInstall + '/bin/ampicc'
 elif env['parallelization'] == 'charm':
     env['CXX'] = charmInstall + '/bin/charmc'
+elif env['parallelization'] == 'chameleon':
+    env['CXX'] = 'mpicc'
 else:
     if env['compiler'] == 'intel':
         env['CXX'] = 'icpc'
