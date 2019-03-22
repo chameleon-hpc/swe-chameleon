@@ -49,7 +49,11 @@
 #include "scenarios/SWE_simple_scenarios.hh"
 #endif
 
-#include "blocks/SWE_DimensionalSplitting.hh"
+#include "blocks/SWE_DimensionalSplittingChameleon.hh"
+
+void swe_solver_kernel( Float2D* blockData ) {
+
+}
 
 int main(int argc, char** argv) {
 
@@ -146,7 +150,7 @@ int main(int argc, char** argv) {
 	boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
 	boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
 
-	SWE_DimensionalSplitting simulation(nxRequested, nyRequested, dxSimulation, dySimulation, originX, originY);
+	SWE_DimensionalSplittingChameleon simulation(nxRequested, nyRequested, dxSimulation, dySimulation, originX, originY);
 	simulation.initScenario(scenario, boundaries);
 
 
@@ -226,6 +230,11 @@ int main(int argc, char** argv) {
 
 	float timestep;
 	unsigned int iterations = 0;
+
+	// hardcode just for debug
+	int num_blocks = 10;
+	Float2D* block_data;
+
 	// loop over the count of requested checkpoints
 	for(int i = 0; i < numberOfCheckPoints; i++) {
 		// Simulate until the checkpoint is reached
@@ -237,12 +246,14 @@ int main(int argc, char** argv) {
     		#pragma omp parallel
     		{
 				#pragma omp for
-				for(int i=0; i<numberOfTasks; i++) {
-				{
+				for(int i=0; i<num_blocks; i++) {
+					chameleon_map_data_entry_t* args = new chameleon_map_data_entry_t[1];
+                	args[0] = chameleon_map_data_entry_create(block_data, sizeof(Float2D), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+
 					int32_t res = chameleon_add_task_manual(
-                    (void *)&matrixMatrixKernel, 
-                    1, // number of parameters that will follow
-                    block, block_size_x*block_size_y, CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+                    (void *)&swe_solver_kernel, 
+                    1, // number of args
+                    args);
 			/*
 			// set values in ghost cells.
 			// we need to sync here since block boundaries get exchanged over ranks

@@ -293,7 +293,17 @@ if env['parallelization'] in ['charm', 'ampi']:
 
 if env['parallelization'] in ['chameleon']:
     env.Append(CCFLAGS=['-std=c++11'])
-    env.Append(CCFLAGS=['-lchameleon'])
+    env.Append(CCFLAGS=['-lchameleon', '-lm', '-lstdc++'])
+    # get the chameleon folder
+    chameleonPath = os.environ['CHAM_PATH']
+    if chameleonPath == '':
+        print(sys.stderr,
+              'No chameleon installation found. Did you set $CHAM_PATH?')
+        Exit(3)
+    else:
+        print("Tryin to find chameleon install at: " + chameleonPath)
+    env.Append(CCFLAGS=['-I'+chameleonPath+'/include/'])
+    env.Append(CCFLAGS=['-L'+chameleonPath+'/lib/'])
 
 #####################################
 # Precompiler/Compiler/Linker flags #
