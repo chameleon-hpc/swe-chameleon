@@ -150,8 +150,16 @@ int main(int argc, char** argv) {
 	boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
 	boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
 
-	SWE_DimensionalSplittingChameleon simulation(nxRequested, nyRequested, dxSimulation, dySimulation, originX, originY);
-	simulation.initScenario(scenario, boundaries);
+	// hardcode just for debug
+	int num_blocks_per_rank = 16;
+	SWE_DimensionalSplittingChameleon* blocks[num_blocks_per_rank];
+	for(int i = 0; i < num_blocks_per_rank; i++) {
+		// TODO: correct dimensions
+		blocks[i] = new SWE_DimensionalSplittingChameleon(nxRequested, nyRequested, dxSimulation, dySimulation, originX, originY);
+		//SWE_DimensionalSplittingChameleon simulation(nxRequested, nyRequested, dxSimulation, dySimulation, originX, originY);
+		blocks[i]->initScenario(scenario, boundaries);
+	}
+	
 
 
 	/***************
@@ -166,7 +174,7 @@ int main(int argc, char** argv) {
 	// Construct a netCDF writer
 	NetCdfWriter writer(
 			outputFileName,
-			simulation.getBathymetry(),
+			blocks[0]->getBathymetry(),
 			boundarySize,
 			nxRequested,
 			nyRequested,
@@ -175,10 +183,11 @@ int main(int argc, char** argv) {
 			simulation.getOriginX(),
 			simulation.getOriginY());
 #else
+	// TODO: fix indices
 	// Construct a vtk writer
 	VtkWriter writer(
 			outputFileName,
-			simulation.getBathymetry(),
+			blocks[0]->getBathymetry(),
 			boundarySize,
 			nxRequested,
 			nyRequested,
@@ -188,9 +197,9 @@ int main(int argc, char** argv) {
 
 	// Write the output at t = 0
 	writer.writeTimeStep(
-			simulation.getWaterHeight(),
-			simulation.getMomentumHorizontal(),
-			simulation.getMomentumVertical(),
+			blocks[0]->getWaterHeight(),
+			blocks[0]->getMomentumHorizontal(),
+			blocks[0]->getMomentumVertical(),
 			(float) 0.);
 
 
@@ -231,10 +240,6 @@ int main(int argc, char** argv) {
 	float timestep;
 	unsigned int iterations = 0;
 
-	// hardcode just for debug
-	int num_blocks = 10;
-	Float2D* block_data;
-
 	// loop over the count of requested checkpoints
 	for(int i = 0; i < numberOfCheckPoints; i++) {
 		// Simulate until the checkpoint is reached
@@ -246,46 +251,46 @@ int main(int argc, char** argv) {
     		#pragma omp parallel
     		{
 				#pragma omp for
-				for(int i=0; i<num_blocks; i++) {
+				for(int i=0; i<num_blocks_per_rank; i++) {
 					chameleon_map_data_entry_t* args = new chameleon_map_data_entry_t[1];
-                	args[0] = chameleon_map_data_entry_create(block_data, sizeof(Float2D), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+                	args[0] = chameleon_map_data_entry_create(blocks+i, sizeof(SWE_DimensionalSplittingChameleon), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
 
 					int32_t res = chameleon_add_task_manual(
                     (void *)&swe_solver_kernel, 
                     1, // number of args
                     args);
-			/*
-			// set values in ghost cells.
-			// we need to sync here since block boundaries get exchanged over ranks
-			// TODO: what can we do if this becomes a bottleneck?
-			simulation.setGhostLayer();
 
-			// Accumulate comm time and start compute clock
-			commClock = clock() - commClock;
-			commTime += (float) commClock / CLOCKS_PER_SEC;
-			computeClock = clock();
+					// set values in ghost cells.
+					// we need to sync here since block boundaries get exchanged over ranks
+					// TODO: as task
+					blocks[i]->setGhostLayer();
 
-			// compute numerical flux on each edge
-			simulation.computeNumericalFluxes();
+					// Accumulate comm time and start compute clock
+					commClock = clock() - commClock;
+					commTime += (float) commClock / CLOCKS_PER_SEC;
+					computeClock = clock();
 
-			// max timestep has been reduced over all ranks in computeNumericalFluxes()
-			timestep = simulation.getMaxTimestep();
+					// compute numerical flux on each edge
+					// TODO: as task
+					blocks[i]->computeNumericalFluxes();
 
-			// update the cell values
-			simulation.updateUnknowns(timestep);
+					// max timestep has been reduced over all ranks in computeNumericalFluxes()
+					timestep = blocks[i]->getMaxTimestep();
 
-			// Accumulate compute time
-			computeClock = clock() - computeClock;
-			computeTime += (float) computeClock / CLOCKS_PER_SEC;
+					// update the cell values
+					blocks[i]->updateUnknowns(timestep);
 
-			// Accumulate wall time
-			clock_gettime(CLOCK_MONOTONIC, &endTime);
-			wallTime += (endTime.tv_sec - startTime.tv_sec);
-			wallTime += (float) (endTime.tv_nsec - startTime.tv_nsec) / 1E9;
-			// update simulation time with time step width.
-			t += timestep;
-			iterations++;
-			*/
+					// Accumulate compute time
+					computeClock = clock() - computeClock;
+					computeTime += (float) computeClock / CLOCKS_PER_SEC;
+
+					// Accumulate wall time
+					clock_gettime(CLOCK_MONOTONIC, &endTime);
+					wallTime += (endTime.tv_sec - startTime.tv_sec);
+					wallTime += (float) (endTime.tv_nsec - startTime.tv_nsec) / 1E9;
+					// update simulation time with time step width.
+					t += timestep;
+					iterations++;
 				}
 			}
 		}
@@ -294,9 +299,9 @@ int main(int argc, char** argv) {
 
 		// write output
 		writer.writeTimeStep(
-				simulation.getWaterHeight(),
-				simulation.getMomentumHorizontal(),
-				simulation.getMomentumVertical(),
+				blocks[i]->getWaterHeight(),
+				blocks[i]->getMomentumHorizontal(),
+				blocks[i]->getMomentumVertical(),
 				t);
 	}
 
@@ -306,7 +311,7 @@ int main(int argc, char** argv) {
 	 ************/
 
 
-	printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", simulation.computeTime, simulation.computeTimeWall, wallTime); 
+	printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[0]->computeTime, blocks[0]->computeTimeWall, wallTime); 
 
 	return 0;
 }
