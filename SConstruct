@@ -301,9 +301,15 @@ if env['parallelization'] in ['chameleon']:
               'No chameleon installation found. Did you set $CHAM_PATH?')
         Exit(3)
     else:
-        print("Tryin to find chameleon install at: " + chameleonPath)
+        print("Trying to find chameleon install at: " + chameleonPath)
     env.Append(CCFLAGS=['-I'+chameleonPath+'/include/'])
     env.Append(CCFLAGS=['-L'+chameleonPath+'/lib/'])
+    env.Append(LIBPATH=['/home/simon/sw/intel/impi/2019.3.199/intel64/libfabric/lib'])
+    env.Append(LINKFLAGS=['-L'+chameleonPath+'/lib/'])
+    env.Append(LINKFLAGS=['-lchameleon'])
+    env.Append(LINKFLAGS=['-lfabric'])
+    env.Append(LINKFLAGS=['-lifcore'])
+    env.Append(LINKFLAGS=['-lirng'])
 
 #####################################
 # Precompiler/Compiler/Linker flags #
@@ -335,7 +341,7 @@ elif env['parallelization'] == 'ampi':
 elif env['parallelization'] == 'charm':
     env['CXX'] = charmInstall + '/bin/charmc'
 elif env['parallelization'] == 'chameleon':
-    env['CXX'] = 'mpicc'
+    env['CXX'] = 'mpiicpc'
 else:
     if env['compiler'] == 'intel':
         env['CXX'] = 'icpc'
@@ -396,8 +402,8 @@ if env['compiler'] == 'intel' and env['showVectorization']:
 # TODO Refactor: This can probably be an else if
 if env['openmp']:
     if env['compiler'] == 'intel':
-        env.Append(CCFLAGS=['-openmp'])
-        env.Append(LINKFLAGS=['-openmp'])
+        env.Append(CCFLAGS=['-qopenmp'])
+        env.Append(LINKFLAGS=['-qopenmp'])
 
     # cray: OpenMP turned on by default
     if env['compiler'] == 'gnu':
