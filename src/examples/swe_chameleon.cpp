@@ -51,10 +51,6 @@
 
 #include "blocks/SWE_DimensionalSplittingChameleon.hh"
 
-void swe_solver_kernel( Float2D* blockData ) {
-
-}
-
 int main(int argc, char** argv) {
 
 
@@ -126,10 +122,21 @@ int main(int argc, char** argv) {
 	}
 
 
-	/**************
-	 * INIT BLOCK *
-	 **************/
+	/***************
+	 * INIT BLOCKS *
+	 ***************/
 
+	int iMyRank, iNumProcs;
+	int provided;
+	int requested = MPI_THREAD_MULTIPLE;
+	MPI_Init_thread(&argc, &argv, requested, &provided);
+	MPI_Comm_size(MPI_COMM_WORLD, &iNumProcs);
+	MPI_Comm_rank(MPI_COMM_WORLD, &iMyRank);
+	// Print status
+	char hostname[HOST_NAME_MAX];
+        gethostname(hostname, HOST_NAME_MAX);
+
+	printf("%i Spawned at %s\n", iMyRank, hostname);
 
 	/*
 	 * Calculate the simulation grid layout.
@@ -140,23 +147,23 @@ int main(int argc, char** argv) {
 	int heightScenario = scenario.getBoundaryPos(BND_TOP) - scenario.getBoundaryPos(BND_BOTTOM);
 	float dxSimulation = (float) widthScenario / nxRequested;
 	float dySimulation = (float) heightScenario / nyRequested;
-	float originX = scenario.getBoundaryPos(BND_LEFT);
-	float originY = scenario.getBoundaryPos(BND_BOTTOM);
 
-	BoundaryType boundaries[4];
-
-	boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
-	boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
-	boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
-	boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
-
-	// hardcode just for debug
-	int num_blocks_per_rank = 16;
+	// hardcode just for testing
+	int num_blocks_per_rank = 32;
 	SWE_DimensionalSplittingChameleon* blocks[num_blocks_per_rank];
+
 	for(int i = 0; i < num_blocks_per_rank; i++) {
+		float originX = scenario.getBoundaryPos(BND_LEFT);
+		float originY = scenario.getBoundaryPos(BND_BOTTOM);
+
+		BoundaryType boundaries[4];
+
+		boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
+		boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
+		boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
+		boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
 		// TODO: correct dimensions
 		blocks[i] = new SWE_DimensionalSplittingChameleon(nxRequested, nyRequested, dxSimulation, dySimulation, originX, originY);
-		//SWE_DimensionalSplittingChameleon simulation(nxRequested, nyRequested, dxSimulation, dySimulation, originX, originY);
 		blocks[i]->initScenario(scenario, boundaries);
 	}
 	
@@ -180,8 +187,8 @@ int main(int argc, char** argv) {
 			nyRequested,
 			dxSimulation,
 			dySimulation,
-			simulation.getOriginX(),
-			simulation.getOriginY());
+			blocks[0]->getOriginX(),
+			blocks[0]->getOriginY());
 #else
 	// TODO: fix indices
 	// Construct a vtk writer
@@ -207,12 +214,6 @@ int main(int argc, char** argv) {
 	 * START SIMULATION *
 	 ********************/
 
-	int iMyRank, iNumProcs;
-	int provided;
-	int requested = MPI_THREAD_MULTIPLE;
-	MPI_Init_thread(&argc, &argv, requested, &provided);
-	MPI_Comm_size(MPI_COMM_WORLD, &iNumProcs);
-	MPI_Comm_rank(MPI_COMM_WORLD, &iMyRank);
     // chameleon_init();
     #pragma omp parallel
     {
@@ -244,55 +245,53 @@ int main(int argc, char** argv) {
 	for(int i = 0; i < numberOfCheckPoints; i++) {
 		// Simulate until the checkpoint is reached
 		while(t < checkpointInstantOfTime[i]) {
+
 			// Start measurement
 			clock_gettime(CLOCK_MONOTONIC, &startTime);
 			commClock = clock();
 
-    		#pragma omp parallel
-    		{
-				#pragma omp for
-				for(int i=0; i<num_blocks_per_rank; i++) {
-					chameleon_map_data_entry_t* args = new chameleon_map_data_entry_t[1];
-                	args[0] = chameleon_map_data_entry_create(blocks+i, sizeof(SWE_DimensionalSplittingChameleon), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+			#pragma omp parallel for
+			for(int i=0; i<num_blocks_per_rank; i++) {
 
-					int32_t res = chameleon_add_task_manual(
-                    (void *)&swe_solver_kernel, 
-                    1, // number of args
-                    args);
-
-					// set values in ghost cells.
-					// we need to sync here since block boundaries get exchanged over ranks
-					// TODO: as task
-					blocks[i]->setGhostLayer();
-
-					// Accumulate comm time and start compute clock
-					commClock = clock() - commClock;
-					commTime += (float) commClock / CLOCKS_PER_SEC;
-					computeClock = clock();
-
-					// compute numerical flux on each edge
-					// TODO: as task
-					blocks[i]->computeNumericalFluxes();
-
-					// max timestep has been reduced over all ranks in computeNumericalFluxes()
-					timestep = blocks[i]->getMaxTimestep();
-
-					// update the cell values
-					blocks[i]->updateUnknowns(timestep);
-
-					// Accumulate compute time
-					computeClock = clock() - computeClock;
-					computeTime += (float) computeClock / CLOCKS_PER_SEC;
-
-					// Accumulate wall time
-					clock_gettime(CLOCK_MONOTONIC, &endTime);
-					wallTime += (endTime.tv_sec - startTime.tv_sec);
-					wallTime += (float) (endTime.tv_nsec - startTime.tv_nsec) / 1E9;
-					// update simulation time with time step width.
-					t += timestep;
-					iterations++;
-				}
+				// set values in ghost cells.
+				// we need to sync here since block boundaries get exchanged over ranks
+				blocks[i]->setGhostLayer();
 			}
+			chameleon_distributed_taskwait(0);
+
+			// Accumulate comm time and start compute clock
+			commClock = clock() - commClock;
+			commTime += (float) commClock / CLOCKS_PER_SEC;
+			computeClock = clock();
+
+			#pragma omp parallel for
+			for(int i=0; i<num_blocks_per_rank; i++) {
+				// compute numerical flux on each edge
+				blocks[i]->computeNumericalFluxes();
+			}
+			chameleon_distributed_taskwait(0);
+			
+			#pragma omp parallel for
+			for(int i=0; i<num_blocks_per_rank; i++) {
+				// max timestep has been reduced over all ranks in computeNumericalFluxes()
+				timestep = blocks[i]->getMaxTimestep();
+
+				// update the cell values
+				blocks[i]->updateUnknowns(timestep);
+			}
+			chameleon_distributed_taskwait(0);
+
+			// Accumulate compute time
+			computeClock = clock() - computeClock;
+			computeTime += (float) computeClock / CLOCKS_PER_SEC;
+
+			// Accumulate wall time
+			clock_gettime(CLOCK_MONOTONIC, &endTime);
+			wallTime += (endTime.tv_sec - startTime.tv_sec);
+			wallTime += (float) (endTime.tv_nsec - startTime.tv_nsec) / 1E9;
+			// update simulation time with time step width.
+			t += timestep;
+			iterations++;
 		}
 
 		printf("Write timestep (%fs)\n", t);

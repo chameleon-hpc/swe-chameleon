@@ -30,6 +30,8 @@
 #include <cassert>
 #include <algorithm>
 #include <omp.h>
+#include <mpi.h>
+#include "chameleon.h"
 
 /*
  * Constructor of a SWE_DimensionalSplittingChameleon Block.
@@ -97,12 +99,26 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 	SWE_Block::applyBoundaryConditions();
 }
 
-/**
- * Compute net updates for the block.
- * The member variable #maxTimestep will be updated with the
- * maximum allowed time step size
- */
-void SWE_DimensionalSplittingChameleon::computeNumericalFluxes() {
+void computeNumericalFluxesKernel(SWE_DimensionalSplittingChameleon* block, float* h_data, float* hu_data, float* hv_data, float* b_data,
+								float* hNetUpdatesLeft_data, float* hNetUpdatesRight_data, float* huNetUpdatesLeft_data, float* huNetUpdatesRight_data,
+								float* hNetUpdatesBelow_data, float* hNetUpdatesAbove_data, float* hvNetUpdatesBelow_data, float* hvNetUpdatesAbove_data,
+								float* hStar_data, float* huStar_data) {
+	// Set data pointers correctly
+	block->h.rawData = h_data;
+	block->hu.rawData = hu_data;
+	block->hv.rawData = hv_data;
+	block->b.rawData = b_data;
+	block->hNetUpdatesLeft.rawData = hNetUpdatesLeft_data;
+	block->hNetUpdatesRight.rawData = hNetUpdatesRight_data_data;
+	block->huNetUpdatesLeft.rawData = huNetUpdatesLeft_data_data;
+	block->huNetUpdatesRight.rawData = huNetUpdatesRight_data;
+	block->hNetUpdatesBelow.rawData = hNetUpdatesBelow_data;
+	block->hNetUpdatesAbove.rawData = hNetUpdatesAbove_data;
+	block->hvNetUpdatesBelow.rawData = hvNetUpdatesBelow_data;
+	block->hvNetUpdatesAbove.rawData = hvNetUpdatesAbove_data;
+	block->hStar.rawData = hStar_data;
+	block->huStar.rawData = huStar_data;
+	
 	// Start compute clocks
 	computeClock = clock();
 	clock_gettime(CLOCK_MONOTONIC, &startTime);
@@ -110,73 +126,94 @@ void SWE_DimensionalSplittingChameleon::computeNumericalFluxes() {
 	//maximum (linearized) wave speed within one iteration
 	float maxHorizontalWaveSpeed = (float) 0.;
 	float maxVerticalWaveSpeed = (float) 0.;
-	solver::Hybrid<float> localSolver = solver;
+	solver::Hybrid<float> localSolver = block->solver;
 
-	#pragma omp parallel private(localSolver)
-	{
-		// x-sweep, compute the actual domain plus ghost rows above and below
-		// iterate over cells on the x-axis, leave out the last column (two cells per computation)
-		#pragma omp for reduction(max : maxHorizontalWaveSpeed) collapse(2)
-		for (int x = 0; x < nx + 1; x++) {
-			// iterate over all rows, including ghost layer
-			for (int y = 0; y < ny + 2; y++) {
-				localSolver.computeNetUpdates (
-						h[x][y], h[x + 1][y],
-						hu[x][y], hu[x + 1][y],
-						b[x][y], b[x + 1][y],
-						hNetUpdatesLeft[x][y], hNetUpdatesRight[x + 1][y],
-						huNetUpdatesLeft[x][y], huNetUpdatesRight[x + 1][y],
-						maxHorizontalWaveSpeed
-						);
-			}
+	// x-sweep, compute the actual domain plus ghost rows above and below
+	// iterate over cells on the x-axis, leave out the last column (two cells per computation)
+	#pragma omp for reduction(max : maxHorizontalWaveSpeed) collapse(2)
+	for (int x = 0; x < block->nx + 1; x++) {
+		// iterate over all rows, including ghost layer
+		for (int y = 0; y < block->ny + 2; y++) {
+			localSolver.computeNetUpdates (
+					block->h[x][y], block->h[x + 1][y],
+					block->hu[x][y], block->hu[x + 1][y],
+					block->b[x][y], block->b[x + 1][y],
+					block->hNetUpdatesLeft[x][y], block->hNetUpdatesRight[x + 1][y],
+					block->huNetUpdatesLeft[x][y], block->huNetUpdatesRight[x + 1][y],
+					maxHorizontalWaveSpeed
+					);
 		}
-
-		#pragma omp single
-		{
-			// compute max timestep according to cautious CFL-condition
-			maxTimestep = (float) .4 * (dx / maxHorizontalWaveSpeed);
-		}
-
-		// set intermediary Q* states
-		#pragma omp for collapse(2)
-		for (int x = 1; x < nx + 1; x++) {
-			for (int y = 0; y < ny + 2; y++) {
-				hStar[x][y] = h[x][y] - (maxTimestep / dx) * (hNetUpdatesLeft[x][y] + hNetUpdatesRight[x][y]);
-				huStar[x][y] = hu[x][y] - (maxTimestep / dx) * (huNetUpdatesLeft[x][y] + huNetUpdatesRight[x][y]);
-			}
-		}
-
-		// y-sweep
-		#pragma omp for reduction(max : maxVerticalWaveSpeed) collapse(2)
-		for (int x = 1; x < nx + 1; x++) {
-			for (int y = 0; y < ny + 1; y++) {
-				localSolver.computeNetUpdates (
-						h[x][y], h[x][y + 1],
-						hv[x][y], hv[x][y + 1],
-						b[x][y], b[x][y + 1],
-						hNetUpdatesBelow[x][y], hNetUpdatesAbove[x][y + 1],
-						hvNetUpdatesBelow[x][y], hvNetUpdatesAbove[x][y + 1],
-						maxVerticalWaveSpeed
-						);
-			}
-		}
-
-		#ifndef NDEBUG
-		#pragma omp single
-		{
-			// check if the cfl condition holds in the y-direction
-			assert(maxTimestep < (float) .5 * (dy / maxVerticalWaveSpeed));
-		}
-		#endif // NDEBUG
 	}
+
+	// compute max timestep according to cautious CFL-condition
+	block->maxTimestep = (float) .4 * (block->dx / maxHorizontalWaveSpeed);
+
+	// set intermediary Q* states
+	#pragma omp for collapse(2)
+	for (int x = 1; x < nx + 1; x++) {
+		for (int y = 0; y < ny + 2; y++) {
+			block->hStar[x][y] = block->h[x][y] - (block->maxTimestep / dx) * (block->hNetUpdatesLeft[x][y] + block->hNetUpdatesRight[x][y]);
+			block->huStar[x][y] = block->hu[x][y] - (block->maxTimestep / dx) * (block->huNetUpdatesLeft[x][y] + block->huNetUpdatesRight[x][y]);
+		}
+	}
+
+	// y-sweep
+	#pragma omp for reduction(max : maxVerticalWaveSpeed) collapse(2)
+	for (int x = 1; x < nx + 1; x++) {
+		for (int y = 0; y < ny + 1; y++) {
+			localSolver.computeNetUpdates (
+					block->h[x][y], block->h[x][y + 1],
+					block->hv[x][y], block->hv[x][y + 1],
+					block->b[x][y], block->b[x][y + 1],
+					block->hNetUpdatesBelow[x][y], block->hNetUpdatesAbove[x][y + 1],
+					block->hvNetUpdatesBelow[x][y], block->hvNetUpdatesAbove[x][y + 1],
+					maxVerticalWaveSpeed
+					);
+		}
+	}
+	
+	#ifndef NDEBUG
+	// check if the cfl condition holds in the y-direction
+	assert(block->maxTimestep < (float) .5 * (block->dy / maxVerticalWaveSpeed));
+	#endif // NDEBUG
 
 	// Accumulate compute time
 	computeClock = clock() - computeClock;
 	computeTime += (float) computeClock / CLOCKS_PER_SEC;
 
 	clock_gettime(CLOCK_MONOTONIC, &endTime);
-	computeTimeWall += (endTime.tv_sec - startTime.tv_sec);
-	computeTimeWall += (float) (endTime.tv_nsec - startTime.tv_nsec) / 1E9;
+	block->computeTimeWall += (endTime.tv_sec - startTime.tv_sec);
+	block->computeTimeWall += (float) (endTime.tv_nsec - startTime.tv_nsec) / 1E9;
+}
+
+/**
+ * Compute net updates for the block.
+ * The member variable #maxTimestep will be updated with the
+ * maximum allowed time step size
+ */
+void SWE_DimensionalSplittingChameleon::computeNumericalFluxes() {
+
+	chameleon_map_data_entry_t* args = new chameleon_map_data_entry_t[15];
+    args[0] = chameleon_map_data_entry_create(this, sizeof(SWE_DimensionalSplittingChameleon), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[1] = chameleon_map_data_entry_create(this->h.rawData, sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[2] = chameleon_map_data_entry_create(this->hu.rawData, sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[3] = chameleon_map_data_entry_create(this->hv.rawData, sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[4] = chameleon_map_data_entry_create(this->b.rawData, sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[5] = chameleon_map_data_entry_create(this->hNetUpdatesLeft.rawData, sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[6] = chameleon_map_data_entry_create(this->hNetUpdatesRight.rawData, sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[7] = chameleon_map_data_entry_create(this->huNetUpdatesLeft.rawData, sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[8] = chameleon_map_data_entry_create(this->huNetUpdatesRight.rawData, sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[9] = chameleon_map_data_entry_create(this->hNetUpdatesBelow.rawData, sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[10] = chameleon_map_data_entry_create(this->hNetUpdatesAbove.rawData, sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[11] = chameleon_map_data_entry_create(this->hvNetUpdatesBelow.rawData, sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[12] = chameleon_map_data_entry_create(this->hvNetUpdatesAbove.rawData, sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[13] = chameleon_map_data_entry_create(this->hStar.rawData, sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[14] = chameleon_map_data_entry_create(this->huStar.rawData, sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+	
+	int32_t res = chameleon_add_task_manual(
+        (void *)&computeNumericalFluxesKernel,
+        15, // number of args
+        args);
 }
 
 /**
