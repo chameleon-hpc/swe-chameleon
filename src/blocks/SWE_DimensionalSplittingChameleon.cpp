@@ -93,10 +93,34 @@ SWE_DimensionalSplittingChameleon::SWE_DimensionalSplittingChameleon (int nx, in
 
 		computeTime = 0.;
 		computeTimeWall = 0.;
-	}
+	},
+	left(NULL),
+	right(NULL)
+
+void setLeft(SWE_DimensionalSplittingChameleon* argLeft) {
+	left = argLeft;
+}
+
+void setRight(SWE_DimensionalSplittingChameleon* argRight) {
+	right = argRight;
+}
 
 void SWE_DimensionalSplittingChameleon::setGhostLayer() {
-	SWE_Block::applyBoundaryConditions();
+	if(right != NULL) {
+		for(int i = 1; i < ny+1; i++) {
+			this.h[nx+1][i] = left->h[nx+1][i];
+			this.hu[nx+1][i] = left->hu[nx+1][i];
+			this.hv[nx+1][i] = left->hv[nx+1][i];
+		}
+	}
+	if(left != NULL) {
+		for(int i = 1; i < ny+1; i++) {
+			this.h[0][i] = left->h[0][i];
+			this.hu[0][i] = left->hu[0][i];
+			this.hv[0][i] = left->hv[0][i];
+		}
+	}
+	// TODO: Use MPI Communication to set top and bottom GhostLayers
 }
 
 void computeNumericalFluxesKernel(SWE_DimensionalSplittingChameleon* block, float* h_data, float* hu_data, float* hv_data, float* b_data,

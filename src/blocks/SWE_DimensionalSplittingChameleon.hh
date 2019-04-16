@@ -53,6 +53,11 @@ class SWE_DimensionalSplittingChameleon : public SWE_Block<Float2DNative> {
 		float computeTime;
 		float computeTimeWall;
 
+		SWE_DimensionalSplittingChameleon* left;
+		SWE_DimensionalSplittingChameleon* right;
+		void setLeft(SWE_DimensionalSplittingChameleon* argLeft);
+		void setRight(SWE_DimensionalSplittingChameleon* argRight);
+
 	private:
 		solver::Hybrid<float> solver;
 
