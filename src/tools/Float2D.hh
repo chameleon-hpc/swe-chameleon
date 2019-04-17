@@ -66,6 +66,10 @@ class Float2D {
 		float* getRawPointer() const {
 			return rawData;
 		}
+
+		void setRawPointer(float* pointer) {
+			rawData = pointer;
+		}
 		
 		inline float* operator[](int index) {
 			return (rawData + (rows * index));

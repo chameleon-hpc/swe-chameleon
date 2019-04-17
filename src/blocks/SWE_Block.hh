@@ -116,9 +116,13 @@ class SWE_Block {
 		int getOriginY();
 		float getMaxTimestep();
 		const T& getWaterHeight();
+		T& getModifiableWaterHeight();
 		const T& getMomentumHorizontal();
+		T& getModifiableMomentumHorizontal();
 		const T& getMomentumVertical();
+		T& getModifiableMomentumVertical();
 		const T& getBathymetry();
+		T& getModifiableBathymetry();
 
 		// Default setter methods
 		virtual void setBoundaryType(Boundary boundary, BoundaryType type);
@@ -127,7 +131,7 @@ class SWE_Block {
 		virtual void initScenario(SWE_Scenario &scenario, BoundaryType boundaries[]);
 		virtual void computeMaxTimestep(const float dryTol = defaultDryTol, const float cflNumber = defaultCflNumber);
 		
-	protected:
+	//protected:
 		// Constructor/Destructor
 		SWE_Block<T>();
 		SWE_Block<T>(int cellCountHorizontal, int cellCountVertical, float cellSizeHorizontal, float cellSizeVertical, float originX = 0, float originY = 0);
@@ -250,7 +254,17 @@ const T& SWE_Block<T>::getWaterHeight() {
 }
 
 template <typename T>
+T& SWE_Block<T>::getModifiableWaterHeight() {
+	return h;
+}
+
+template <typename T>
 const T& SWE_Block<T>::getMomentumHorizontal() {
+	return hu;
+}
+
+template <typename T>
+T& SWE_Block<T>::getModifiableMomentumHorizontal() {
 	return hu;
 }
 
@@ -260,7 +274,17 @@ const T& SWE_Block<T>::getMomentumVertical() {
 }
 
 template <typename T>
+T& SWE_Block<T>::getModifiableMomentumVertical() {
+	return hv;
+}
+
+template <typename T>
 const T& SWE_Block<T>::getBathymetry() {
+	return b;
+}
+
+template <typename T>
+T& SWE_Block<T>::getModifiableBathymetry() {
 	return b;
 }
 

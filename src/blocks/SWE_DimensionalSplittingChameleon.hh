@@ -35,6 +35,7 @@
 #include "tools/Float2DNative.hh"
 #include <ctime>
 #include <time.h>
+#include <mpi.h>
 
 #include "solvers/Hybrid.hpp"
 
@@ -58,7 +59,10 @@ class SWE_DimensionalSplittingChameleon : public SWE_Block<Float2DNative> {
 		void setLeft(SWE_DimensionalSplittingChameleon* argLeft);
 		void setRight(SWE_DimensionalSplittingChameleon* argRight);
 
-	private:
+		int myRank;
+		void setRank(int rank);
+		MPI_Datatype HORIZONTAL_BOUNDARY;
+
 		solver::Hybrid<float> solver;
 
 		// Temporary values after x-sweep and before y-sweep
