@@ -34,6 +34,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <limits.h>
+#include <algorithm>
 
 #include "tools/args.hh"
 
@@ -126,17 +127,17 @@ int main(int argc, char** argv) {
 	 * INIT BLOCKS *
 	 ***************/
 
-	int iMyRank, iNumProcs;
+	int myRank, numRanks;
 	int provided;
 	int requested = MPI_THREAD_MULTIPLE;
 	MPI_Init_thread(&argc, &argv, requested, &provided);
-	MPI_Comm_size(MPI_COMM_WORLD, &iNumProcs);
-	MPI_Comm_rank(MPI_COMM_WORLD, &iMyRank);
+	MPI_Comm_size(MPI_COMM_WORLD, &numRanks);
+	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
 	// Print status
 	char hostname[HOST_NAME_MAX];
         gethostname(hostname, HOST_NAME_MAX);
 
-	printf("%i Spawned at %s\n", iMyRank, hostname);
+	printf("%i Spawned at %s\n", myRank, hostname);
 
 	/*
 	 * Calculate the simulation grid layout.
@@ -152,18 +153,40 @@ int main(int argc, char** argv) {
 	int num_blocks_per_rank = 32;
 	SWE_DimensionalSplittingChameleon* blocks[num_blocks_per_rank];
 
+	// y values are the same for all blocks on the same rank
+	int y_blocksize = nyRequested / numRanks;
+	int y_pos = std::min(myRank*y_blocksize, nyRequested);
+	float originY = y_pos / dySimulation;
+	int block_ny = std::min(y_blocksize, nyRequested - y_pos);
+		
 	for(int i = 0; i < num_blocks_per_rank; i++) {
-		float originX = scenario.getBoundaryPos(BND_LEFT);
-		float originY = scenario.getBoundaryPos(BND_BOTTOM);
+		// divide horizontal slice vertically into blocks
+		int x_blocksize = nxRequested / num_blocks_per_rank;
+		int x_pos = std::min(i*x_blocksize, nxRequested);
+		float originX = x_pos / dxSimulation;
+		int block_nx = std::min(x_blocksize, nxRequested - x_pos);
 
 		BoundaryType boundaries[4];
 
-		boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
-		boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
-		boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
-		boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
+		if(i == 0)
+			boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
+		else
+			boundaries[BND_LEFT] = CONNECT;
+		if(i == num_blocks_per_rank - 1)
+			boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
+		else
+			boundaries[BND_RIGHT] = CONNECT;
+		if(myRank == 0)
+			boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
+		else
+			boundaries[BND_BOTTOM] = CONNECT;
+		if(myRank = numRanks - 1)
+			boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
+		else
+			boundaries[BND_TOP] = CONNECT;
+
 		// TODO: correct dimensions
-		blocks[i] = new SWE_DimensionalSplittingChameleon(nxRequested, nyRequested, dxSimulation, dySimulation, originX, originY);
+		blocks[i] = new SWE_DimensionalSplittingChameleon(block_nx, block_ny, dxSimulation, dySimulation, originX, originY);
 		blocks[i]->initScenario(scenario, boundaries);
 	}
 	
