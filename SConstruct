@@ -360,7 +360,7 @@ if env['compileMode'] == 'debug':
     if env['compiler'] == 'gnu':
         env.Append(CCFLAGS=['-O0', '-g3', '-Wall'])
     elif env['compiler'] == 'intel':
-        env.Append(CCFLAGS=['-O0', '-g'])
+        env.Append(CCFLAGS=['-O0', '-g', '-std=c++0x', '-DSUPPRESS_SOLVER_DEBUG_OUTPUT'])
     elif env['compiler'] == 'cray':
         env.Append(CCFLAGS=['-O0'])
 elif env['compileMode'] == 'release':
@@ -368,10 +368,13 @@ elif env['compileMode'] == 'release':
     if env['compiler'] == 'gnu':
         env.Append(CCFLAGS=['-O3', '-mtune=native'])
     elif env['compiler'] == 'intel':
-        env.Append(CCFLAGS=['-O2', '-std=c++0x'])
+        env.Append(CCFLAGS=['-O3', '-std=c++0x'])
     # especially for env['compiler'] == 'cray'
     else:
         env.Append(CCFLAGS=['-O3'])
+
+# always build with debug symbols
+env.Append(CCFLAGS=['-g'])
 
 # Other compiler flags (for all compilers)
 if env['compiler'] != 'cray':

@@ -286,7 +286,7 @@ void computeNumericalFluxesKernel(SWE_DimensionalSplittingChameleon* block, floa
 	
 	#ifndef NDEBUG
 	// check if the cfl condition holds in the y-direction
-	assert(block->maxTimestep < (float) .5 * (block->dy / maxVerticalWaveSpeed));
+	assert(block->maxTimestep < (float) .6 * (block->dy / maxVerticalWaveSpeed));
 	#endif // NDEBUG
 
 	// Accumulate compute time

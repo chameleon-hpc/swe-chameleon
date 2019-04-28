@@ -150,7 +150,7 @@ int main(int argc, char** argv) {
 	float dySimulation = (float) heightScenario / nyRequested;
 
 	// hardcode just for testing
-	int num_blocks_per_rank = 32;
+	int num_blocks_per_rank = 1;
 	SWE_DimensionalSplittingChameleon* blocks[num_blocks_per_rank];
 
 	// y values are the same for all blocks on the same rank
@@ -321,9 +321,9 @@ int main(int argc, char** argv) {
 
 		// write output
 		writer.writeTimeStep(
-				blocks[i]->getWaterHeight(),
-				blocks[i]->getMomentumHorizontal(),
-				blocks[i]->getMomentumVertical(),
+				blocks[0]->getWaterHeight(),
+				blocks[0]->getMomentumHorizontal(),
+				blocks[0]->getMomentumVertical(),
 				t);
 	}
 
