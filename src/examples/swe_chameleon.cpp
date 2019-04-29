@@ -150,20 +150,20 @@ int main(int argc, char** argv) {
 	float dySimulation = (float) heightScenario / nyRequested;
 
 	// hardcode just for testing
-	int num_blocks_per_rank = 1;
+	int num_blocks_per_rank = 4;
 	SWE_DimensionalSplittingChameleon* blocks[num_blocks_per_rank];
 
 	// y values are the same for all blocks on the same rank
 	int y_blocksize = nyRequested / numRanks;
 	int y_pos = std::min(myRank*y_blocksize, nyRequested);
-	float originY = y_pos / dySimulation;
+	float originY = y_pos * dySimulation;
 	int block_ny = std::min(y_blocksize, nyRequested - y_pos);
 		
 	for(int i = 0; i < num_blocks_per_rank; i++) {
 		// divide horizontal slice vertically into blocks
 		int x_blocksize = nxRequested / num_blocks_per_rank;
 		int x_pos = std::min(i*x_blocksize, nxRequested);
-		float originX = x_pos / dxSimulation;
+		float originX = x_pos * dxSimulation;
 		int block_nx = std::min(x_blocksize, nxRequested - x_pos);
 
 		BoundaryType boundaries[4];
@@ -185,11 +185,18 @@ int main(int argc, char** argv) {
 		else
 			boundaries[BND_TOP] = CONNECT;
 
-		// TODO: correct dimensions
 		blocks[i] = new SWE_DimensionalSplittingChameleon(block_nx, block_ny, dxSimulation, dySimulation, originX, originY);
 		blocks[i]->initScenario(scenario, boundaries);
+
+		//printf("Init block %d with originX:%d and originY:%d\n", i, blocks[i]->getOriginX(), blocks[i]->getOriginY());
 	}
 	
+	for(int i = 0; i < num_blocks_per_rank; i++) {
+		if(i != 0)
+			blocks[i]->left = blocks[i-1];
+		if(i != num_blocks_per_rank-1)
+			blocks[i]->right = blocks[i+1];
+	}
 
 
 	/***************
@@ -199,38 +206,47 @@ int main(int argc, char** argv) {
 
 	// Initialize boundary size of the ghost layers
 	BoundarySize boundarySize = {{1, 1, 1, 1}};
-	outputFileName = outputBaseName;
 #ifdef WRITENETCDF
-	// Construct a netCDF writer
-	NetCdfWriter writer(
-			outputFileName,
-			blocks[0]->getBathymetry(),
-			boundarySize,
-			nxRequested,
-			nyRequested,
-			dxSimulation,
-			dySimulation,
-			blocks[0]->getOriginX(),
-			blocks[0]->getOriginY());
+	// Construct netCDF writers
+	NetCdfWriter* writers[num_blocks_per_rank];
+	for(int i=0; i<num_blocks_per_rank; i++) {
+		outputFileName = generateBaseFileName(outputBaseName, blocks[i]->getOriginX(), blocks[i]->getOriginY());
+		writers[i] = new NetCdfWriter(
+				outputFileName,
+				blocks[i]->getBathymetry(),
+				boundarySize,
+				blocks[i]->getCellCountHorizontal(),
+				blocks[i]->getCellCountVertical(),
+				dxSimulation,
+				dySimulation,
+				blocks[i]->getOriginX(),
+				blocks[i]->getOriginY());
+		//printf("Init writer %d with originX:%d and originY:%d\n", i, blocks[i]->getOriginX(), blocks[i]->getOriginY());
+	}
 #else
-	// TODO: fix indices
 	// Construct a vtk writer
-	VtkWriter writer(
+	VtkWriter* writers[num_blocks_per_rank];
+	for(int i=0; i<num_blocks_per_rank; i++) {
+		outputFileName = generateBaseFileName(outputBaseName, blocks[i]->getOriginX(), blocks[i]->getOriginY());
+		writers[i] = new VtkWriter(
 			outputFileName,
-			blocks[0]->getBathymetry(),
+			blocks[i]->getBathymetry(),
 			boundarySize,
-			nxRequested,
-			nyRequested,
+			blocks[i]->getCellCountHorizontal(),
+			blocks[i]->getCellCountVertical(),
 			dxSimulation,
 			dySimulation);
+	}
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	writer.writeTimeStep(
-			blocks[0]->getWaterHeight(),
-			blocks[0]->getMomentumHorizontal(),
-			blocks[0]->getMomentumVertical(),
-			(float) 0.);
+	for(int i=0; i<num_blocks_per_rank; i++) {
+		writers[i]->writeTimeStep(
+				blocks[i]->getWaterHeight(),
+				blocks[i]->getMomentumHorizontal(),
+				blocks[i]->getMomentumVertical(),
+				(float) 0.);
+	}
 
 
 	/********************
@@ -320,11 +336,13 @@ int main(int argc, char** argv) {
 		printf("Write timestep (%fs)\n", t);
 
 		// write output
-		writer.writeTimeStep(
-				blocks[0]->getWaterHeight(),
-				blocks[0]->getMomentumHorizontal(),
-				blocks[0]->getMomentumVertical(),
-				t);
+		for(int i=0; i<num_blocks_per_rank; i++) {
+			writers[i]->writeTimeStep(
+					blocks[i]->getWaterHeight(),
+					blocks[i]->getMomentumHorizontal(),
+					blocks[i]->getMomentumVertical(),
+					t);
+		}
 	}
 
 

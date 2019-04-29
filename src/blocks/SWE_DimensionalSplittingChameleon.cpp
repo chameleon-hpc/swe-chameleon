@@ -112,25 +112,23 @@ void SWE_DimensionalSplittingChameleon::setRank(int rank) {
 }
 
 void SWE_DimensionalSplittingChameleon::setGhostLayer() {
+	// Apply appropriate conditions for OUTFLOW/WALL boundaries
 	SWE_Block::applyBoundaryConditions();
 
 	if(right != NULL) {
 		for(int i = 1; i < ny+1; i++) {
-			h[nx+1][i] = left->getWaterHeight()[nx+1][i];
-			hu[nx+1][i] = left->getMomentumHorizontal()[nx+1][i];
-			hv[nx+1][i] = left->getMomentumVertical()[nx+1][i];
+			h[nx+1][i] = right->getWaterHeight()[1][i];
+			hu[nx+1][i] = right->getMomentumHorizontal()[1][i];
+			hv[nx+1][i] = right->getMomentumVertical()[1][i];
 		}
 	}
 	if(left != NULL) {
 		for(int i = 1; i < ny+1; i++) {
-			h[0][i] = left->getWaterHeight()[0][i];
-			hu[0][i] = left->getMomentumHorizontal()[0][i];
-			hv[0][i] = left->getMomentumVertical()[0][i];
+			h[0][i] = left->getWaterHeight()[nx][i];
+			hu[0][i] = left->getMomentumHorizontal()[nx][i];
+			hv[0][i] = left->getMomentumVertical()[nx][i];
 		}
 	}
-
-		// Apply appropriate conditions for OUTFLOW/WALL boundaries
-	SWE_Block::applyBoundaryConditions();
 
 	MPI_Status status;
 
