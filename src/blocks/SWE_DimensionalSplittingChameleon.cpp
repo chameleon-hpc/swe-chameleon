@@ -139,6 +139,8 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 	assert(hu.getCols() == nx + 2);
 	assert(hv.getCols() == nx + 2);
 
+	return;
+
 	/*********
 	 * SEND *
 	 ********/
@@ -157,6 +159,7 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 		MPI_Isend(&hv[1][1], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_BOTTOM], MPI_TAG_OUT_HV_BOTTOM, MPI_COMM_WORLD, &req);
 		MPI_Request_free(&req);
 
+		printf("%d: Sent to %d\n", myRank, neighbourRankId[BND_BOTTOM]);
 	}
 	if (boundaryType[BND_TOP] == CONNECT) {
 
@@ -169,24 +172,28 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 		MPI_Isend(&hv[1][ny], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_TOP], MPI_TAG_OUT_HV_TOP, MPI_COMM_WORLD, &req);
 		MPI_Request_free(&req);
 
+		printf("%d: Sent to %d\n", myRank, neighbourRankId[BND_TOP]);
 	}
+
+
 
 	/***********
 	 * RECEIVE *
 	 **********/
 
-	// 4 Boundaries times 3 arrays (h, hu, hv) means 12 requests
-	// The requests corresponding to the h array will be at indices 0, 3, 6, 9
-	// hu array requests will be at indices 1, 4, 5, 10 and so forth
+	// 2 Boundaries times 3 arrays (h, hu, hv) means 6 requests
 	MPI_Request recvReqs[6];
 	MPI_Status stati[6];
 
+	int bottomReceive = 0;
+	int topReceive = 0;
 	if (boundaryType[BND_BOTTOM] == CONNECT) {
 
 		MPI_Irecv(&h[1][0], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_BOTTOM], MPI_TAG_OUT_H_TOP, MPI_COMM_WORLD, &recvReqs[0]); 
 		MPI_Irecv(&hu[1][0], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_BOTTOM], MPI_TAG_OUT_HU_TOP, MPI_COMM_WORLD, &recvReqs[1]); 
 		MPI_Irecv(&hv[1][0], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_BOTTOM], MPI_TAG_OUT_HV_TOP, MPI_COMM_WORLD, &recvReqs[2]); 
 
+		bottomReceive = 1;
 	} else {
 		recvReqs[0] = MPI_REQUEST_NULL;
 		recvReqs[1] = MPI_REQUEST_NULL;
@@ -199,6 +206,7 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 		MPI_Irecv(&hu[1][ny + 1], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_TOP], MPI_TAG_OUT_HU_BOTTOM, MPI_COMM_WORLD, &recvReqs[4]); 
 		MPI_Irecv(&hv[1][ny + 1], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_TOP], MPI_TAG_OUT_HV_BOTTOM, MPI_COMM_WORLD, &recvReqs[5]); 
 
+		topReceive = 1;
 	} else {
 		recvReqs[3] = MPI_REQUEST_NULL;
 		recvReqs[4] = MPI_REQUEST_NULL;
@@ -206,7 +214,11 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 	}
 	
 
-	MPI_Waitall(12, recvReqs, stati);
+	MPI_Waitall(6, recvReqs, stati);
+	if(bottomReceive)
+		printf("%d: Received from %d\n", myRank, neighbourRankId[BND_BOTTOM]);
+	if(topReceive)
+		printf("%d: Received from %d\n", myRank, neighbourRankId[BND_TOP]);
 }
 
 void computeNumericalFluxesKernel(SWE_DimensionalSplittingChameleon* block, float* h_data, float* hu_data, float* hv_data, float* b_data,
@@ -304,7 +316,7 @@ void computeNumericalFluxesKernel(SWE_DimensionalSplittingChameleon* block, floa
 void SWE_DimensionalSplittingChameleon::computeNumericalFluxes() {
 
 	chameleon_map_data_entry_t* args = new chameleon_map_data_entry_t[15];
-    args[0] = chameleon_map_data_entry_create(this, sizeof(SWE_DimensionalSplittingChameleon), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[0] = chameleon_map_data_entry_create(this, sizeof(SWE_DimensionalSplittingChameleon), CHAM_OMP_TGT_MAPTYPE_TO);
     args[1] = chameleon_map_data_entry_create(this->getWaterHeight().getRawPointer(), sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
     args[2] = chameleon_map_data_entry_create(this->hu.getRawPointer(), sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
     args[3] = chameleon_map_data_entry_create(this->hv.getRawPointer(), sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
@@ -340,6 +352,7 @@ void SWE_DimensionalSplittingChameleon::updateUnknowns (float dt) {
 	// this assertion has to hold since the intermediary star states were calculated internally using a timestep width of maxTimestep
 	assert(std::abs(dt - maxTimestep) < 0.00001);
 	//update cell averages with the net-updates
+	//printf("%d: %p, %p, %p, %p\n", myRank, h.getRawPointer(), hStar.getRawPointer(), hNetUpdatesBelow.getRawPointer(), hNetUpdatesAbove.getRawPointer());
 	for (int x = 1; x < nx+1; x++) {
 		for (int y = 1; y < ny + 1; y++) {
 			h[x][y] = hStar[x][y] - (maxTimestep / dx) * (hNetUpdatesBelow[x][y] + hNetUpdatesAbove[x][y]);

@@ -180,7 +180,7 @@ int main(int argc, char** argv) {
 			boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
 		else
 			boundaries[BND_BOTTOM] = CONNECT;
-		if(myRank = numRanks - 1)
+		if(myRank == numRanks - 1)
 			boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
 		else
 			boundaries[BND_TOP] = CONNECT;
@@ -188,9 +188,15 @@ int main(int argc, char** argv) {
 		blocks[i] = new SWE_DimensionalSplittingChameleon(block_nx, block_ny, dxSimulation, dySimulation, originX, originY);
 		blocks[i]->initScenario(scenario, boundaries);
 
+		blocks[i]->myRank = myRank;
+		if(myRank != 0)
+			blocks[i]->neighbourRankId[BND_BOTTOM] = myRank-1;
+		if(myRank != numRanks - 1)
+			blocks[i]->neighbourRankId[BND_TOP] = myRank+1;
+
 		//printf("Init block %d with originX:%d and originY:%d\n", i, blocks[i]->getOriginX(), blocks[i]->getOriginY());
 	}
-	
+
 	for(int i = 0; i < num_blocks_per_rank; i++) {
 		if(i != 0)
 			blocks[i]->left = blocks[i-1];
@@ -203,6 +209,10 @@ int main(int argc, char** argv) {
 	 * INIT OUTPUT *
 	 ***************/
 
+	// block used for writing (only used on rank 0)
+	// all ranks send their blocks to rank 0 and they are copied into this write block
+	// This block is then written resulting in a single file
+	SWE_DimensionalSplittingChameleon writeBlock(nxRequested, nyRequested, dxSimulation, dySimulation, 0, 0);
 
 	// Initialize boundary size of the ghost layers
 	BoundarySize boundarySize = {{1, 1, 1, 1}};
@@ -296,7 +306,7 @@ int main(int argc, char** argv) {
 				// we need to sync here since block boundaries get exchanged over ranks
 				blocks[i]->setGhostLayer();
 			}
-			chameleon_distributed_taskwait(0);
+			//chameleon_distributed_taskwait(0);
 
 			// Accumulate comm time and start compute clock
 			commClock = clock() - commClock;
@@ -310,7 +320,8 @@ int main(int argc, char** argv) {
 			}
 			chameleon_distributed_taskwait(0);
 			
-			#pragma omp parallel for
+			// TODO: reduce max timestep
+			//#pragma omp parallel for
 			for(int i=0; i<num_blocks_per_rank; i++) {
 				// max timestep has been reduced over all ranks in computeNumericalFluxes()
 				timestep = blocks[i]->getMaxTimestep();
@@ -318,7 +329,7 @@ int main(int argc, char** argv) {
 				// update the cell values
 				blocks[i]->updateUnknowns(timestep);
 			}
-			chameleon_distributed_taskwait(0);
+			//chameleon_distributed_taskwait(0);
 
 			// Accumulate compute time
 			computeClock = clock() - computeClock;
@@ -331,6 +342,9 @@ int main(int argc, char** argv) {
 			// update simulation time with time step width.
 			t += timestep;
 			iterations++;
+
+			MPI_Barrier(MPI_COMM_WORLD);
+			printf("%d: Step\n", myRank);
 		}
 
 		printf("Write timestep (%fs)\n", t);
