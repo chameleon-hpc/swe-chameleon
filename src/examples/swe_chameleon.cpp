@@ -153,6 +153,7 @@ int main(int argc, char** argv) {
 	int num_blocks_per_rank = 4;
 	SWE_DimensionalSplittingChameleon* blocks[num_blocks_per_rank];
 
+	int x_blocksize = nxRequested / num_blocks_per_rank;
 	// y values are the same for all blocks on the same rank
 	int y_blocksize = nyRequested / numRanks;
 	int y_pos = std::min(myRank*y_blocksize, nyRequested);
@@ -160,8 +161,8 @@ int main(int argc, char** argv) {
 	int block_ny = std::min(y_blocksize, nyRequested - y_pos);
 		
 	for(int i = 0; i < num_blocks_per_rank; i++) {
+		// TODO: extract into function in chameleonSplitting
 		// divide horizontal slice vertically into blocks
-		int x_blocksize = nxRequested / num_blocks_per_rank;
 		int x_pos = std::min(i*x_blocksize, nxRequested);
 		float originX = x_pos * dxSimulation;
 		int block_nx = std::min(x_blocksize, nxRequested - x_pos);
@@ -210,54 +211,58 @@ int main(int argc, char** argv) {
 	 ***************/
 
 	// block used for writing (only used on rank 0)
-	// all ranks send their blocks to rank 0 and they are copied into this write block
+	// all ranks write their blocks to this write block on rank 0 (using one-sided communication)
 	// This block is then written resulting in a single file
 	SWE_DimensionalSplittingChameleon writeBlock(nxRequested, nyRequested, dxSimulation, dySimulation, 0, 0);
+	BoundaryType boundaries[4];
+	boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
+	boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
+	boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
+	boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
+	writeBlock.initScenario(scenario, boundaries);
+  	MPI_Win writeBlockWin_h;
+	MPI_Win writeBlockWin_hu;
+  	MPI_Win writeBlockWin_hv;
+
+	MPI_Win_create(writeBlock.h.getRawPointer(), (nxRequested+2)*(nyRequested*2), sizeof(float), MPI_INFO_NULL, MPI_COMM_WORLD, &writeBlockWin_h);
+	MPI_Win_create(writeBlock.hu.getRawPointer(), (nxRequested+2)*(nyRequested*2), sizeof(float), MPI_INFO_NULL, MPI_COMM_WORLD, &writeBlockWin_hu);
+	MPI_Win_create(writeBlock.hv.getRawPointer(), (nxRequested+2)*(nyRequested*2), sizeof(float), MPI_INFO_NULL, MPI_COMM_WORLD, &writeBlockWin_hv);
 
 	// Initialize boundary size of the ghost layers
 	BoundarySize boundarySize = {{1, 1, 1, 1}};
 #ifdef WRITENETCDF
 	// Construct netCDF writers
-	NetCdfWriter* writers[num_blocks_per_rank];
-	for(int i=0; i<num_blocks_per_rank; i++) {
-		outputFileName = generateBaseFileName(outputBaseName, blocks[i]->getOriginX(), blocks[i]->getOriginY());
-		writers[i] = new NetCdfWriter(
-				outputFileName,
-				blocks[i]->getBathymetry(),
-				boundarySize,
-				blocks[i]->getCellCountHorizontal(),
-				blocks[i]->getCellCountVertical(),
-				dxSimulation,
-				dySimulation,
-				blocks[i]->getOriginX(),
-				blocks[i]->getOriginY());
-		//printf("Init writer %d with originX:%d and originY:%d\n", i, blocks[i]->getOriginX(), blocks[i]->getOriginY());
-	}
+	outputFileName = outputBaseName;
+	NetCdfWriter writer(
+		outputFileName,
+		writeBlock.getBathymetry(),
+		boundarySize,
+		writeBlock.getCellCountHorizontal(),
+		writeBlock.getCellCountVertical(),
+		dxSimulation,
+		dySimulation,
+		writeBlock.getOriginX(),
+		writeBlock.getOriginY());
+	//printf("Init writer %d with originX:%d and originY:%d\n", i, blocks[i]->getOriginX(), blocks[i]->getOriginY());
 #else
 	// Construct a vtk writer
-	VtkWriter* writers[num_blocks_per_rank];
-	for(int i=0; i<num_blocks_per_rank; i++) {
-		outputFileName = generateBaseFileName(outputBaseName, blocks[i]->getOriginX(), blocks[i]->getOriginY());
-		writers[i] = new VtkWriter(
-			outputFileName,
-			blocks[i]->getBathymetry(),
-			boundarySize,
-			blocks[i]->getCellCountHorizontal(),
-			blocks[i]->getCellCountVertical(),
-			dxSimulation,
-			dySimulation);
-	}
+	outputFileName = outputBaseName;
+	VtkWriter writer(
+		outputFileName,
+		writeBlock.getBathymetry(),
+		boundarySize,
+		writeBlock.getCellCountHorizontal(),
+		writeBlock.getCellCountVertical(),
+		dxSimulation,
+		dySimulation);
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	for(int i=0; i<num_blocks_per_rank; i++) {
-		writers[i]->writeTimeStep(
-				blocks[i]->getWaterHeight(),
-				blocks[i]->getMomentumHorizontal(),
-				blocks[i]->getMomentumVertical(),
-				(float) 0.);
-	}
-
+	writer.writeTimeStep(
+		writeBlock.getWaterHeight(),
+		writeBlock.getMomentumHorizontal(),
+		writeBlock.getMomentumVertical(),
+		(float) 0.);
 
 	/********************
 	 * START SIMULATION *
@@ -350,12 +355,33 @@ int main(int argc, char** argv) {
 		printf("Write timestep (%fs)\n", t);
 
 		// write output
+		MPI_Win_fence(0, writeBlockWin_h);
+		MPI_Win_fence(0, writeBlockWin_hu);
+		MPI_Win_fence(0, writeBlockWin_hv);
 		for(int i=0; i<num_blocks_per_rank; i++) {
-			writers[i]->writeTimeStep(
-					blocks[i]->getWaterHeight(),
-					blocks[i]->getMomentumHorizontal(),
-					blocks[i]->getMomentumVertical(),
-					t);
+			// Send all data to rank 0, which will write it to a single file
+			// send each column separately
+			for(int j=0; j<blocks[i]->nx; j++) {
+				int x_pos = std::min(i*x_blocksize, nxRequested);
+				int y_pos = std::min(i*y_blocksize, nyRequested);
+				MPI_Put(blocks[i]->h.getRawPointer()+1+(blocks[i]->ny+2)*j, blocks[i]->ny, MPI_FLOAT,
+					0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_h);
+				MPI_Put(blocks[i]->hu.getRawPointer()+1+(blocks[i]->ny+2)*j, blocks[i]->ny, MPI_FLOAT,
+					0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_hu);
+				MPI_Put(blocks[i]->hv.getRawPointer()+1+(blocks[i]->ny+2)*j, blocks[i]->ny, MPI_FLOAT,
+					0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_hv);
+			}
+		}
+		MPI_Win_fence(0, writeBlockWin_h);
+		MPI_Win_fence(0, writeBlockWin_hu);
+		MPI_Win_fence(0, writeBlockWin_hv);
+
+		if(myRank == 0) {
+			writer.writeTimeStep(
+				writeBlock.getWaterHeight(),
+				writeBlock.getMomentumHorizontal(),
+				writeBlock.getMomentumVertical(),
+				t);
 		}
 	}
 
