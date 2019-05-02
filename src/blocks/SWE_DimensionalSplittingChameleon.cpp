@@ -111,6 +111,10 @@ void SWE_DimensionalSplittingChameleon::setRank(int rank) {
 	myRank = rank;
 }
 
+void SWE_DimensionalSplittingChameleon::freeMpiType() {
+	MPI_Type_free(&HORIZONTAL_BOUNDARY);
+}
+
 void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 	// Apply appropriate conditions for OUTFLOW/WALL boundaries
 	SWE_Block::applyBoundaryConditions();

@@ -366,6 +366,10 @@ int main(int argc, char** argv) {
 
 
 	printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[0]->computeTime, blocks[0]->computeTimeWall, wallTime); 
+	for(int i=0; i<num_blocks_per_rank; i++) {
+		blocks[i]->freeMpiType();
+	}
+	MPI_Finalize();
 
 	return 0;
 }
