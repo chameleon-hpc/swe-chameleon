@@ -149,62 +149,115 @@ int main(int argc, char** argv) {
 	float dxSimulation = (float) widthScenario / nxRequested;
 	float dySimulation = (float) heightScenario / nyRequested;
 
+	// TODO: Move to own function
 	// hardcode just for testing
-	int num_blocks_per_rank = 4;
-	SWE_DimensionalSplittingChameleon* blocks[num_blocks_per_rank];
-
-	int x_blocksize = nxRequested / num_blocks_per_rank;
-	// y values are the same for all blocks on the same rank
-	int y_blocksize = nyRequested / numRanks;
-	int y_pos = std::min(myRank*y_blocksize, nyRequested);
-	float originY = y_pos * dySimulation;
-	int block_ny = std::min(y_blocksize, nyRequested - y_pos);
-		
-	for(int i = 0; i < num_blocks_per_rank; i++) {
-		// TODO: extract into function in chameleonSplitting
-		// divide horizontal slice vertically into blocks
-		int x_pos = std::min(i*x_blocksize, nxRequested);
-		float originX = x_pos * dxSimulation;
-		int block_nx = std::min(x_blocksize, nxRequested - x_pos);
-
-		BoundaryType boundaries[4];
-
-		if(i == 0)
-			boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
-		else
-			boundaries[BND_LEFT] = CONNECT;
-		if(i == num_blocks_per_rank - 1)
-			boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
-		else
-			boundaries[BND_RIGHT] = CONNECT;
-		if(myRank == 0)
-			boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
-		else
-			boundaries[BND_BOTTOM] = CONNECT;
-		if(myRank == numRanks - 1)
-			boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
-		else
-			boundaries[BND_TOP] = CONNECT;
-
-		blocks[i] = new SWE_DimensionalSplittingChameleon(block_nx, block_ny, dxSimulation, dySimulation, originX, originY);
-		blocks[i]->initScenario(scenario, boundaries);
-
-		blocks[i]->myRank = myRank;
-		if(myRank != 0)
-			blocks[i]->neighbourRankId[BND_BOTTOM] = myRank-1;
-		if(myRank != numRanks - 1)
-			blocks[i]->neighbourRankId[BND_TOP] = myRank+1;
-
-		//printf("Init block %d with originX:%d and originY:%d\n", i, blocks[i]->getOriginX(), blocks[i]->getOriginY());
+	int xRankCount = 1;
+	int yRankCount = numRanks;
+	int xBlockCount = 2;
+	int yBlockCount = 2;
+	//int num_blocks_per_rank = 4;
+	float xWeights[xRankCount];
+	float yWeights[yRankCount];
+	float xSum = 0.0;
+	float ySum = 0.0;
+	// read and normalize weights
+	for(int i = 0; i < xRankCount; i++){
+		xWeights[i] = 1.0;
+		xSum += xWeights[i];
+	}
+	for(int i = 0; i < yRankCount; i++) {
+		yWeights[i] = 1.0;
+		ySum +=yWeights[i];
 	}
 
-	for(int i = 0; i < num_blocks_per_rank; i++) {
-		if(i != 0)
-			blocks[i]->left = blocks[i-1];
-		if(i != num_blocks_per_rank-1)
-			blocks[i]->right = blocks[i+1];
-	}
+	for(int i = 0; i < xRankCount; i++)
+		xWeights[i] = xWeights[i] / xSum * xBlockCount;
+	for(int i = 0; i < yRankCount; i++)
+		yWeights[i] = yWeights[i] / ySum * yBlockCount;
 
+	int xBounds[xRankCount+1];
+	xBounds[0] = 0;
+	int yBounds[yRankCount+1];
+	yBounds[0] = 0;
+	for(int i = 1; i < xRankCount; i++)
+		xBounds[i] = xBounds[i-1] + xWeights[i];
+	xBounds[xRankCount] = xBlockCount;
+	for(int i = 1; i < yRankCount; i++)
+		yBounds[i] = yBounds[i-1] + yWeights[i];
+	yBounds[yRankCount] = yBlockCount;
+
+	SWE_DimensionalSplittingChameleon* blocks[xBounds[myRank+1]-xBounds[myRank]][yBounds[myRank+1]-yBounds[myRank]];
+
+	int x_blocksize = nxRequested / xBlockCount;
+	int y_blocksize = nyRequested / yBlockCount;
+
+	for(int x = xBounds[myRank]; x < xBounds[myRank+1]; x++) {
+		for(int y = yBounds[myRank]; y < yBounds[myRank+1]; y++) {
+			int x_pos = x*x_blocksize;
+			float originX = x_pos * dxSimulation;
+			int block_nx = x_blocksize;
+			if(x == xBlockCount-1)
+				block_nx += nxRequested % x_blocksize;
+			int y_pos = y*y_blocksize;
+			float originY = y_pos * dySimulation;
+			int block_ny = y_blocksize;
+			if(y == yBlockCount-1)
+				block_ny += nyRequested % y_blocksize;
+
+			BoundaryType boundaries[4];			
+
+			if(x == 0)
+				boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
+			else if(x == xBounds[myRank])
+				boundaries[BND_LEFT] = CONNECT;
+			else
+				boundaries[BND_LEFT] = CONNECT_WITHIN_RANK;
+			
+			if(x_pos+block_nx == nxRequested-1)
+				boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
+			else if(x == xBounds[myRank+1]-1)
+				boundaries[BND_RIGHT] = CONNECT;
+			else
+				boundaries[BND_RIGHT] = CONNECT_WITHIN_RANK;
+
+			if(y == 0)
+				boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
+			else if(y == yBounds[myRank])
+				boundaries[BND_BOTTOM] = CONNECT;
+			else
+				boundaries[BND_BOTTOM] = CONNECT_WITHIN_RANK;
+
+			if(y_pos + block_ny == nyRequested-1)
+				boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
+			else if(y == yBounds[myRank+1]-1)
+				boundaries[BND_TOP] = CONNECT;
+			else
+				boundaries[BND_TOP] = CONNECT_WITHIN_RANK;
+
+			blocks[x][y] = new SWE_DimensionalSplittingChameleon(block_nx, block_ny, dxSimulation, dySimulation, originX, originY);
+			blocks[x][y]->initScenario(scenario, boundaries);
+
+			blocks[x][y]->myRank = myRank;
+			if(myRank != 0)
+				blocks[x][y]->neighbourRankId[BND_LEFT] = myRank-1;
+			if(myRank != numRanks - 1)
+				blocks[x][y]->neighbourRankId[BND_RIGHT] = myRank+1;
+			if(myRank > xRankCount)
+				blocks[x][y]->neighbourRankId[BND_BOTTOM] = myRank-xRankCount;
+			if(myRank < numRanks - xRankCount)
+				blocks[x][y]->neighbourRankId[BND_BOTTOM] = myRank+xRankCount;
+
+			if(x != xBounds[myRank])
+				blocks[x][y]->left = blocks[x-1][y];
+			if(x != xBounds[myRank+1]-1)
+				blocks[x][y]->right = blocks[x+1][y];
+			if(y != yBounds[myRank])
+				blocks[x][y]->bottom = blocks[x][y-1];
+			if(y != yBounds[myRank+1]-1)
+				blocks[x][y]->top = blocks[x][y+1];
+			//printf("Init block %d with originX:%d and originY:%d\n", i, blocks[i]->getOriginX(), blocks[i]->getOriginY());
+		}
+	}
 
 	/***************
 	 * INIT OUTPUT *
@@ -212,7 +265,7 @@ int main(int argc, char** argv) {
 
 	// block used for writing (only used on rank 0)
 	// all ranks write their blocks to this write block on rank 0 (using one-sided communication)
-	// This block is then written resulting in a single file
+	// This block is then written to get a single output file
 	SWE_DimensionalSplittingChameleon writeBlock(nxRequested, nyRequested, dxSimulation, dySimulation, 0, 0);
 	BoundaryType boundaries[4];
 	boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
