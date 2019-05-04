@@ -185,8 +185,12 @@ int main(int argc, char** argv) {
 	for(int i = 1; i < yRankCount; i++)
 		yBounds[i] = yBounds[i-1] + yWeights[i];
 	yBounds[yRankCount] = yBlockCount;
+	printf("%d: xBlockCount:%d\n", myRank, xBlockCount);
+	printf("%d: xBounds:%d, %d\n", myRank, xBounds[0], xBounds[1]);
+	printf("%d: yBounds:%d, %d, %d\n", myRank, yBounds[0], yBounds[1], yBounds[2]);
+	printf("%d: xDim:%d, yDim:%d\n", myRank, xBounds[(myRank%xRankCount)+1]-xBounds[myRank%xRankCount], yBounds[(myRank/xRankCount)+1]-yBounds[myRank/xRankCount]);
 
-	SWE_DimensionalSplittingChameleon* blocks[xBounds[myRank+1]-xBounds[myRank]][yBounds[myRank+1]-yBounds[myRank]];
+	SWE_DimensionalSplittingChameleon* blocks[xBounds[(myRank%xRankCount)+1]-xBounds[myRank%xRankCount]][yBounds[(myRank/xRankCount)+1]-yBounds[myRank/xRankCount]];
 
 	int x_blocksize = nxRequested / xBlockCount;
 	int y_blocksize = nyRequested / yBlockCount;
@@ -245,7 +249,7 @@ int main(int argc, char** argv) {
 			if(myRank > xRankCount)
 				blocks[x][y]->neighbourRankId[BND_BOTTOM] = myRank-xRankCount;
 			if(myRank < numRanks - xRankCount)
-				blocks[x][y]->neighbourRankId[BND_BOTTOM] = myRank+xRankCount;
+				blocks[x][y]->neighbourRankId[BND_TOP] = myRank+xRankCount;
 
 			if(x != xBounds[myRank])
 				blocks[x][y]->left = blocks[x-1][y];
@@ -266,6 +270,7 @@ int main(int argc, char** argv) {
 	// block used for writing (only used on rank 0)
 	// all ranks write their blocks to this write block on rank 0 (using one-sided communication)
 	// This block is then written to get a single output file
+	printf("%d: Init write block with nxReq:%d, nyReq:%d, dxSim:%f, dySim:%f\n", myRank, nxRequested, nyRequested, dxSimulation, dySimulation);
 	SWE_DimensionalSplittingChameleon writeBlock(nxRequested, nyRequested, dxSimulation, dySimulation, 0, 0);
 	BoundaryType boundaries[4];
 	boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
