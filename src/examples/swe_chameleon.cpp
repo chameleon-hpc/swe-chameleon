@@ -190,13 +190,15 @@ int main(int argc, char** argv) {
 	printf("%d: yBounds:%d, %d, %d\n", myRank, yBounds[0], yBounds[1], yBounds[2]);
 	printf("%d: xDim:%d, yDim:%d\n", myRank, xBounds[(myRank%xRankCount)+1]-xBounds[myRank%xRankCount], yBounds[(myRank/xRankCount)+1]-yBounds[myRank/xRankCount]);
 
-	SWE_DimensionalSplittingChameleon* blocks[xBounds[(myRank%xRankCount)+1]-xBounds[myRank%xRankCount]][yBounds[(myRank/xRankCount)+1]-yBounds[myRank/xRankCount]];
+	SWE_DimensionalSplittingChameleon* blocks[xBlockCount][yBlockCount];
 
 	int x_blocksize = nxRequested / xBlockCount;
 	int y_blocksize = nyRequested / yBlockCount;
 
-	for(int x = xBounds[myRank]; x < xBounds[myRank+1]; x++) {
-		for(int y = yBounds[myRank]; y < yBounds[myRank+1]; y++) {
+	printf("%d: loop bounds: %d, %d, %d, %d\n", myRank, xBounds[myRank%xRankCount], xBounds[(myRank%xRankCount)+1], yBounds[myRank/xRankCount], yBounds[(myRank/xRankCount)+1]);
+	for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+		for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+			printf("%d: x=%d, y=%d\n", myRank, x, y);
 			int x_pos = x*x_blocksize;
 			float originX = x_pos * dxSimulation;
 			int block_nx = x_blocksize;
@@ -246,16 +248,16 @@ int main(int argc, char** argv) {
 				blocks[x][y]->neighbourRankId[BND_LEFT] = myRank-1;
 			if(myRank != numRanks - 1)
 				blocks[x][y]->neighbourRankId[BND_RIGHT] = myRank+1;
-			if(myRank > xRankCount)
+			if(myRank >= xRankCount)
 				blocks[x][y]->neighbourRankId[BND_BOTTOM] = myRank-xRankCount;
 			if(myRank < numRanks - xRankCount)
 				blocks[x][y]->neighbourRankId[BND_TOP] = myRank+xRankCount;
 
-			if(x != xBounds[myRank])
+			if(x != 0)
 				blocks[x][y]->left = blocks[x-1][y];
 			if(x != xBounds[myRank+1]-1)
 				blocks[x][y]->right = blocks[x+1][y];
-			if(y != yBounds[myRank])
+			if(y != 0)
 				blocks[x][y]->bottom = blocks[x][y-1];
 			if(y != yBounds[myRank+1]-1)
 				blocks[x][y]->top = blocks[x][y+1];
@@ -289,19 +291,22 @@ int main(int argc, char** argv) {
 	// Initialize boundary size of the ghost layers
 	BoundarySize boundarySize = {{1, 1, 1, 1}};
 #ifdef WRITENETCDF
-	// Construct netCDF writers
+	// Construct a netCDF writer
 	outputFileName = outputBaseName;
-	NetCdfWriter writer(
-		outputFileName,
-		writeBlock.getBathymetry(),
-		boundarySize,
-		writeBlock.getCellCountHorizontal(),
-		writeBlock.getCellCountVertical(),
-		dxSimulation,
-		dySimulation,
-		writeBlock.getOriginX(),
-		writeBlock.getOriginY());
-	//printf("Init writer %d with originX:%d and originY:%d\n", i, blocks[x][y]->getOriginX(), blocks[x][y]->getOriginY());
+	NetCdfWriter* writer;
+	if(myRank == 0) {
+		writer = new NetCdfWriter(
+			outputFileName,
+			writeBlock.getBathymetry(),
+			boundarySize,
+			writeBlock.getCellCountHorizontal(),
+			writeBlock.getCellCountVertical(),
+			dxSimulation,
+			dySimulation,
+			writeBlock.getOriginX(),
+			writeBlock.getOriginY());
+		printf("%d: Init writer with CellCountHorizontal:%d, CellCountVertical:%d, OriginX:%d, getOriginX:%d\n", myRank, writeBlock.getCellCountHorizontal(), writeBlock.getCellCountVertical(), writeBlock.getOriginX(), writeBlock.getOriginY());
+	}
 #else
 	// Construct a vtk writer
 	outputFileName = outputBaseName;
@@ -316,7 +321,7 @@ int main(int argc, char** argv) {
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	writer.writeTimeStep(
+	writer->writeTimeStep(
 		writeBlock.getWaterHeight(),
 		writeBlock.getMomentumHorizontal(),
 		writeBlock.getMomentumVertical(),
@@ -363,12 +368,13 @@ int main(int argc, char** argv) {
 			commClock = clock();
 
 			#pragma omp parallel for
-			for(int x = xBounds[myRank]; x < xBounds[myRank+1]; x++) {
-				for(int y = yBounds[myRank]; y < yBounds[myRank+1]; y++) {
+			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+					printf("%d: x=%d, y=%d\n", myRank, x, y);
 
-						// set values in ghost cells.
-						// we need to sync here since block boundaries get exchanged over ranks
-						blocks[x][y]->setGhostLayer();
+					// set values in ghost cells.
+					// we need to sync here since block boundaries get exchanged over ranks
+					blocks[x][y]->setGhostLayer();
 				}
 			}
 			//chameleon_distributed_taskwait(0);
@@ -379,8 +385,9 @@ int main(int argc, char** argv) {
 			computeClock = clock();
 
 			#pragma omp parallel for
-			for(int x = xBounds[myRank]; x < xBounds[myRank+1]; x++) {
-				for(int y = yBounds[myRank]; y < yBounds[myRank+1]; y++) {
+			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+					printf("%d: x=%d, y=%d\n", myRank, x, y);
 					// compute numerical flux on each edge
 					blocks[x][y]->computeNumericalFluxes();
 				}
@@ -389,8 +396,9 @@ int main(int argc, char** argv) {
 			
 			// TODO: reduce max timestep
 			//#pragma omp parallel for
-			for(int x = xBounds[myRank]; x < xBounds[myRank+1]; x++) {
-				for(int y = yBounds[myRank]; y < yBounds[myRank+1]; y++) {
+			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+					printf("%d: x=%d, y=%d\n", myRank, x, y);
 					// max timestep has been reduced over all ranks in computeNumericalFluxes()
 					timestep = blocks[x][y]->getMaxTimestep();
 
@@ -422,8 +430,9 @@ int main(int argc, char** argv) {
 		MPI_Win_fence(0, writeBlockWin_h);
 		MPI_Win_fence(0, writeBlockWin_hu);
 		MPI_Win_fence(0, writeBlockWin_hv);
-		for(int x = xBounds[myRank]; x < xBounds[myRank+1]; x++) {
-			for(int y = yBounds[myRank]; y < yBounds[myRank+1]; y++) {
+			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+				printf("%d: x=%d, y=%d\n", myRank, x, y);
 				// Send all data to rank 0, which will write it to a single file
 				// send each column separately
 				for(int j=0; j<blocks[x][y]->nx; j++) {
@@ -443,7 +452,7 @@ int main(int argc, char** argv) {
 		MPI_Win_fence(0, writeBlockWin_hv);
 
 		if(myRank == 0) {
-			writer.writeTimeStep(
+			writer->writeTimeStep(
 				writeBlock.getWaterHeight(),
 				writeBlock.getMomentumHorizontal(),
 				writeBlock.getMomentumVertical(),
@@ -459,8 +468,9 @@ int main(int argc, char** argv) {
 
 	printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[0][0]->computeTime, blocks[0][0]->computeTimeWall, wallTime); 
 
-	for(int x = xBounds[myRank]; x < xBounds[myRank+1]; x++) {
-		for(int y = yBounds[myRank]; y < yBounds[myRank+1]; y++) {
+	for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+		for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+			printf("%d: x=%d, y=%d\n", myRank, x, y);
 			blocks[x][y]->freeMpiType();
 		}
 	}
