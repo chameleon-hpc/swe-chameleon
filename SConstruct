@@ -292,7 +292,6 @@ if env['parallelization'] in ['charm', 'ampi']:
 ################################
 
 if env['parallelization'] in ['chameleon']:
-    env.Append(INTEL_LICENSE_FILE=["50017@license2.rz.rwth-aachen.de"])
     env.Append(CCFLAGS=['-std=c++11'])
     env.Append(CCFLAGS=['-lchameleon', '-lm', '-lstdc++'])
     # get the chameleon folder
@@ -305,7 +304,6 @@ if env['parallelization'] in ['chameleon']:
         print("Trying to find chameleon install at: " + chameleonPath)
     env.Append(CCFLAGS=['-I'+chameleonPath+'/include/'])
     env.Append(CCFLAGS=['-L'+chameleonPath+'/lib/'])
-    env.Append(LIBPATH=['/home/simon/sw/intel/impi/2019.3.199/intel64/libfabric/lib'])
     env.Append(LINKFLAGS=['-L'+chameleonPath+'/lib/'])
     env.Append(LINKFLAGS=['-lchameleon'])
     env.Append(LINKFLAGS=['-lfabric'])
