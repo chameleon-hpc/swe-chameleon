@@ -221,8 +221,6 @@ if (env['parallelization'] in ['cuda', 'mpi_with_cuda'] and
     print(sys.stderr,
           '** The "' + env['solver'] + '" solver is not supported in CUDA.')
     Exit(3)
-    
-env['INTEL_LICENSE_FILE'] = "50017@license2.rz.rwth-aachen.de"
 
 # CUDA parallelization for openGL
 if env['parallelization'] != 'cuda' and env['openGL']:
@@ -232,8 +230,8 @@ if env['parallelization'] != 'cuda' and env['openGL']:
     Exit(3)
 
 # Copy whole environment?
-if env['copyenv']:
-    env.AppendUnique(ENV=os.environ, delete_existing=1)
+#if env['copyenv']:
+env.AppendUnique(ENV=os.environ, delete_existing=1)
 
 #######################
 # UPCXX Specific Init #
@@ -294,6 +292,7 @@ if env['parallelization'] in ['charm', 'ampi']:
 ################################
 
 if env['parallelization'] in ['chameleon']:
+    env.Append(INTEL_LICENSE_FILE=["50017@license2.rz.rwth-aachen.de"])
     env.Append(CCFLAGS=['-std=c++11'])
     env.Append(CCFLAGS=['-lchameleon', '-lm', '-lstdc++'])
     # get the chameleon folder
