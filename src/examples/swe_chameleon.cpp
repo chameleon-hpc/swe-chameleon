@@ -299,6 +299,8 @@ int main(int argc, char** argv) {
 			clock_gettime(CLOCK_MONOTONIC, &startTime);
 			commClock = clock();
 
+			timestep = std::numeric_limits<float>::max();
+
 			#pragma omp parallel for
 			for(int i=0; i<num_blocks_per_rank; i++) {
 
@@ -320,12 +322,19 @@ int main(int argc, char** argv) {
 			}
 			chameleon_distributed_taskwait(0);
 			
-			// TODO: reduce max timestep
 			//#pragma omp parallel for
 			for(int i=0; i<num_blocks_per_rank; i++) {
-				// max timestep has been reduced over all ranks in computeNumericalFluxes()
-				timestep = blocks[i]->getMaxTimestep();
+				// reduce timestep
+				if(blocks[i]->getMaxTimestep() < timestep)
+					timestep = blocks[i]->getMaxTimestep();
+			}
 
+			// reduce over all ranks
+			float maxTimestepGlobal;
+			MPI_Allreduce(&timestep, &maxTimestepGlobal, 1, MPI_FLOAT, MPI_MIN, MPI_COMM_WORLD);
+			timestep = maxTimestepGlobal;
+
+			for(int i=0; i<num_blocks_per_rank; i++) {
 				// update the cell values
 				blocks[i]->updateUnknowns(timestep);
 			}
@@ -344,7 +353,7 @@ int main(int argc, char** argv) {
 			iterations++;
 
 			MPI_Barrier(MPI_COMM_WORLD);
-			printf("%d: Step\n", myRank);
+			printf("%d: Step, current time:%f\n", myRank, t);
 		}
 
 		printf("Write timestep (%fs)\n", t);
