@@ -221,6 +221,8 @@ if (env['parallelization'] in ['cuda', 'mpi_with_cuda'] and
     print(sys.stderr,
           '** The "' + env['solver'] + '" solver is not supported in CUDA.')
     Exit(3)
+    
+env['INTEL_LICENSE_FILE'] = "50017@license2.rz.rwth-aachen.de"
 
 # CUDA parallelization for openGL
 if env['parallelization'] != 'cuda' and env['openGL']:
