@@ -150,7 +150,7 @@ int main(int argc, char** argv) {
 	float dySimulation = (float) heightScenario / nyRequested;
 
 	// hardcode just for testing
-	int num_blocks_per_rank = 4;
+	int num_blocks_per_rank = 1;
 	SWE_DimensionalSplittingChameleon* blocks[num_blocks_per_rank];
 
 	// y values are the same for all blocks on the same rank
@@ -336,6 +336,7 @@ int main(int argc, char** argv) {
 
 			for(int i=0; i<num_blocks_per_rank; i++) {
 				// update the cell values
+				blocks[i]->maxTimestep = timestep;
 				blocks[i]->updateUnknowns(timestep);
 			}
 			//chameleon_distributed_taskwait(0);

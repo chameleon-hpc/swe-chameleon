@@ -143,8 +143,6 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 	assert(hu.getCols() == nx + 2);
 	assert(hv.getCols() == nx + 2);
 
-	return;
-
 	/*********
 	 * SEND *
 	 ********/
