@@ -212,28 +212,30 @@ int main(int argc, char** argv) {
 
 			if(x == 0)
 				boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
-			else if(x == xBounds[myRank])
+			else if(x == xBounds[myRank%xRankCount])
 				boundaries[BND_LEFT] = CONNECT;
 			else
 				boundaries[BND_LEFT] = CONNECT_WITHIN_RANK;
 			
-			if(x_pos+block_nx == nxRequested-1)
+			if(x_pos+block_nx == nxRequested)
 				boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
-			else if(x == xBounds[myRank+1]-1)
+			else if(x == xBounds[(myRank%xRankCount)+1]-1)
 				boundaries[BND_RIGHT] = CONNECT;
 			else
 				boundaries[BND_RIGHT] = CONNECT_WITHIN_RANK;
 
 			if(y == 0)
 				boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
-			else if(y == yBounds[myRank])
+			else if(y == yBounds[myRank/xRankCount])
 				boundaries[BND_BOTTOM] = CONNECT;
 			else
 				boundaries[BND_BOTTOM] = CONNECT_WITHIN_RANK;
 
-			if(y_pos + block_ny == nyRequested-1)
+			printf("%d:First condition: %d==%d\n", myRank, y_pos + block_ny, nyRequested-1);
+			printf("%d:Second condition: %d==%d\n", myRank, y, yBounds[myRank+1]-1);
+			if(y_pos + block_ny == nyRequested)
 				boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
-			else if(y == yBounds[myRank+1]-1)
+			else if(y == yBounds[(myRank/yRankCount)+1]-1)
 				boundaries[BND_TOP] = CONNECT;
 			else
 				boundaries[BND_TOP] = CONNECT_WITHIN_RANK;
@@ -250,7 +252,10 @@ int main(int argc, char** argv) {
 				blocks[x][y]->neighbourRankId[BND_BOTTOM] = myRank-xRankCount;
 			if(myRank < numRanks - xRankCount)
 				blocks[x][y]->neighbourRankId[BND_TOP] = myRank+xRankCount;
-
+		}
+	}
+	for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+		for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
 			if(x != 0)
 				blocks[x][y]->left = blocks[x-1][y];
 			if(x != xBounds[myRank+1]-1)
@@ -259,7 +264,7 @@ int main(int argc, char** argv) {
 				blocks[x][y]->bottom = blocks[x][y-1];
 			if(y != yBounds[myRank+1]-1)
 				blocks[x][y]->top = blocks[x][y+1];
-			//printf("Init block %d with originX:%d and originY:%d\n", i, blocks[x][y]->getOriginX(), blocks[x][y]->getOriginY());
+			printf("%d: Init blocks[%d,%d] with  block_nx:%d, block_ny:%d, originX:%d and originY:%d\n", myRank, x, y, blocks[x][y]->nx, blocks[x][y]->nx, blocks[x][y]->getOriginX(), blocks[x][y]->getOriginY());
 		}
 	}
 
@@ -371,7 +376,7 @@ int main(int argc, char** argv) {
 			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
 				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
 					printf("%d: x=%d, y=%d\n", myRank, x, y);
-
+					// TODO: first send all MPI messages, then receive all
 					// set values in ghost cells.
 					// we need to sync here since block boundaries get exchanged over ranks
 					blocks[x][y]->setGhostLayer();
@@ -446,9 +451,8 @@ int main(int argc, char** argv) {
 				// Send all data to rank 0, which will write it to a single file
 				// send each column separately
 				for(int j=1; j<blocks[x][y]->nx+1; j++) {
-					//TODO: FIX
-					int x_pos = std::min(i*x_blocksize, nxRequested);
-					int y_pos = std::min(i*y_blocksize, nyRequested);
+					int x_pos = x*x_blocksize;
+					int y_pos = y*y_blocksize;
 					MPI_Put(blocks[x][y]->h.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
 						0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_h);
 					MPI_Put(blocks[x][y]->hu.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
