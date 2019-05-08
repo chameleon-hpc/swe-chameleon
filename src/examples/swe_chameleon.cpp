@@ -371,15 +371,16 @@ int main(int argc, char** argv) {
 		for(int i=0; i<num_blocks_per_rank; i++) {
 			// Send all data to rank 0, which will write it to a single file
 			// send each column separately
-			for(int j=0; j<blocks[i]->nx; j++) {
+			for(int j=1; j<blocks[i]->nx+1; j++) {
 				int x_pos = std::min(i*x_blocksize, nxRequested);
-				int y_pos = std::min(i*y_blocksize, nyRequested);
+				int y_pos = std::min(myRank*y_blocksize, nyRequested);
+				//printf("%d: Writing h to %d with xPos=%d, yPos=%d\n", myRank, 1+(nyRequested+2)*(x_pos+j)+y_pos, x_pos, y_pos);
 				MPI_Put(blocks[i]->h.getRawPointer()+1+(blocks[i]->ny+2)*j, blocks[i]->ny, MPI_FLOAT,
-					0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_h);
+					0, 1+(nyRequested+2)*(x_pos+j)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_h);
 				MPI_Put(blocks[i]->hu.getRawPointer()+1+(blocks[i]->ny+2)*j, blocks[i]->ny, MPI_FLOAT,
-					0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_hu);
+					0, 1+(nyRequested+2)*(x_pos+j)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_hu);
 				MPI_Put(blocks[i]->hv.getRawPointer()+1+(blocks[i]->ny+2)*j, blocks[i]->ny, MPI_FLOAT,
-					0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_hv);
+					0, 1+(nyRequested+2)*(x_pos+j)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_hv);
 			}
 		}
 		MPI_Win_fence(0, writeBlockWin_h);
@@ -387,12 +388,14 @@ int main(int argc, char** argv) {
 		MPI_Win_fence(0, writeBlockWin_hv);
 
 		if(myRank == 0) {
+			printf("Actually write timestep (%fs)\n", t);
 			writer.writeTimeStep(
 				writeBlock.getWaterHeight(),
 				writeBlock.getMomentumHorizontal(),
 				writeBlock.getMomentumVertical(),
 				t);
 		}
+		MPI_Barrier(MPI_COMM_WORLD);
 	}
 
 
@@ -402,6 +405,14 @@ int main(int argc, char** argv) {
 
 
 	printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[0]->computeTime, blocks[0]->computeTimeWall, wallTime); 
+	MPI_Barrier(MPI_COMM_WORLD);
+
+    #pragma omp parallel
+    {
+        chameleon_thread_finalize();
+    }
+    chameleon_finalize();
+
 	for(int i=0; i<num_blocks_per_rank; i++) {
 		blocks[i]->freeMpiType();
 	}
