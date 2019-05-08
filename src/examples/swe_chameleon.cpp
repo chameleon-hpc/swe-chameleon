@@ -149,62 +149,119 @@ int main(int argc, char** argv) {
 	float dxSimulation = (float) widthScenario / nxRequested;
 	float dySimulation = (float) heightScenario / nyRequested;
 
-	// hardcode just for testing
-	int num_blocks_per_rank = 1;
-	SWE_DimensionalSplittingChameleon* blocks[num_blocks_per_rank];
-
-	int x_blocksize = nxRequested / num_blocks_per_rank;
-	// y values are the same for all blocks on the same rank
-	int y_blocksize = nyRequested / numRanks;
-	int y_pos = std::min(myRank*y_blocksize, nyRequested);
-	float originY = y_pos * dySimulation;
-	int block_ny = std::min(y_blocksize, nyRequested - y_pos);
-		
-	for(int i = 0; i < num_blocks_per_rank; i++) {
-		// TODO: extract into function in chameleonSplitting
-		// divide horizontal slice vertically into blocks
-		int x_pos = std::min(i*x_blocksize, nxRequested);
-		float originX = x_pos * dxSimulation;
-		int block_nx = std::min(x_blocksize, nxRequested - x_pos);
-
-		BoundaryType boundaries[4];
-
-		if(i == 0)
-			boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
-		else
-			boundaries[BND_LEFT] = CONNECT;
-		if(i == num_blocks_per_rank - 1)
-			boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
-		else
-			boundaries[BND_RIGHT] = CONNECT;
-		if(myRank == 0)
-			boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
-		else
-			boundaries[BND_BOTTOM] = CONNECT;
-		if(myRank == numRanks - 1)
-			boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
-		else
-			boundaries[BND_TOP] = CONNECT;
-
-		blocks[i] = new SWE_DimensionalSplittingChameleon(block_nx, block_ny, dxSimulation, dySimulation, originX, originY);
-		blocks[i]->initScenario(scenario, boundaries);
-
-		blocks[i]->myRank = myRank;
-		if(myRank != 0)
-			blocks[i]->neighbourRankId[BND_BOTTOM] = myRank-1;
-		if(myRank != numRanks - 1)
-			blocks[i]->neighbourRankId[BND_TOP] = myRank+1;
-
-		//printf("Init block %d with originX:%d and originY:%d\n", i, blocks[i]->getOriginX(), blocks[i]->getOriginY());
+	int xRankCount = 1;
+	int yRankCount = numRanks;
+	int xBlockCount = 2;
+	int yBlockCount = 2;
+	//int num_blocks_per_rank = 4;
+	float xWeights[xRankCount];
+	float yWeights[yRankCount];
+	float xSum = 0.0;
+	float ySum = 0.0;
+	// read and normalize weights
+	for(int i = 0; i < xRankCount; i++){
+		xWeights[i] = 1.0;
+		xSum += xWeights[i];
+	}
+	for(int i = 0; i < yRankCount; i++) {
+		yWeights[i] = 1.0;
+		ySum +=yWeights[i];
 	}
 
-	for(int i = 0; i < num_blocks_per_rank; i++) {
-		if(i != 0)
-			blocks[i]->left = blocks[i-1];
-		if(i != num_blocks_per_rank-1)
-			blocks[i]->right = blocks[i+1];
-	}
+	for(int i = 0; i < xRankCount; i++)
+		xWeights[i] = xWeights[i] / xSum * xBlockCount;
+	for(int i = 0; i < yRankCount; i++)
+		yWeights[i] = yWeights[i] / ySum * yBlockCount;
 
+	int xBounds[xRankCount+1];
+	xBounds[0] = 0;
+	int yBounds[yRankCount+1];
+	yBounds[0] = 0;
+	for(int i = 1; i < xRankCount; i++)
+		xBounds[i] = xBounds[i-1] + xWeights[i];
+	xBounds[xRankCount] = xBlockCount;
+	for(int i = 1; i < yRankCount; i++)
+		yBounds[i] = yBounds[i-1] + yWeights[i];
+	yBounds[yRankCount] = yBlockCount;
+	printf("%d: xBlockCount:%d\n", myRank, xBlockCount);
+	printf("%d: xBounds:%d, %d\n", myRank, xBounds[0], xBounds[1]);
+	printf("%d: yBounds:%d, %d, %d\n", myRank, yBounds[0], yBounds[1], yBounds[2]);
+	printf("%d: xDim:%d, yDim:%d\n", myRank, xBounds[(myRank%xRankCount)+1]-xBounds[myRank%xRankCount], yBounds[(myRank/xRankCount)+1]-yBounds[myRank/xRankCount]);
+
+	SWE_DimensionalSplittingChameleon* blocks[xBlockCount][yBlockCount];
+
+	int x_blocksize = nxRequested / xBlockCount;
+	int y_blocksize = nyRequested / yBlockCount;
+
+	printf("%d: loop bounds: %d, %d, %d, %d\n", myRank, xBounds[myRank%xRankCount], xBounds[(myRank%xRankCount)+1], yBounds[myRank/xRankCount], yBounds[(myRank/xRankCount)+1]);
+	for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+		for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+			printf("%d: x=%d, y=%d\n", myRank, x, y);
+			int x_pos = x*x_blocksize;
+			float originX = x_pos * dxSimulation;
+			int block_nx = x_blocksize;
+			if(x == xBlockCount-1)
+				block_nx += nxRequested % x_blocksize;
+			int y_pos = y*y_blocksize;
+			float originY = y_pos * dySimulation;
+			int block_ny = y_blocksize;
+			if(y == yBlockCount-1)
+				block_ny += nyRequested % y_blocksize;
+
+			BoundaryType boundaries[4];			
+
+			if(x == 0)
+				boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
+			else if(x == xBounds[myRank])
+				boundaries[BND_LEFT] = CONNECT;
+			else
+				boundaries[BND_LEFT] = CONNECT_WITHIN_RANK;
+			
+			if(x_pos+block_nx == nxRequested-1)
+				boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
+			else if(x == xBounds[myRank+1]-1)
+				boundaries[BND_RIGHT] = CONNECT;
+			else
+				boundaries[BND_RIGHT] = CONNECT_WITHIN_RANK;
+
+			if(y == 0)
+				boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
+			else if(y == yBounds[myRank])
+				boundaries[BND_BOTTOM] = CONNECT;
+			else
+				boundaries[BND_BOTTOM] = CONNECT_WITHIN_RANK;
+
+			if(y_pos + block_ny == nyRequested-1)
+				boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
+			else if(y == yBounds[myRank+1]-1)
+				boundaries[BND_TOP] = CONNECT;
+			else
+				boundaries[BND_TOP] = CONNECT_WITHIN_RANK;
+
+			blocks[x][y] = new SWE_DimensionalSplittingChameleon(block_nx, block_ny, dxSimulation, dySimulation, originX, originY);
+			blocks[x][y]->initScenario(scenario, boundaries);
+
+			blocks[x][y]->myRank = myRank;
+			if(myRank != 0)
+				blocks[x][y]->neighbourRankId[BND_LEFT] = myRank-1;
+			if(myRank != numRanks - 1)
+				blocks[x][y]->neighbourRankId[BND_RIGHT] = myRank+1;
+			if(myRank >= xRankCount)
+				blocks[x][y]->neighbourRankId[BND_BOTTOM] = myRank-xRankCount;
+			if(myRank < numRanks - xRankCount)
+				blocks[x][y]->neighbourRankId[BND_TOP] = myRank+xRankCount;
+
+			if(x != 0)
+				blocks[x][y]->left = blocks[x-1][y];
+			if(x != xBounds[myRank+1]-1)
+				blocks[x][y]->right = blocks[x+1][y];
+			if(y != 0)
+				blocks[x][y]->bottom = blocks[x][y-1];
+			if(y != yBounds[myRank+1]-1)
+				blocks[x][y]->top = blocks[x][y+1];
+			//printf("Init block %d with originX:%d and originY:%d\n", i, blocks[x][y]->getOriginX(), blocks[x][y]->getOriginY());
+		}
+	}
 
 	/***************
 	 * INIT OUTPUT *
@@ -212,7 +269,8 @@ int main(int argc, char** argv) {
 
 	// block used for writing (only used on rank 0)
 	// all ranks write their blocks to this write block on rank 0 (using one-sided communication)
-	// This block is then written resulting in a single file
+	// This block is then written to get a single output file
+	printf("%d: Init write block with nxReq:%d, nyReq:%d, dxSim:%f, dySim:%f\n", myRank, nxRequested, nyRequested, dxSimulation, dySimulation);
 	SWE_DimensionalSplittingChameleon writeBlock(nxRequested, nyRequested, dxSimulation, dySimulation, 0, 0);
 	BoundaryType boundaries[4];
 	boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
@@ -231,19 +289,22 @@ int main(int argc, char** argv) {
 	// Initialize boundary size of the ghost layers
 	BoundarySize boundarySize = {{1, 1, 1, 1}};
 #ifdef WRITENETCDF
-	// Construct netCDF writers
+	// Construct a netCDF writer
 	outputFileName = outputBaseName;
-	NetCdfWriter writer(
-		outputFileName,
-		writeBlock.getBathymetry(),
-		boundarySize,
-		writeBlock.getCellCountHorizontal(),
-		writeBlock.getCellCountVertical(),
-		dxSimulation,
-		dySimulation,
-		writeBlock.getOriginX(),
-		writeBlock.getOriginY());
-	//printf("Init writer %d with originX:%d and originY:%d\n", i, blocks[i]->getOriginX(), blocks[i]->getOriginY());
+	NetCdfWriter* writer;
+	if(myRank == 0) {
+		writer = new NetCdfWriter(
+			outputFileName,
+			writeBlock.getBathymetry(),
+			boundarySize,
+			writeBlock.getCellCountHorizontal(),
+			writeBlock.getCellCountVertical(),
+			dxSimulation,
+			dySimulation,
+			writeBlock.getOriginX(),
+			writeBlock.getOriginY());
+		printf("%d: Init writer with CellCountHorizontal:%d, CellCountVertical:%d, OriginX:%d, getOriginX:%d\n", myRank, writeBlock.getCellCountHorizontal(), writeBlock.getCellCountVertical(), writeBlock.getOriginX(), writeBlock.getOriginY());
+	}
 #else
 	// Construct a vtk writer
 	outputFileName = outputBaseName;
@@ -258,7 +319,7 @@ int main(int argc, char** argv) {
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	writer.writeTimeStep(
+	writer->writeTimeStep(
 		writeBlock.getWaterHeight(),
 		writeBlock.getMomentumHorizontal(),
 		writeBlock.getMomentumVertical(),
@@ -307,11 +368,14 @@ int main(int argc, char** argv) {
 			timestep = std::numeric_limits<float>::max();
 
 			#pragma omp parallel for
-			for(int i=0; i<num_blocks_per_rank; i++) {
+			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+					printf("%d: x=%d, y=%d\n", myRank, x, y);
 
-				// set values in ghost cells.
-				// we need to sync here since block boundaries get exchanged over ranks
-				blocks[i]->setGhostLayer();
+					// set values in ghost cells.
+					// we need to sync here since block boundaries get exchanged over ranks
+					blocks[x][y]->setGhostLayer();
+				}
 			}
 			//chameleon_distributed_taskwait(0);
 
@@ -321,28 +385,36 @@ int main(int argc, char** argv) {
 			computeClock = clock();
 
 			#pragma omp parallel for
-			for(int i=0; i<num_blocks_per_rank; i++) {
-				// compute numerical flux on each edge
-				blocks[i]->computeNumericalFluxes();
+			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+					printf("%d: x=%d, y=%d\n", myRank, x, y);
+					// compute numerical flux on each edge
+					blocks[x][y]->computeNumericalFluxes();
+				}
 			}
 			chameleon_distributed_taskwait(0);
 			
-			//#pragma omp parallel for
-			for(int i=0; i<num_blocks_per_rank; i++) {
-				// reduce timestep
-				if(blocks[i]->getMaxTimestep() < timestep)
-					timestep = blocks[i]->getMaxTimestep();
+
+			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+					printf("%d: x=%d, y=%d\n", myRank, x, y);
+					// max timestep has been reduced over all ranks in computeNumericalFluxes()
+					timestep = blocks[x][y]->getMaxTimestep();
+				}
 			}
 
 			// reduce over all ranks
 			float maxTimestepGlobal;
 			MPI_Allreduce(&timestep, &maxTimestepGlobal, 1, MPI_FLOAT, MPI_MIN, MPI_COMM_WORLD);
 			timestep = maxTimestepGlobal;
+			
+			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
 
-			for(int i=0; i<num_blocks_per_rank; i++) {
-				// update the cell values
-				blocks[i]->maxTimestep = timestep;
-				blocks[i]->updateUnknowns(timestep);
+					// update the cell values
+					blocks[x][y]->maxTimestep = timestep;
+					blocks[x][y]->updateUnknowns(timestep);
+				}
 			}
 			//chameleon_distributed_taskwait(0);
 
@@ -368,28 +440,32 @@ int main(int argc, char** argv) {
 		MPI_Win_fence(0, writeBlockWin_h);
 		MPI_Win_fence(0, writeBlockWin_hu);
 		MPI_Win_fence(0, writeBlockWin_hv);
-		for(int i=0; i<num_blocks_per_rank; i++) {
-			// Send all data to rank 0, which will write it to a single file
-			// send each column separately
-			for(int j=1; j<blocks[i]->nx+1; j++) {
-				int x_pos = std::min(i*x_blocksize, nxRequested);
-				int y_pos = std::min(myRank*y_blocksize, nyRequested);
-				//printf("%d: Writing h to %d with xPos=%d, yPos=%d\n", myRank, 1+(nyRequested+2)*(x_pos+j)+y_pos, x_pos, y_pos);
-				MPI_Put(blocks[i]->h.getRawPointer()+1+(blocks[i]->ny+2)*j, blocks[i]->ny, MPI_FLOAT,
-					0, 1+(nyRequested+2)*(x_pos+j)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_h);
-				MPI_Put(blocks[i]->hu.getRawPointer()+1+(blocks[i]->ny+2)*j, blocks[i]->ny, MPI_FLOAT,
-					0, 1+(nyRequested+2)*(x_pos+j)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_hu);
-				MPI_Put(blocks[i]->hv.getRawPointer()+1+(blocks[i]->ny+2)*j, blocks[i]->ny, MPI_FLOAT,
-					0, 1+(nyRequested+2)*(x_pos+j)+y_pos, blocks[i]->ny, MPI_FLOAT, writeBlockWin_hv);
+		for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+			for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+				printf("%d: x=%d, y=%d\n", myRank, x, y);
+				// Send all data to rank 0, which will write it to a single file
+				// send each column separately
+				for(int j=1; j<blocks[x][y]->nx+1; j++) {
+					//TODO: FIX
+					int x_pos = std::min(i*x_blocksize, nxRequested);
+					int y_pos = std::min(i*y_blocksize, nyRequested);
+					MPI_Put(blocks[x][y]->h.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
+						0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_h);
+					MPI_Put(blocks[x][y]->hu.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
+						0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_hu);
+					MPI_Put(blocks[x][y]->hv.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
+						0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_hv);
+				}
 			}
 		}
+
 		MPI_Win_fence(0, writeBlockWin_h);
 		MPI_Win_fence(0, writeBlockWin_hu);
 		MPI_Win_fence(0, writeBlockWin_hv);
 
 		if(myRank == 0) {
 			printf("Actually write timestep (%fs)\n", t);
-			writer.writeTimeStep(
+			writer->writeTimeStep(
 				writeBlock.getWaterHeight(),
 				writeBlock.getMomentumHorizontal(),
 				writeBlock.getMomentumVertical(),
@@ -404,7 +480,7 @@ int main(int argc, char** argv) {
 	 ************/
 
 
-	printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[0]->computeTime, blocks[0]->computeTimeWall, wallTime); 
+	printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[0][0]->computeTime, blocks[0][0]->computeTimeWall, wallTime); 
 	MPI_Barrier(MPI_COMM_WORLD);
 
     #pragma omp parallel
@@ -413,9 +489,13 @@ int main(int argc, char** argv) {
     }
     chameleon_finalize();
 
-	for(int i=0; i<num_blocks_per_rank; i++) {
-		blocks[i]->freeMpiType();
+	for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+		for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+			printf("%d: x=%d, y=%d\n", myRank, x, y);
+			blocks[x][y]->freeMpiType();
+		}
 	}
+
 	MPI_Finalize();
 
 	return 0;

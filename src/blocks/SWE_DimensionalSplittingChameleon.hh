@@ -56,6 +56,8 @@ class SWE_DimensionalSplittingChameleon : public SWE_Block<Float2DNative> {
 
 		SWE_DimensionalSplittingChameleon* left;
 		SWE_DimensionalSplittingChameleon* right;
+		SWE_DimensionalSplittingChameleon* bottom;
+		SWE_DimensionalSplittingChameleon* top;
 		void setLeft(SWE_DimensionalSplittingChameleon* argLeft);
 		void setRight(SWE_DimensionalSplittingChameleon* argRight);
 		void freeMpiType();

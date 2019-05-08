@@ -432,6 +432,7 @@ void SWE_Block<T>::applyBoundaryConditions() {
 				break;
 			}
 		case CONNECT:
+		case CONNECT_WITHIN_RANK:
 		case PASSIVE:
 			break;
 		default:
@@ -460,6 +461,7 @@ void SWE_Block<T>::applyBoundaryConditions() {
 				break;
 			}
 		case CONNECT:
+		case CONNECT_WITHIN_RANK:
 		case PASSIVE:
 			break;
 		default:
@@ -488,6 +490,7 @@ void SWE_Block<T>::applyBoundaryConditions() {
 				break;
 			}
 		case CONNECT:
+		case CONNECT_WITHIN_RANK:
 		case PASSIVE:
 			break;
 		default:
@@ -516,6 +519,7 @@ void SWE_Block<T>::applyBoundaryConditions() {
 				break;
 			}
 		case CONNECT:
+		case CONNECT_WITHIN_RANK:
 		case PASSIVE:
 			break;
 		default:
