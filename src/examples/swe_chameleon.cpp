@@ -324,11 +324,13 @@ int main(int argc, char** argv) {
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	writer->writeTimeStep(
-		writeBlock.getWaterHeight(),
-		writeBlock.getMomentumHorizontal(),
-		writeBlock.getMomentumVertical(),
-		(float) 0.);
+	if(myRank == 0) {
+		writer->writeTimeStep(
+			writeBlock.getWaterHeight(),
+			writeBlock.getMomentumHorizontal(),
+			writeBlock.getMomentumVertical(),
+			(float) 0.);
+	}
 
 	/********************
 	 * START SIMULATION *
@@ -372,7 +374,9 @@ int main(int argc, char** argv) {
 
 			timestep = std::numeric_limits<float>::max();
 
-			#pragma omp parallel for
+			//TODO: exchange bathymetry
+
+			//#pragma omp parallel for
 			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
 				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
 					printf("%d: x=%d, y=%d\n", myRank, x, y);
@@ -380,6 +384,12 @@ int main(int argc, char** argv) {
 					// set values in ghost cells.
 					// we need to sync here since block boundaries get exchanged over ranks
 					blocks[x][y]->setGhostLayer();
+				}
+			}
+			//#pragma omp parallel for
+			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+					blocks[x][y]->receiveGhostLayer();
 				}
 			}
 			//chameleon_distributed_taskwait(0);
@@ -403,8 +413,8 @@ int main(int argc, char** argv) {
 			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
 				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
 					printf("%d: x=%d, y=%d\n", myRank, x, y);
-					// max timestep has been reduced over all ranks in computeNumericalFluxes()
-					timestep = blocks[x][y]->getMaxTimestep();
+					if(blocks[x][y]->getMaxTimestep() < timestep)
+						timestep = blocks[x][y]->getMaxTimestep();
 				}
 			}
 
@@ -415,7 +425,6 @@ int main(int argc, char** argv) {
 			
 			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
 				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
-
 					// update the cell values
 					blocks[x][y]->maxTimestep = timestep;
 					blocks[x][y]->updateUnknowns(timestep);
