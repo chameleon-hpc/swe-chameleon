@@ -290,7 +290,7 @@ void SWE_DimensionalSplittingChameleon::receiveGhostLayer() {
 		printf("%d: Received top from %d\n", myRank, neighbourRankId[BND_TOP]);
 }
 
-void computeNumericalFluxesKernel(SWE_DimensionalSplittingChameleon* block, float* h_data, float* hu_data, float* hv_data, float* b_data,
+void computeNumericalFluxesHorizontalKernel(SWE_DimensionalSplittingChameleon* block, float* h_data, float* hu_data, float* hv_data, float* b_data,
 								float* hNetUpdatesLeft_data, float* hNetUpdatesRight_data, float* huNetUpdatesLeft_data, float* huNetUpdatesRight_data,
 								float* hNetUpdatesBelow_data, float* hNetUpdatesAbove_data, float* hvNetUpdatesBelow_data, float* hvNetUpdatesAbove_data,
 								float* hStar_data, float* huStar_data) {
@@ -339,6 +339,73 @@ void computeNumericalFluxesKernel(SWE_DimensionalSplittingChameleon* block, floa
 	// compute max timestep according to cautious CFL-condition
 	block->maxTimestep = (float) .4 * (block->dx / maxHorizontalWaveSpeed);
 
+	// Accumulate compute time
+	block->computeClock = clock() - block->computeClock;
+	block->computeTime += (float) block->computeClock / CLOCKS_PER_SEC;
+
+	clock_gettime(CLOCK_MONOTONIC, &(block->endTime));
+	block->computeTimeWall += (block->endTime.tv_sec - block->startTime.tv_sec);
+	block->computeTimeWall += (float) (block->endTime.tv_nsec - block->startTime.tv_nsec) / 1E9;
+}
+
+/**
+ * Compute net updates for the block.
+ * The member variable #maxTimestep will be updated with the
+ * maximum allowed time step size
+ */
+void SWE_DimensionalSplittingChameleon::computeNumericalFluxesHorizontal() {
+
+	chameleon_map_data_entry_t* args = new chameleon_map_data_entry_t[15];
+    args[0] = chameleon_map_data_entry_create(this, sizeof(SWE_DimensionalSplittingChameleon), CHAM_OMP_TGT_MAPTYPE_TO);
+    args[1] = chameleon_map_data_entry_create(this->getWaterHeight().getRawPointer(), sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[2] = chameleon_map_data_entry_create(this->hu.getRawPointer(), sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[3] = chameleon_map_data_entry_create(this->hv.getRawPointer(), sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[4] = chameleon_map_data_entry_create(this->b.getRawPointer(), sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[5] = chameleon_map_data_entry_create(this->hNetUpdatesLeft.getRawPointer(), sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[6] = chameleon_map_data_entry_create(this->hNetUpdatesRight.getRawPointer(), sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[7] = chameleon_map_data_entry_create(this->huNetUpdatesLeft.getRawPointer(), sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[8] = chameleon_map_data_entry_create(this->huNetUpdatesRight.getRawPointer(), sizeof(float)*(nx + 2)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[9] = chameleon_map_data_entry_create(this->hNetUpdatesBelow.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[10] = chameleon_map_data_entry_create(this->hNetUpdatesAbove.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[11] = chameleon_map_data_entry_create(this->hvNetUpdatesBelow.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[12] = chameleon_map_data_entry_create(this->hvNetUpdatesAbove.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[13] = chameleon_map_data_entry_create(this->hStar.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+    args[14] = chameleon_map_data_entry_create(this->huStar.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
+	
+	int32_t res = chameleon_add_task_manual(
+        (void *)&computeNumericalFluxesHorizontalKernel,
+        15, // number of args
+        args);
+}
+
+void computeNumericalFluxesVerticalKernel(SWE_DimensionalSplittingChameleon* block, float* h_data, float* hu_data, float* hv_data, float* b_data,
+								float* hNetUpdatesLeft_data, float* hNetUpdatesRight_data, float* huNetUpdatesLeft_data, float* huNetUpdatesRight_data,
+								float* hNetUpdatesBelow_data, float* hNetUpdatesAbove_data, float* hvNetUpdatesBelow_data, float* hvNetUpdatesAbove_data,
+								float* hStar_data, float* huStar_data) {
+	// Set data pointers correctly
+	block->getModifiableWaterHeight().setRawPointer(h_data);
+	block->getModifiableMomentumHorizontal().setRawPointer(hu_data);
+	block->getModifiableMomentumVertical().setRawPointer(hv_data);
+	block->getModifiableBathymetry().setRawPointer(b_data);
+	block->hNetUpdatesLeft.setRawPointer(hNetUpdatesLeft_data);
+	block->hNetUpdatesRight.setRawPointer(hNetUpdatesRight_data);
+	block->huNetUpdatesLeft.setRawPointer(huNetUpdatesLeft_data);
+	block->huNetUpdatesRight.setRawPointer(huNetUpdatesRight_data);
+	block->hNetUpdatesBelow.setRawPointer(hNetUpdatesBelow_data);
+	block->hNetUpdatesAbove.setRawPointer(hNetUpdatesAbove_data);
+	block->hvNetUpdatesBelow.setRawPointer(hvNetUpdatesBelow_data);
+	block->hvNetUpdatesAbove.setRawPointer(hvNetUpdatesAbove_data);
+	block->hStar.setRawPointer(hStar_data);
+	block->huStar.setRawPointer(huStar_data);
+	
+	// Start compute clocks
+	block->computeClock = clock();
+	clock_gettime(CLOCK_MONOTONIC, &(block->startTime));
+
+	//maximum (linearized) wave speed within one iteration
+	float maxVerticalWaveSpeed = (float) 0.;
+	solver::Hybrid<float> localSolver = block->solver;
+
 	// set intermediary Q* states
 	//#pragma omp for collapse(2)
 	for (int x = 1; x < block->nx + 1; x++) {
@@ -364,8 +431,11 @@ void computeNumericalFluxesKernel(SWE_DimensionalSplittingChameleon* block, floa
 	}
 	
 	#ifndef NDEBUG
+	if(block->maxTimestep >= (float) .7 * (block->dy / maxVerticalWaveSpeed)) {
+		printf("%d: %f, %f, %f\n", block->myRank, block->maxTimestep, block->dy, maxVerticalWaveSpeed);
+	}
 	// check if the cfl condition holds in the y-direction
-	assert(block->maxTimestep < (float) .5 * (block->dy / maxVerticalWaveSpeed));
+	assert(block->maxTimestep < (float) .7 * (block->dy / maxVerticalWaveSpeed));
 	#endif // NDEBUG
 
 	// Accumulate compute time
@@ -382,7 +452,7 @@ void computeNumericalFluxesKernel(SWE_DimensionalSplittingChameleon* block, floa
  * The member variable #maxTimestep will be updated with the
  * maximum allowed time step size
  */
-void SWE_DimensionalSplittingChameleon::computeNumericalFluxes() {
+void SWE_DimensionalSplittingChameleon::computeNumericalFluxesVertical() {
 
 	chameleon_map_data_entry_t* args = new chameleon_map_data_entry_t[15];
     args[0] = chameleon_map_data_entry_create(this, sizeof(SWE_DimensionalSplittingChameleon), CHAM_OMP_TGT_MAPTYPE_TO);
@@ -402,7 +472,7 @@ void SWE_DimensionalSplittingChameleon::computeNumericalFluxes() {
     args[14] = chameleon_map_data_entry_create(this->huStar.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
 	
 	int32_t res = chameleon_add_task_manual(
-        (void *)&computeNumericalFluxesKernel,
+        (void *)&computeNumericalFluxesVerticalKernel,
         15, // number of args
         args);
 }
@@ -418,7 +488,7 @@ void SWE_DimensionalSplittingChameleon::updateUnknowns (float dt) {
 	computeClock = clock();
 	clock_gettime(CLOCK_MONOTONIC, &startTime);
 
-	printf("%d: Update with %f and %f\n", myRank, dt, maxTimestep);
+	//printf("%d: Update with %f and %f\n", myRank, dt, maxTimestep);
 
 	// this assertion has to hold since the intermediary star states were calculated internally using a timestep width of maxTimestep
 	assert(std::abs(dt - maxTimestep) < 0.00001);
