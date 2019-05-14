@@ -194,7 +194,10 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 	}
 	if (boundaryType[BND_BOTTOM] == CONNECT) {
 
+		//int code = 
 		MPI_Isend(&h[1][1], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_BOTTOM], ((int)originX)&tagH, MPI_COMM_WORLD, &req);
+		//if(code != MPI_SUCCESS)
+		//	printf("%d: No success %d\n", myRank, code);
 		MPI_Request_free(&req);
 
 		MPI_Isend(&hu[1][1], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_BOTTOM], ((int)originX)&tagHU, MPI_COMM_WORLD, &req);
@@ -202,7 +205,7 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 
 		MPI_Isend(&hv[1][1], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_BOTTOM], ((int)originX)&tagHV, MPI_COMM_WORLD, &req);
 		MPI_Request_free(&req);
-		printf("%d: Sent to bottom %d, %f\n", myRank, neighbourRankId[BND_BOTTOM], h[1][1]);
+		printf("%d: Sent to bottom %d, %f at %f\n", myRank, neighbourRankId[BND_BOTTOM], h[1][1], originX);
 
 	}
 	if (boundaryType[BND_TOP] == CONNECT) {
@@ -215,7 +218,7 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 
 		MPI_Isend(&hv[1][ny], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_TOP], ((int)originX)&tagHV, MPI_COMM_WORLD, &req);
 		MPI_Request_free(&req);
-		printf("%d: Sent to top %d, %f\n", myRank, neighbourRankId[BND_TOP], h[1][ny]);
+		printf("%d: Sent to top %d, %f at %f\n", myRank, neighbourRankId[BND_TOP], h[1][ny], originX);
 
 	}
 }
@@ -226,8 +229,8 @@ void SWE_DimensionalSplittingChameleon::receiveGhostLayer() {
 	 **********/
 
 	// 4 Boundaries times 3 arrays (h, hu, hv) means 12 requests
-	MPI_Request recvReqs[6];
-	MPI_Status stati[6];
+	MPI_Request recvReqs[12];
+	MPI_Status stati[12];
 
 	int tagH = 1 << 30;
 	int tagHU = 2 << 30;
@@ -268,9 +271,9 @@ void SWE_DimensionalSplittingChameleon::receiveGhostLayer() {
 		MPI_Irecv(&hv[1][0], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_BOTTOM], ((int)originX)&tagHV, MPI_COMM_WORLD, &recvReqs[8]); 
 		bottomReceive = 1;
 	} else {
-		recvReqs[0] = MPI_REQUEST_NULL;
-		recvReqs[1] = MPI_REQUEST_NULL;
-		recvReqs[2] = MPI_REQUEST_NULL;
+		recvReqs[6] = MPI_REQUEST_NULL;
+		recvReqs[7] = MPI_REQUEST_NULL;
+		recvReqs[8] = MPI_REQUEST_NULL;
 	}
 	
 	if (boundaryType[BND_TOP] == CONNECT) {
@@ -280,20 +283,22 @@ void SWE_DimensionalSplittingChameleon::receiveGhostLayer() {
 		MPI_Irecv(&hv[1][ny + 1], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_TOP], ((int)originX)&tagHV, MPI_COMM_WORLD, &recvReqs[11]); 
 		topReceive = 1;
 	} else {
-		recvReqs[3] = MPI_REQUEST_NULL;
-		recvReqs[4] = MPI_REQUEST_NULL;
-		recvReqs[5] = MPI_REQUEST_NULL;
+		recvReqs[9] = MPI_REQUEST_NULL;
+		recvReqs[10] = MPI_REQUEST_NULL;
+		recvReqs[11] = MPI_REQUEST_NULL;
 	}
 
-	MPI_Waitall(12, recvReqs, stati);
+	int code = MPI_Waitall(12, recvReqs, stati);
+	if(code != MPI_SUCCESS)
+		printf("%d: No success %d\n", myRank, code);
 	if(leftReceive)
 		printf("%d: Received left from %d\n", myRank, neighbourRankId[BND_LEFT]);
 	if(rightReceive)
 		printf("%d: Received right from %d\n", myRank, neighbourRankId[BND_RIGHT]);
 	if(bottomReceive)
-		printf("%d: Received bottom from %d, %f\n", myRank, neighbourRankId[BND_BOTTOM], h[1][0]);
+		printf("%d: Received bottom from %d, %f at %f\n", myRank, neighbourRankId[BND_BOTTOM], h[1][0], originX);
 	if(topReceive)
-		printf("%d: Received top from %d, %f\n", myRank, neighbourRankId[BND_TOP], h[1][ny + 1]);
+		printf("%d: Received top from %d, %f at %f\n", myRank, neighbourRankId[BND_TOP], h[1][ny + 1], originX);
 }
 
 void computeNumericalFluxesHorizontalKernel(SWE_DimensionalSplittingChameleon* block, float* h_data, float* hu_data, float* hv_data, float* b_data,
