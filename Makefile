@@ -22,7 +22,7 @@ simulate_charm_test:
 	./charmrun +p4 ./build/SWE_gnu_release_charm_hybrid -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/radial_charm
 
 simulate_chameleon:
-	./build/SWE_gnu_release_chameleon_omp_hybrid -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/charm -b /home/jurek/storage/tsunami/tohu_bath.nc -d /home/jurek/storage/tsunami/tohu_displ.nc
+	OMP_NUM_THREADS=1 /home/simon/sw/intel/impi/2019.3.199/intel64/bin/mpiexec.hydra -np 2 ./build/SWE_intel_debug_chameleon_omp_hybrid -t 1 -n 1 -x 320 -y 320 -o ./output/test
 
 simulate_chameleon_test:
 	./build/SWE_gnu_release_chameleon_omp_hybrid -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/radial_charm

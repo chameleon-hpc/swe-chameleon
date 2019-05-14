@@ -501,11 +501,16 @@ int main(int argc, char** argv) {
 	 * FINALIZE *
 	 ************/
 
-
 	//printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[xBounds[myRank%xRankCount]][myRank/xRankCount]->computeTime, blocks[xBounds[myRank%xRankCount]][myRank/xRankCount]->computeTimeWall, wallTime);
-	printf("Chameleon: Computation ended\n");
+	//printf("Chameleon: Computation ended\n");
 
 	MPI_Barrier(MPI_COMM_WORLD);
+
+	for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
+		for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+			blocks[x][y]->freeMpiType();
+		}
+	}
 
     #pragma omp parallel
     {
@@ -513,18 +518,9 @@ int main(int argc, char** argv) {
     }
     chameleon_finalize();
 
-	//for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
-	//	for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
-	//		blocks[x][y]->freeMpiType();
-	//	}
-	//}
 
-	MPI_Status status;
-	int flag;
-	MPI_Iprobe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &flag, &status);
-	if(flag)
-		printf("%d: Messages still in queue\n", myRank);
-	
+	if(myRank == 0)
+		delete writer;
 	MPI_Finalize();
 
 	return 0;
