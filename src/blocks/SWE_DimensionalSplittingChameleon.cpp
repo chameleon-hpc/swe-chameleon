@@ -205,7 +205,7 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 
 		MPI_Isend(&hv[1][1], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_BOTTOM], ((int)originX)&tagHV, MPI_COMM_WORLD, &req);
 		MPI_Request_free(&req);
-		printf("%d: Sent to bottom %d, %f at %f\n", myRank, neighbourRankId[BND_BOTTOM], h[1][1], originX);
+		//printf("%d: Sent to bottom %d, %f at %f\n", myRank, neighbourRankId[BND_BOTTOM], h[1][1], originX);
 
 	}
 	if (boundaryType[BND_TOP] == CONNECT) {
@@ -218,7 +218,7 @@ void SWE_DimensionalSplittingChameleon::setGhostLayer() {
 
 		MPI_Isend(&hv[1][ny], 1, HORIZONTAL_BOUNDARY, neighbourRankId[BND_TOP], ((int)originX)&tagHV, MPI_COMM_WORLD, &req);
 		MPI_Request_free(&req);
-		printf("%d: Sent to top %d, %f at %f\n", myRank, neighbourRankId[BND_TOP], h[1][ny], originX);
+		//printf("%d: Sent to top %d, %f at %f\n", myRank, neighbourRankId[BND_TOP], h[1][ny], originX);
 
 	}
 }
@@ -291,14 +291,14 @@ void SWE_DimensionalSplittingChameleon::receiveGhostLayer() {
 	int code = MPI_Waitall(12, recvReqs, stati);
 	if(code != MPI_SUCCESS)
 		printf("%d: No success %d\n", myRank, code);
-	if(leftReceive)
-		printf("%d: Received left from %d\n", myRank, neighbourRankId[BND_LEFT]);
-	if(rightReceive)
-		printf("%d: Received right from %d\n", myRank, neighbourRankId[BND_RIGHT]);
-	if(bottomReceive)
-		printf("%d: Received bottom from %d, %f at %f\n", myRank, neighbourRankId[BND_BOTTOM], h[1][0], originX);
-	if(topReceive)
-		printf("%d: Received top from %d, %f at %f\n", myRank, neighbourRankId[BND_TOP], h[1][ny + 1], originX);
+	//if(leftReceive)
+	//	printf("%d: Received left from %d\n", myRank, neighbourRankId[BND_LEFT]);
+	//if(rightReceive)
+	//	printf("%d: Received right from %d\n", myRank, neighbourRankId[BND_RIGHT]);
+	//if(bottomReceive)
+	//	printf("%d: Received bottom from %d, %f at %f\n", myRank, neighbourRankId[BND_BOTTOM], h[1][0], originX);
+	//if(topReceive)
+	//	printf("%d: Received top from %d, %f at %f\n", myRank, neighbourRankId[BND_TOP], h[1][ny + 1], originX);
 }
 
 void computeNumericalFluxesHorizontalKernel(SWE_DimensionalSplittingChameleon* block, float* h_data, float* hu_data, float* hv_data, float* b_data,

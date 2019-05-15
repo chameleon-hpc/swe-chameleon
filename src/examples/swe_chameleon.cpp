@@ -149,10 +149,10 @@ int main(int argc, char** argv) {
 	float dxSimulation = (float) widthScenario / nxRequested;
 	float dySimulation = (float) heightScenario / nyRequested;
 
-	int xRankCount = 1;
-	int yRankCount = numRanks;
-	int xBlockCount = 4;
-	int yBlockCount = 4;
+	int xRankCount = 2;
+	int yRankCount = 2;
+	int xBlockCount = 16;
+	int yBlockCount = 16;
 	//int num_blocks_per_rank = 4;
 	float xWeights[xRankCount];
 	float yWeights[yRankCount];
@@ -169,9 +169,9 @@ int main(int argc, char** argv) {
 	}
 
 	for(int i = 0; i < xRankCount; i++)
-		xWeights[i] = xWeights[i] / xSum * xBlockCount;
+		xWeights[i] = (xWeights[i] / xSum) * xBlockCount;
 	for(int i = 0; i < yRankCount; i++)
-		yWeights[i] = yWeights[i] / ySum * yBlockCount;
+		yWeights[i] = (yWeights[i] / ySum) * yBlockCount;
 
 	int xBounds[xRankCount+1];
 	xBounds[0] = 0;
@@ -184,7 +184,7 @@ int main(int argc, char** argv) {
 		yBounds[i] = yBounds[i-1] + yWeights[i];
 	yBounds[yRankCount] = yBlockCount;
 	//printf("%d: xBlockCount:%d\n", myRank, xBlockCount);
-	//printf("%d: xBounds:%d, %d\n", myRank, xBounds[0], xBounds[1]);
+	//printf("%d: xBounds:%d, %d, %d\n", myRank, xBounds[0], xBounds[1], xBounds[2]);
 	//printf("%d: yBounds:%d, %d, %d\n", myRank, yBounds[0], yBounds[1], yBounds[2]);
 	//printf("%d: xDim:%d, yDim:%d\n", myRank, xBounds[(myRank%xRankCount)+1]-xBounds[myRank%xRankCount], yBounds[(myRank/xRankCount)+1]-yBounds[myRank/xRankCount]);
 
@@ -500,6 +500,9 @@ int main(int argc, char** argv) {
 	/************
 	 * FINALIZE *
 	 ************/
+
+	//TODO: Free all allocated memory
+	//TODO: Get times
 
 	//printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[xBounds[myRank%xRankCount]][myRank/xRankCount]->computeTime, blocks[xBounds[myRank%xRankCount]][myRank/xRankCount]->computeTimeWall, wallTime);
 	//printf("Chameleon: Computation ended\n");
