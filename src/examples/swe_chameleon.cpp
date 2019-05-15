@@ -35,6 +35,8 @@
 #include <unistd.h>
 #include <limits.h>
 #include <algorithm>
+#include <vector>
+#include <numeric>
 
 #include "tools/args.hh"
 
@@ -73,7 +75,10 @@ int main(int argc, char** argv) {
 	args.addOption("resolution-horizontal", 'x', "Number of simulation cells in horizontal direction");
 	args.addOption("resolution-vertical", 'y', "Number of simulated cells in y-direction");
 	args.addOption("output-basepath", 'o', "Output base file name");
-
+	args.addOption("x-blockcount", 'i', "Block Count in x-direction", tools::Args::Optional, false);
+	args.addOption("y-blockcount", 'j', "Block Count in y-direction", tools::Args::Optional, false);
+	args.addOption("x-imbalance", 'u', "Imbalance in x-direction", tools::Args::Optional, false);
+	args.addOption("y-imbalance", 'v', "Imbalance in y-direction", tools::Args::Optional, false);
 
 	// Declare the variables needed to hold command line input
 	float simulationDuration;
@@ -149,33 +154,48 @@ int main(int argc, char** argv) {
 	float dxSimulation = (float) widthScenario / nxRequested;
 	float dySimulation = (float) heightScenario / nyRequested;
 
-	int xRankCount = 2;
-	int yRankCount = 2;
+	// Determine number of ranks in x and y direction
+	int xRankCount = std::sqrt(numRanks);
+	while(numRanks % xRankCount != 0)
+		xRankCount--;
+	int yRankCount = numRanks/xRankCount;
+	//printf("xRankCount=%d, yRankCount=%d\n", xRankCount, yRankCount);
+
 	int xBlockCount = 16;
+	if(args.isSet("x-blockcount"))
+		xBlockCount = args.getArgument<int>("x-blockcount");
 	int yBlockCount = 16;
-	//int num_blocks_per_rank = 4;
-	float xWeights[xRankCount];
-	float yWeights[yRankCount];
-	float xSum = 0.0;
-	float ySum = 0.0;
-	// read and normalize weights
-	for(int i = 0; i < xRankCount; i++){
-		xWeights[i] = 1.0;
-		xSum += xWeights[i];
-	}
-	for(int i = 0; i < yRankCount; i++) {
-		yWeights[i] = 1.0;
-		ySum +=yWeights[i];
-	}
+	if(args.isSet("y-blockcount"))
+		yBlockCount = args.getArgument<int>("y-blockcount");
+	assert(xRankCount * yRankCount == numRanks);
+	assert(nxRequested % xBlockCount == 0);
+	assert(nyRequested % yBlockCount == 0);
+	int myXRank = myRank%xRankCount;
+	int myYRank = myRank/xRankCount;
+
+	std::vector<std::vector<float>> imbalanceVectors{
+	{ 1, 1, 1, 1, 1, 1, 1, 1 },      //no imbalance
+	{ 8, 7, 6, 5, 4, 3, 2, 1 },      //slight imbalance
+	{ 128, 64, 32, 16, 8, 4, 2, 1 }, //imbalance
+	{ 1, 0, 0, 0, 0, 0, 0, 0 }};     //extreme imbalance
+
+	std::vector<float> xWeights = imbalanceVectors[0];
+	if(args.isSet("x-imbalance"))
+		xWeights = imbalanceVectors[args.getArgument<int>("x-imbalance")];
+	std::vector<float> yWeights = imbalanceVectors[0];
+	if(args.isSet("y-imbalance"))
+		xWeights = imbalanceVectors[args.getArgument<int>("y-imbalance")];
+	float xSum = std::accumulate(xWeights.begin(), xWeights.end(), 0);
+	float ySum = std::accumulate(yWeights.begin(), yWeights.end(), 0);
 
 	for(int i = 0; i < xRankCount; i++)
 		xWeights[i] = (xWeights[i] / xSum) * xBlockCount;
 	for(int i = 0; i < yRankCount; i++)
 		yWeights[i] = (yWeights[i] / ySum) * yBlockCount;
 
-	int xBounds[xRankCount+1];
+	std::vector<int> xBounds(xRankCount+1);
 	xBounds[0] = 0;
-	int yBounds[yRankCount+1];
+	std::vector<int> yBounds(yRankCount+1);
 	yBounds[0] = 0;
 	for(int i = 1; i < xRankCount; i++)
 		xBounds[i] = xBounds[i-1] + xWeights[i];
@@ -186,16 +206,16 @@ int main(int argc, char** argv) {
 	//printf("%d: xBlockCount:%d\n", myRank, xBlockCount);
 	//printf("%d: xBounds:%d, %d, %d\n", myRank, xBounds[0], xBounds[1], xBounds[2]);
 	//printf("%d: yBounds:%d, %d, %d\n", myRank, yBounds[0], yBounds[1], yBounds[2]);
-	//printf("%d: xDim:%d, yDim:%d\n", myRank, xBounds[(myRank%xRankCount)+1]-xBounds[myRank%xRankCount], yBounds[(myRank/xRankCount)+1]-yBounds[myRank/xRankCount]);
+	//printf("%d: xDim:%d, yDim:%d\n", myRank, xBounds[myXRank+1]-xBounds[myXRank], yBounds[myYRank+1]-yBounds[myYRank]);
 
 	SWE_DimensionalSplittingChameleon* blocks[xBlockCount][yBlockCount];
 
 	int x_blocksize = nxRequested / xBlockCount;
 	int y_blocksize = nyRequested / yBlockCount;
 
-	//printf("%d: loop bounds: %d, %d, %d, %d\n", myRank, xBounds[myRank%xRankCount], xBounds[(myRank%xRankCount)+1], yBounds[myRank/xRankCount], yBounds[(myRank/xRankCount)+1]);
-	for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
-		for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+	//printf("%d: loop bounds: %d, %d, %d, %d\n", myRank, xBounds[myXRank], xBounds[myXRank+1], yBounds[myYRank], yBounds[myYRank+1]);
+	for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+		for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 			//printf("%d: x=%d, y=%d\n", myRank, x, y);
 			int x_pos = x*x_blocksize;
 			float originX = x_pos * dxSimulation;
@@ -212,21 +232,21 @@ int main(int argc, char** argv) {
 
 			if(x == 0)
 				boundaries[BND_LEFT] = scenario.getBoundaryType(BND_LEFT);
-			else if(x == xBounds[myRank%xRankCount])
+			else if(x == xBounds[myXRank])
 				boundaries[BND_LEFT] = CONNECT;
 			else
 				boundaries[BND_LEFT] = CONNECT_WITHIN_RANK;
 			
 			if(x_pos+block_nx == nxRequested)
 				boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
-			else if(x == xBounds[(myRank%xRankCount)+1]-1)
+			else if(x == xBounds[myXRank+1]-1)
 				boundaries[BND_RIGHT] = CONNECT;
 			else
 				boundaries[BND_RIGHT] = CONNECT_WITHIN_RANK;
 
 			if(y == 0)
 				boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
-			else if(y == yBounds[myRank/xRankCount])
+			else if(y == yBounds[myYRank])
 				boundaries[BND_BOTTOM] = CONNECT;
 			else
 				boundaries[BND_BOTTOM] = CONNECT_WITHIN_RANK;
@@ -254,8 +274,8 @@ int main(int argc, char** argv) {
 				blocks[x][y]->neighbourRankId[BND_TOP] = myRank+xRankCount;
 		}
 	}
-	for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
-		for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+	for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+		for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 			if(x != 0)
 				blocks[x][y]->left = blocks[x-1][y];
 			if(x != xBounds[myRank+1]-1)
@@ -377,22 +397,20 @@ int main(int argc, char** argv) {
 			//TODO: exchange bathymetry
 
 			//#pragma omp parallel for
-			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
-				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 					//printf("%d: x=%d, y=%d\n", myRank, x, y);
-					// TODO: first send all MPI messages, then receive all
 					// set values in ghost cells.
 					// we need to sync here since block boundaries get exchanged over ranks
 					blocks[x][y]->setGhostLayer();
 				}
 			}
 			//#pragma omp parallel for
-			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
-				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 					blocks[x][y]->receiveGhostLayer();
 				}
 			}
-			//chameleon_distributed_taskwait(0);
 
 			// Accumulate comm time and start compute clock
 			commClock = clock() - commClock;
@@ -400,18 +418,16 @@ int main(int argc, char** argv) {
 			computeClock = clock();
 
 			#pragma omp parallel for
-			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
-				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
-					//printf("%d: x=%d, y=%d\n", myRank, x, y);
+			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 					// compute numerical flux on each edge
 					blocks[x][y]->computeNumericalFluxesHorizontal();
 				}
 			}
 			chameleon_distributed_taskwait(0);
 
-			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
-				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
-					//printf("%d: x=%d, y=%d\n", myRank, x, y);
+			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 					if(blocks[x][y]->getMaxTimestep() < timestep)
 						timestep = blocks[x][y]->getMaxTimestep();
 				}
@@ -423,9 +439,8 @@ int main(int argc, char** argv) {
 			timestep = maxTimestepGlobal;
 
 			#pragma omp parallel for
-			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
-				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
-					//printf("%d: x=%d, y=%d\n", myRank, x, y);
+			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 					// compute numerical flux on each edge
 					blocks[x][y]->maxTimestep = timestep;
 					blocks[x][y]->computeNumericalFluxesVertical();
@@ -433,13 +448,12 @@ int main(int argc, char** argv) {
 			}
 			chameleon_distributed_taskwait(0);
 			
-			for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
-				for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 					// update the cell values
 					blocks[x][y]->updateUnknowns(timestep);
 				}
 			}
-			//chameleon_distributed_taskwait(0);
 
 			// Accumulate compute time
 			computeClock = clock() - computeClock;
@@ -463,9 +477,8 @@ int main(int argc, char** argv) {
 		MPI_Win_fence(0, writeBlockWin_h);
 		MPI_Win_fence(0, writeBlockWin_hu);
 		MPI_Win_fence(0, writeBlockWin_hv);
-		for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
-			for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
-				//printf("%d: x=%d, y=%d\n", myRank, x, y);
+		for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+			for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 				// Send all data to rank 0, which will write it to a single file
 				// send each column separately
 				for(int j=1; j<blocks[x][y]->nx+1; j++) {
@@ -504,13 +517,13 @@ int main(int argc, char** argv) {
 	//TODO: Free all allocated memory
 	//TODO: Get times
 
-	//printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[xBounds[myRank%xRankCount]][myRank/xRankCount]->computeTime, blocks[xBounds[myRank%xRankCount]][myRank/xRankCount]->computeTimeWall, wallTime);
+	//printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[xBounds[myXRank]][myYRank]->computeTime, blocks[xBounds[myXRank]][myYRank]->computeTimeWall, wallTime);
 	//printf("Chameleon: Computation ended\n");
 
 	MPI_Barrier(MPI_COMM_WORLD);
 
-	for(int x = xBounds[myRank%xRankCount]; x < xBounds[(myRank%xRankCount)+1]; x++) {
-		for(int y = yBounds[myRank/xRankCount]; y < yBounds[(myRank/xRankCount)+1]; y++) {
+	for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+		for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 			blocks[x][y]->freeMpiType();
 		}
 	}
@@ -520,7 +533,6 @@ int main(int argc, char** argv) {
         chameleon_thread_finalize();
     }
     chameleon_finalize();
-
 
 	if(myRank == 0)
 		delete writer;
