@@ -56,8 +56,6 @@
 
 int main(int argc, char** argv) {
 
-
-
 	/**************
 	 * INIT INPUT *
 	 **************/
@@ -75,26 +73,14 @@ int main(int argc, char** argv) {
 	args.addOption("resolution-horizontal", 'x', "Number of simulation cells in horizontal direction");
 	args.addOption("resolution-vertical", 'y', "Number of simulated cells in y-direction");
 	args.addOption("output-basepath", 'o', "Output base file name");
-	args.addOption("x-blockcount", 'i', "Block Count in x-direction", tools::Args::Optional, false);
-	args.addOption("y-blockcount", 'j', "Block Count in y-direction", tools::Args::Optional, false);
-	args.addOption("x-imbalance", 'u', "Imbalance in x-direction", tools::Args::Optional, false);
-	args.addOption("y-imbalance", 'v', "Imbalance in y-direction", tools::Args::Optional, false);
-
-	// Declare the variables needed to hold command line input
-	float simulationDuration;
-	int numberOfCheckPoints;
-	int nxRequested;
-	int nyRequested;
-	std::string outputBaseName;
-
-	// Declare variables for the output and the simulation time
-	std::string outputFileName;
-	float t = 0.;
+	args.addOption("x-blockcount", 'i', "Block Count in x-direction", tools::Args::Required, false);
+	args.addOption("y-blockcount", 'j', "Block Count in y-direction", tools::Args::Required, false);
+	args.addOption("x-imbalance", 'u', "Imbalance in x-direction", tools::Args::Required, false);
+	args.addOption("y-imbalance", 'v', "Imbalance in y-direction", tools::Args::Required, false);
 
 	// Parse command line arguments
 	tools::Args::Result ret = args.parse(argc, argv);
-	switch (ret)
-	{
+	switch (ret) {
 		case tools::Args::Error:
 			return 1;
 		case tools::Args::Help:
@@ -104,11 +90,11 @@ int main(int argc, char** argv) {
 	}
 
 	// Read in command line arguments
-	simulationDuration = args.getArgument<float>("simulation-duration");
-	numberOfCheckPoints = args.getArgument<int>("checkpoint-count");
-	nxRequested = args.getArgument<int>("resolution-horizontal");
-	nyRequested = args.getArgument<int>("resolution-vertical");
-	outputBaseName = args.getArgument<std::string>("output-basepath");
+	float simulationDuration = args.getArgument<float>("simulation-duration");
+	int numberOfCheckPoints = args.getArgument<int>("checkpoint-count");
+	int nxRequested = args.getArgument<int>("resolution-horizontal");
+	int nyRequested = args.getArgument<int>("resolution-vertical");
+	std::string outputBaseName = args.getArgument<std::string>("output-basepath");
 
 	// Initialize Scenario
 #ifdef ASAGI
@@ -127,22 +113,17 @@ int main(int argc, char** argv) {
 		checkpointInstantOfTime[i] = checkpointInstantOfTime[i - 1] + checkpointTimeDelta;
 	}
 
-
 	/***************
 	 * INIT BLOCKS *
 	 ***************/
 
+	// Init MPI
 	int myRank, numRanks;
 	int provided;
 	int requested = MPI_THREAD_MULTIPLE;
 	MPI_Init_thread(&argc, &argv, requested, &provided);
 	MPI_Comm_size(MPI_COMM_WORLD, &numRanks);
 	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
-	// Print status
-	char hostname[HOST_NAME_MAX];
-        gethostname(hostname, HOST_NAME_MAX);
-
-	//printf("%i Spawned at %s\n", myRank, hostname);
 
 	/*
 	 * Calculate the simulation grid layout.
@@ -167,26 +148,27 @@ int main(int argc, char** argv) {
 	int yBlockCount = 16;
 	if(args.isSet("y-blockcount"))
 		yBlockCount = args.getArgument<int>("y-blockcount");
-	assert(xRankCount * yRankCount == numRanks);
 	assert(nxRequested % xBlockCount == 0);
 	assert(nyRequested % yBlockCount == 0);
 	int myXRank = myRank%xRankCount;
 	int myYRank = myRank/xRankCount;
 
+	// Imbalance vectors that determine the weights of the ranks
 	std::vector<std::vector<float>> imbalanceVectors{
 	{ 1, 1, 1, 1, 1, 1, 1, 1 },      //no imbalance
-	{ 8, 7, 6, 5, 4, 3, 2, 1 },      //slight imbalance
+	{ 2, 1, 1, 1, 1, 1, 1, 1 },      //slight imbalance
 	{ 128, 64, 32, 16, 8, 4, 2, 1 }, //imbalance
 	{ 1, 0, 0, 0, 0, 0, 0, 0 }};     //extreme imbalance
 
+	// read chosen imbalance vectors (optional)
 	std::vector<float> xWeights = imbalanceVectors[0];
 	if(args.isSet("x-imbalance"))
 		xWeights = imbalanceVectors[args.getArgument<int>("x-imbalance")];
 	std::vector<float> yWeights = imbalanceVectors[0];
 	if(args.isSet("y-imbalance"))
 		xWeights = imbalanceVectors[args.getArgument<int>("y-imbalance")];
-	float xSum = std::accumulate(xWeights.begin(), xWeights.end(), 0);
-	float ySum = std::accumulate(yWeights.begin(), yWeights.end(), 0);
+	float xSum = std::accumulate(xWeights.begin(), xWeights.begin()+xRankCount, 0);
+	float ySum = std::accumulate(yWeights.begin(), yWeights.begin()+yRankCount, 0);
 
 	for(int i = 0; i < xRankCount; i++)
 		xWeights[i] = (xWeights[i] / xSum) * xBlockCount;
@@ -203,6 +185,14 @@ int main(int argc, char** argv) {
 	for(int i = 1; i < yRankCount; i++)
 		yBounds[i] = yBounds[i-1] + yWeights[i];
 	yBounds[yRankCount] = yBlockCount;
+	printf("%d: xBlockCount=%d, xBounds:", myRank, xBlockCount);
+	for(int i = 0; i < xRankCount+1; i++)
+		printf(" %d", xBounds[i]);
+	printf("\n");
+	printf("%d: yBlockCount=%d, yBounds:", myRank, yBlockCount);
+	for(int i = 0; i < yRankCount+1; i++)
+		printf(" %d", yBounds[i]);
+	printf("\n");
 	//printf("%d: xBlockCount:%d\n", myRank, xBlockCount);
 	//printf("%d: xBounds:%d, %d, %d\n", myRank, xBounds[0], xBounds[1], xBounds[2]);
 	//printf("%d: yBounds:%d, %d, %d\n", myRank, yBounds[0], yBounds[1], yBounds[2]);
@@ -213,20 +203,13 @@ int main(int argc, char** argv) {
 	int x_blocksize = nxRequested / xBlockCount;
 	int y_blocksize = nyRequested / yBlockCount;
 
-	//printf("%d: loop bounds: %d, %d, %d, %d\n", myRank, xBounds[myXRank], xBounds[myXRank+1], yBounds[myYRank], yBounds[myYRank+1]);
 	for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 		for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 			//printf("%d: x=%d, y=%d\n", myRank, x, y);
 			int x_pos = x*x_blocksize;
 			float originX = x_pos * dxSimulation;
-			int block_nx = x_blocksize;
-			if(x == xBlockCount-1)
-				block_nx += nxRequested % x_blocksize;
 			int y_pos = y*y_blocksize;
 			float originY = y_pos * dySimulation;
-			int block_ny = y_blocksize;
-			if(y == yBlockCount-1)
-				block_ny += nyRequested % y_blocksize;
 
 			BoundaryType boundaries[4];			
 
@@ -237,7 +220,7 @@ int main(int argc, char** argv) {
 			else
 				boundaries[BND_LEFT] = CONNECT_WITHIN_RANK;
 			
-			if(x_pos+block_nx == nxRequested)
+			if(x_pos+x_blocksize == nxRequested)
 				boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
 			else if(x == xBounds[myXRank+1]-1)
 				boundaries[BND_RIGHT] = CONNECT;
@@ -251,16 +234,14 @@ int main(int argc, char** argv) {
 			else
 				boundaries[BND_BOTTOM] = CONNECT_WITHIN_RANK;
 
-			//printf("%d:First condition: %d==%d\n", myRank, y_pos + block_ny, nyRequested-1);
-			//printf("%d:Second condition: %d==%d\n", myRank, y, yBounds[myRank+1]-1);
-			if(y_pos + block_ny == nyRequested)
+			if(y_pos + y_blocksize == nyRequested)
 				boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
 			else if(y == yBounds[(myRank/yRankCount)+1]-1)
 				boundaries[BND_TOP] = CONNECT;
 			else
 				boundaries[BND_TOP] = CONNECT_WITHIN_RANK;
 
-			blocks[x][y] = new SWE_DimensionalSplittingChameleon(block_nx, block_ny, dxSimulation, dySimulation, originX, originY);
+			blocks[x][y] = new SWE_DimensionalSplittingChameleon(x_blocksize, y_blocksize, dxSimulation, dySimulation, originX, originY);
 			blocks[x][y]->initScenario(scenario, boundaries);
 
 			blocks[x][y]->myRank = myRank;
@@ -284,7 +265,6 @@ int main(int argc, char** argv) {
 				blocks[x][y]->bottom = blocks[x][y-1];
 			if(y != yBounds[myRank+1]-1)
 				blocks[x][y]->top = blocks[x][y+1];
-			//printf("%d: Init blocks[%d,%d] with  block_nx:%d, block_ny:%d, originX:%d and originY:%d\n", myRank, x, y, blocks[x][y]->nx, blocks[x][y]->nx, blocks[x][y]->getOriginX(), blocks[x][y]->getOriginY());
 		}
 	}
 
@@ -303,6 +283,8 @@ int main(int argc, char** argv) {
 	boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
 	boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
 	writeBlock.initScenario(scenario, boundaries);
+
+	// Prepare writeBlock for usage with One-Sided Communication
   	MPI_Win writeBlockWin_h;
 	MPI_Win writeBlockWin_hu;
   	MPI_Win writeBlockWin_hv;
@@ -315,7 +297,7 @@ int main(int argc, char** argv) {
 	BoundarySize boundarySize = {{1, 1, 1, 1}};
 #ifdef WRITENETCDF
 	// Construct a netCDF writer
-	outputFileName = outputBaseName;
+	std::string outputFileName = outputBaseName;
 	NetCdfWriter* writer;
 	if(myRank == 0) {
 		writer = new NetCdfWriter(
@@ -332,7 +314,7 @@ int main(int argc, char** argv) {
 	}
 #else
 	// Construct a vtk writer
-	outputFileName = outputBaseName;
+	std::string outputFileName = outputBaseName;
 	VtkWriter writer(
 		outputFileName,
 		writeBlock.getBathymetry(),
@@ -356,7 +338,6 @@ int main(int argc, char** argv) {
 	 * START SIMULATION *
 	 ********************/
 
-    // chameleon_init();
     #pragma omp parallel
     {
         chameleon_thread_init();
@@ -378,8 +359,7 @@ int main(int argc, char** argv) {
 	float commTime = 0.;
 	float wallTime = 0.;
 
-	t = 0.0;
-
+	float t = 0.0;
 	float timestep;
 	unsigned int iterations = 0;
 
@@ -399,7 +379,6 @@ int main(int argc, char** argv) {
 			//#pragma omp parallel for
 			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
-					//printf("%d: x=%d, y=%d\n", myRank, x, y);
 					// set values in ghost cells.
 					// we need to sync here since block boundaries get exchanged over ranks
 					blocks[x][y]->setGhostLayer();
@@ -493,7 +472,6 @@ int main(int argc, char** argv) {
 				}
 			}
 		}
-
 		MPI_Win_fence(0, writeBlockWin_h);
 		MPI_Win_fence(0, writeBlockWin_hu);
 		MPI_Win_fence(0, writeBlockWin_hv);
