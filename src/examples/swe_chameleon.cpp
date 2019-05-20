@@ -433,7 +433,7 @@ int main(int argc, char** argv) {
 				}
 			}
 			chameleon_distributed_taskwait(0);
-			
+
 			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 					// update the cell values
@@ -454,7 +454,7 @@ int main(int argc, char** argv) {
 			iterations++;
 
 			MPI_Barrier(MPI_COMM_WORLD);
-			//printf("%d: Step, current time:%f\n", myRank, t);
+			printf("%d: Step, current time:%f\n", myRank, t);
 		}
 
 		//printf("Write timestep to rank 0 (%fs)\n", t);
@@ -503,7 +503,7 @@ int main(int argc, char** argv) {
 	//TODO: Get times
 
 	//printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[xBounds[myXRank]][myYRank]->computeTime, blocks[xBounds[myXRank]][myYRank]->computeTimeWall, wallTime);
-	//printf("Chameleon: Computation ended\n");
+	printf("Chameleon: Computation ended, walltime:%f\n", wallTime);
 
 	MPI_Barrier(MPI_COMM_WORLD);
 
