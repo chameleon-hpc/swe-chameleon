@@ -31,6 +31,7 @@
 #include <algorithm>
 #include <omp.h>
 #include <mpi.h>
+#include <unistd.h>
 #include "chameleon.h"
 
 /*
@@ -357,6 +358,8 @@ void computeNumericalFluxesHorizontalKernel(SWE_DimensionalSplittingChameleon* b
 	clock_gettime(CLOCK_MONOTONIC, &(block->endTime));
 	block->computeTimeWall += (block->endTime.tv_sec - block->startTime.tv_sec);
 	block->computeTimeWall += (float) (block->endTime.tv_nsec - block->startTime.tv_nsec) / 1E9;
+
+	//usleep(10000);
 }
 
 /**

@@ -384,12 +384,16 @@ int main(int argc, char** argv) {
 					blocks[x][y]->setGhostLayer();
 				}
 			}
+
+			if(myRank == 0) printf("After setGhostLayer() %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 			//#pragma omp parallel for
 			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 					blocks[x][y]->receiveGhostLayer();
 				}
 			}
+
+			if(myRank == 0) printf("After receiveGhostLayer() %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 
 			// Accumulate comm time and start compute clock
 			commClock = clock() - commClock;
@@ -403,7 +407,10 @@ int main(int argc, char** argv) {
 					blocks[x][y]->computeNumericalFluxesHorizontal();
 				}
 			}
+			if(myRank == 0) printf("After computeNumericalFluxesHorizontal() Task Spawning %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 			chameleon_distributed_taskwait(0);
+			if(myRank == 0) printf("After computeNumericalFluxesHorizontal() Task Wait %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
+
 
 			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
