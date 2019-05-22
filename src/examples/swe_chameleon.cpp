@@ -422,16 +422,20 @@ int main(int argc, char** argv) {
 			//commTime += (float) commClock / CLOCKS_PER_SEC;
 			computeClock = clock();
 
-			#pragma omp parallel for
-			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
-					// compute numerical flux on each edge
-					blocks[x][y]->computeNumericalFluxesHorizontal();
+			#pragma omp parallel 
+			{
+				#pragma omp for
+				for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+					for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+						// compute numerical flux on each edge
+						blocks[x][y]->computeNumericalFluxesHorizontal();
+					}
 				}
+				#pragma omp master
+					taskCreateHorizontalTime += getTime()-lastTime; lastTime = getTime();
+				//if(myRank == 0) printf("After computeNumericalFluxesHorizontal() Task Spawning %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
+				chameleon_distributed_taskwait(0);
 			}
-			taskCreateHorizontalTime += getTime()-lastTime; lastTime = getTime();
-			//if(myRank == 0) printf("After computeNumericalFluxesHorizontal() Task Spawning %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
-			chameleon_distributed_taskwait(0);
 			taskWaitHorizontalTime += getTime()-lastTime; lastTime = getTime();
 			//if(myRank == 0) printf("After computeNumericalFluxesHorizontal() Task Wait %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 
@@ -448,17 +452,21 @@ int main(int argc, char** argv) {
 			timestep = maxTimestepGlobal;
 
 			reductionTime += getTime()-lastTime; lastTime = getTime();
-			#pragma omp parallel for
-			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
-					// compute numerical flux on each edge
-					blocks[x][y]->maxTimestep = timestep;
-					blocks[x][y]->computeNumericalFluxesVertical();
+			#pragma omp parallel
+			{
+				#pragma omp for
+				for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+					for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+						// compute numerical flux on each edge
+						blocks[x][y]->maxTimestep = timestep;
+						blocks[x][y]->computeNumericalFluxesVertical();
+					}
 				}
+				#pragma omp master
+					taskCreateVerticalTime += getTime()-lastTime; lastTime = getTime();
+				//if(myRank == 0) printf("After computeNumericalFluxesVertical() Task Spawning %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
+				chameleon_distributed_taskwait(0);
 			}
-			taskCreateVerticalTime += getTime()-lastTime; lastTime = getTime();
-			//if(myRank == 0) printf("After computeNumericalFluxesVertical() Task Spawning %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
-			chameleon_distributed_taskwait(0);
 			taskWaitVerticalTime += getTime()-lastTime; lastTime = getTime();
 			//if(myRank == 0) printf("After computeNumericalFluxesVertical() Task Wait %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 			
