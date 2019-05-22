@@ -54,6 +54,12 @@
 
 #include "blocks/SWE_DimensionalSplittingChameleon.hh"
 
+double getTime() {
+	struct timespec time;
+	clock_gettime(CLOCK_MONOTONIC, &time);
+	return (double) time.tv_sec + ((double)time.tv_nsec)/1E9;
+}
+
 int main(int argc, char** argv) {
 
 	/**************
@@ -359,6 +365,18 @@ int main(int argc, char** argv) {
 	float commTime = 0.;
 	float wallTime = 0.;
 
+	// performance debug
+	double lastTime = 0;
+	double setGhostLayerTime = 0;
+	double receiveGhostLayerTime = 0;
+	double taskCreateHorizontalTime = 0;
+	double taskWaitHorizontalTime = 0;
+	double reductionTime = 0;
+	double taskCreateVerticalTime = 0;
+	double taskWaitVerticalTime = 0;
+	double updateUnknownsTime = 0;
+	double writeOutputTime = 0;
+
 	float t = 0.0;
 	float timestep;
 	unsigned int iterations = 0;
@@ -371,6 +389,7 @@ int main(int argc, char** argv) {
 			// Start measurement
 			clock_gettime(CLOCK_MONOTONIC, &startTime);
 			commClock = clock();
+			lastTime = getTime();
 
 			timestep = std::numeric_limits<float>::max();
 
@@ -385,7 +404,9 @@ int main(int argc, char** argv) {
 				}
 			}
 
-			if(myRank == 0) printf("After setGhostLayer() %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
+			setGhostLayerTime += getTime()-lastTime; lastTime = getTime();
+
+			//if(myRank == 0) printf("After setGhostLayer() %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 			//#pragma omp parallel for
 			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
@@ -393,11 +414,12 @@ int main(int argc, char** argv) {
 				}
 			}
 
-			if(myRank == 0) printf("After receiveGhostLayer() %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
+			receiveGhostLayerTime += getTime()-lastTime; lastTime = getTime();
+			//if(myRank == 0) printf("After receiveGhostLayer() %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 
 			// Accumulate comm time and start compute clock
-			commClock = clock() - commClock;
-			commTime += (float) commClock / CLOCKS_PER_SEC;
+			//commClock = clock() - commClock;
+			//commTime += (float) commClock / CLOCKS_PER_SEC;
 			computeClock = clock();
 
 			#pragma omp parallel for
@@ -407,10 +429,11 @@ int main(int argc, char** argv) {
 					blocks[x][y]->computeNumericalFluxesHorizontal();
 				}
 			}
-			if(myRank == 0) printf("After computeNumericalFluxesHorizontal() Task Spawning %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
+			taskCreateHorizontalTime += getTime()-lastTime; lastTime = getTime();
+			//if(myRank == 0) printf("After computeNumericalFluxesHorizontal() Task Spawning %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 			chameleon_distributed_taskwait(0);
-			if(myRank == 0) printf("After computeNumericalFluxesHorizontal() Task Wait %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
-
+			taskWaitHorizontalTime += getTime()-lastTime; lastTime = getTime();
+			//if(myRank == 0) printf("After computeNumericalFluxesHorizontal() Task Wait %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 
 			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
@@ -424,6 +447,7 @@ int main(int argc, char** argv) {
 			MPI_Allreduce(&timestep, &maxTimestepGlobal, 1, MPI_FLOAT, MPI_MIN, MPI_COMM_WORLD);
 			timestep = maxTimestepGlobal;
 
+			reductionTime += getTime()-lastTime; lastTime = getTime();
 			#pragma omp parallel for
 			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
@@ -432,14 +456,21 @@ int main(int argc, char** argv) {
 					blocks[x][y]->computeNumericalFluxesVertical();
 				}
 			}
+			taskCreateVerticalTime += getTime()-lastTime; lastTime = getTime();
+			//if(myRank == 0) printf("After computeNumericalFluxesVertical() Task Spawning %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 			chameleon_distributed_taskwait(0);
-
+			taskWaitVerticalTime += getTime()-lastTime; lastTime = getTime();
+			//if(myRank == 0) printf("After computeNumericalFluxesVertical() Task Wait %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
+			
+			#pragma omp parallel for
 			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 					// update the cell values
 					blocks[x][y]->updateUnknowns(timestep);
 				}
 			}
+			updateUnknownsTime += getTime()-lastTime; lastTime = getTime();
+			//if(myRank == 0) printf("After updateUnknowns() %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 
 			// Accumulate compute time
 			computeClock = clock() - computeClock;
@@ -504,6 +535,16 @@ int main(int argc, char** argv) {
 
 	//printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[xBounds[myXRank]][myYRank]->computeTime, blocks[xBounds[myXRank]][myYRank]->computeTimeWall, wallTime);
 	printf("Chameleon: Computation ended, walltime:%f\n", wallTime);
+
+	printf("%d: setGhostLayerTime=%f\n", myRank, (float)setGhostLayerTime);
+	printf("%d: receiveGhostLayerTime=%f\n", myRank, (float)receiveGhostLayerTime);
+	printf("%d: taskCreateHorizontalTime=%f\n", myRank, (float)taskCreateHorizontalTime);
+	printf("%d: taskWaitHorizontalTime=%f\n", myRank, (float)taskWaitHorizontalTime);
+	printf("%d: reductionTime=%f\n", myRank, (float)reductionTime);
+	printf("%d: taskCreateVerticalTime=%f\n", myRank, (float)taskCreateVerticalTime);
+	printf("%d: taskWaitVerticalTime=%f\n", myRank, (float)taskWaitVerticalTime);
+	printf("%d: updateUnknownsTime=%f\n", myRank, (float)updateUnknownsTime);
+	printf("%d: writeOutputTime=%f\n", myRank, (float)writeOutputTime);
 
 	MPI_Barrier(MPI_COMM_WORLD);
 
