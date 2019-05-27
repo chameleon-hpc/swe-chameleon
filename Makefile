@@ -37,7 +37,7 @@ smp:
 	scons writeNetCDF=True openmp=True solver=hybrid parallelization=none asagi=true asagiDir=${ASAGI_PATH}
 
 mpi_hybrid:
-	scons writeNetCDF=True openmp=True solver=hybrid parallelization=mpi asagi=true asagiDir=${ASAGI_PATH} netCDFDir=${NETCDF_BASE}
+	scons writeNetCDF=True openmp=True solver=hybrid parallelization=mpi compiler=intel
 mpi:
 	scons writeNetCDF=True openmp=false solver=hybrid parallelization=mpi asagi=true asagiDir=${ASAGI_PATH}
 
@@ -47,7 +47,7 @@ upcxx:
 	scons openmp=false solver=hybrid parallelization=upcxx compiler=intel
 
 charm:
-	scons openmp=true solver=hybrid parallelization=charm
+	scons openmp=true solver=hybrid parallelization=charm compiler=intel
 
 chameleon:
 	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=chameleon
