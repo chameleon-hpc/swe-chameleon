@@ -146,7 +146,7 @@ int main(int argc, char** argv) {
 	while(numRanks % xRankCount != 0)
 		xRankCount--;
 	int yRankCount = numRanks/xRankCount;
-	//printf("xRankCount=%d, yRankCount=%d\n", xRankCount, yRankCount);
+	printf("xRankCount=%d, yRankCount=%d\n", xRankCount, yRankCount);
 
 	int xBlockCount = 16;
 	if(args.isSet("x-blockcount"))
@@ -242,7 +242,7 @@ int main(int argc, char** argv) {
 
 			if(y_pos + y_blocksize == nyRequested)
 				boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
-			else if(y == yBounds[(myRank/yRankCount)+1]-1)
+			else if(y == yBounds[myYRank+1]-1)
 				boundaries[BND_TOP] = CONNECT;
 			else
 				boundaries[BND_TOP] = CONNECT_WITHIN_RANK;
@@ -265,11 +265,11 @@ int main(int argc, char** argv) {
 		for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 			if(x != 0)
 				blocks[x][y]->left = blocks[x-1][y];
-			if(x != xBounds[myRank+1]-1)
+			if(x != xBounds[myXRank+1]-1)
 				blocks[x][y]->right = blocks[x+1][y];
 			if(y != 0)
 				blocks[x][y]->bottom = blocks[x][y-1];
-			if(y != yBounds[myRank+1]-1)
+			if(y != yBounds[myYRank+1]-1)
 				blocks[x][y]->top = blocks[x][y+1];
 		}
 	}
