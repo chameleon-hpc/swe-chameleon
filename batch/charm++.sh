@@ -1,26 +1,38 @@
 #!/usr/local_rwth/bin/zsh
-# ask for four tasks (which is 4 MPI ranks)
-#SBATCH --ntasks=4
-# ask for 24 threads per task (which is 1 thread per core on one socket on CLAIX18)
-#SBATCH --cpus-per-task=24
-#################
-# ATTENTION !!! #
-#################
-# Divide the needed memory per task through the cpus-per-task, as slurm requests memory per cpu, not per task !
-# Example:
-# You need 24 GB memory per task, you have 24 cpus per task ordered
-# order 24GB/24 -> 1G memory per cpu (i.e., per thread)
-#SBATCH --mem-per-cpu=1G   #M is the default and can therefore be omitted, but could also be K(ilo)|G(iga)|T(era)
+# ask for number of nodes
+#SBATCH --nodes=2
+#SBATCH --exclusive
+# ask for tasks (MPI ranks)
+#SBATCH --ntasks=48
+# ask for threads per task (which is 1 thread per core on one socket on CLAIX18)
+#SBATCH --cpus-per-task=1
+# ask for memory (per node)
+#SBATCH --mem=16G   #M is the default and can therefore be omitted, but could also be K(ilo)|G(iga)|T(era)
+# partition
+#SBATCH --partition=c16m
+# project
+#SBATCH --account=jara0001
 # name the job
 #SBATCH --job-name=SWE_CHAMELEON
 # declare the merged STDOUT/STDERR file
-#SBATCH --output=swe_chameleon_output.%J.txt
+#SBATCH --output=batch/output/swe_charm++_output.%J.txt
 
 ### Change to the work directory
 source /home/sc427635/.zshrc
 cd /home/sc427635/master/swe-benchmark
-CHARM_PATH=/home/sc427635/sw/charm make charm
+
+### Load modules
+
+### Compile
+#CHARM_PATH=/home/sc427635/sw/charm make charm
+
+### Set environment variables
+export OMP_NUM_THREADS=1
+export I_MPI_PIN=1
+export I_MPI_PIN_DOMAIN=auto
+export I_MPI_DEBUG=5
+export OMP_PROC_BIND=close
 
 ### Execute your application
-echo $FLAGS_MPI_BATCH
-/home/sc427635/sw/charm/bin/charmrun +p4 ./build/SWE_intel_release_charm_omp_hybrid -t 1 -n 1 -x 1000 -y 1000 -o ./output/charm_batch
+echo /home/sc427635/sw/charm/bin/charmrun +p48 ./build/SWE_intel_release_charm_omp_hybrid -t 1 -n 1 -x 1024 -y 1024 -o ./output/charm_batch
+/home/sc427635/sw/charm/bin/charmrun +p48 ./build/SWE_intel_release_charm_omp_hybrid -t 1 -n 1 -x 1024 -y 1024 -o ./output/charm_batch
