@@ -55,7 +55,11 @@ chameleon:
 chameleon_debug:
 	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=chameleon compileMode=debug
 
+starpu:
+	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=starpu
 
+starpu_debug:
+	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=starpu compileMode=debug
 
 
 test: test/runner ncgen_test

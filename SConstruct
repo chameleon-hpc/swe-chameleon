@@ -109,7 +109,7 @@ vars.AddVariables(
                      'none',
                      allowed_values=('none', 'cuda', 'mpi_with_cuda',
                                      'mpi', 'ampi', 'charm', 'upcxx',
-                                     'chameleon')
+                                     'chameleon', 'starpu')
                      ),
         BoolVariable('openmp',
                      'compile with OpenMP parallelization enabled',
@@ -310,6 +310,25 @@ if env['parallelization'] in ['chameleon']:
     env.Append(LINKFLAGS=['-lifcore'])
     env.Append(LINKFLAGS=['-lirng'])
 
+################################
+# StarPU specific
+################################
+
+if env['parallelization'] in ['starpu']:
+    # get the starpu folder
+    starpuPath = os.environ['STARPU_PATH']
+    if starpuPath == '':
+        print(sys.stderr,
+              'No StarPU installation found. Did you set $STARPU_PATH?')
+        Exit(3)
+    else:
+        print("Trying to find StarPU install at: " + starpuPath)
+    env.Append(CCFLAGS=['-I'+starpuPath+'/include/'])
+    env.Append(CCFLAGS=['-L'+starpuPath+'/lib/'])
+    env.Append(LINKFLAGS=['-L'+starpuPath+'/lib/'])
+    env.Append(LINKFLAGS=['-lfabric'])
+    env.Append(LINKFLAGS=['-lifcore'])
+    env.Append(LINKFLAGS=['-lirng'])
 #####################################
 # Precompiler/Compiler/Linker flags #
 #####################################
@@ -340,6 +359,8 @@ elif env['parallelization'] == 'ampi':
 elif env['parallelization'] == 'charm':
     env['CXX'] = charmInstall + '/bin/charmc'
 elif env['parallelization'] == 'chameleon':
+    env['CXX'] = 'mpiicpc'
+elif env['parallelization'] == 'starpu':
     env['CXX'] = 'mpiicpc'
 else:
     if env['compiler'] == 'intel':

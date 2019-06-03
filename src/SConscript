@@ -53,6 +53,8 @@ elif env['parallelization'] in ['charm']:
 # Chameleon
 elif env['parallelization'] in ['chameleon']:
     sourceFiles = ['blocks/SWE_DimensionalSplittingChameleon.cpp']
+elif env['parallelization'] in ['starpu']:
+    sourceFiles = ['blocks/SWE_DimensionalSplittingStarPU.cpp']
 # Other Code without CUDA
 elif env['parallelization'] not in ['cuda', 'mpi_with_cuda']:
     if env['solver'] == 'rusanov':
@@ -137,6 +139,8 @@ elif env['parallelization'] in ['charm']:
     sourceFiles.append(['examples/swe_charm.cpp'])
 elif env['parallelization'] in ['chameleon']:
     sourceFiles.append(['examples/swe_chameleon.cpp'])
+elif env['parallelization'] in ['starpu']:
+    sourceFiles.append(['examples/swe_starpu.cpp'])
 else:
     print(sys.stderr, '** The selected configuration is not implemented.')
     Exit(1)
