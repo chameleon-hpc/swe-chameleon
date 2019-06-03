@@ -42,7 +42,8 @@ mpi:
 	scons writeNetCDF=True openmp=false solver=hybrid parallelization=mpi asagi=true asagiDir=${ASAGI_PATH}
 
 upcxx_hybrid:
-	scons writeNetCDF=True openmp=True solver=hybrid parallelization=upcxx asagi=true asagiDir=${ASAGI_PATH} netCDFDir=${NETCDF_BASE}
+	scons writeNetCDF=True openmp=True solver=hybrid parallelization=upcxx compiler=intel
+#	scons writeNetCDF=True openmp=True solver=hybrid parallelization=upcxx asagi=true asagiDir=${ASAGI_PATH} netCDFDir=${NETCDF_BASE}
 upcxx:
 	scons openmp=false solver=hybrid parallelization=upcxx compiler=intel
 
