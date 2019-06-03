@@ -148,10 +148,10 @@ int main(int argc, char** argv) {
 	int yRankCount = numRanks/xRankCount;
 	printf("xRankCount=%d, yRankCount=%d\n", xRankCount, yRankCount);
 
-	int xBlockCount = 16;
+	int xBlockCount = 32;
 	if(args.isSet("x-blockcount"))
 		xBlockCount = args.getArgument<int>("x-blockcount");
-	int yBlockCount = 16;
+	int yBlockCount = 32;
 	if(args.isSet("y-blockcount"))
 		yBlockCount = args.getArgument<int>("y-blockcount");
 	assert(nxRequested % xBlockCount == 0);
