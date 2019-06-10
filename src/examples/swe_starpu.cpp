@@ -27,8 +27,11 @@
  */
 
 #include <mpi.h>
+#include "starpu_config.h"
+#undef STARPU_NMAXBUFS
+#define STARPU_NMAXBUFS 16
 #include "starpu.h"
-#include "starpu/1.2/starpu_mpi.h"
+#include "starpu_mpi.h"
 #include <cassert>
 #include <string>
 #include <ctime>
@@ -128,6 +131,7 @@ int main(int argc, char** argv) {
 	int myRank, numRanks;
 	int provided;
 	int requested = MPI_THREAD_MULTIPLE;
+	//TODO: use MPI_THREAD_MULTIPLE
 	MPI_Init_thread(&argc, &argv, requested, &provided);
 	MPI_Comm_size(MPI_COMM_WORLD, &numRanks);
 	MPI_Comm_rank(MPI_COMM_WORLD, &myRank);

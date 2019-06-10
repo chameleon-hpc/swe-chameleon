@@ -324,11 +324,15 @@ if env['parallelization'] in ['starpu']:
     else:
         print("Trying to find StarPU install at: " + starpuPath)
     env.Append(CCFLAGS=['-I'+starpuPath+'/include/'])
+    env.Append(CCFLAGS=['-I'+starpuPath+'/mpi/include/'])
     env.Append(CCFLAGS=['-L'+starpuPath+'/lib/'])
     env.Append(LINKFLAGS=['-L'+starpuPath+'/lib/'])
     env.Append(LINKFLAGS=['-lfabric'])
     env.Append(LINKFLAGS=['-lifcore'])
     env.Append(LINKFLAGS=['-lirng'])
+    env.Append(LINKFLAGS=['-lstarpu-1.3'])
+    env.Append(LINKFLAGS=['-lstarpumpi-1.3'])
+
 #####################################
 # Precompiler/Compiler/Linker flags #
 #####################################

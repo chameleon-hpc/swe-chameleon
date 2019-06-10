@@ -32,7 +32,11 @@
 #include <omp.h>
 #include <mpi.h>
 #include <unistd.h>
+#include "starpu_config.h"
+#undef STARPU_NMAXBUFS
+#define STARPU_NMAXBUFS 16
 #include "starpu.h"
+#include "starpu_mpi.h"
 
 /*
  * Constructor of a SWE_DimensionalSplittingStarPU Block.
@@ -301,26 +305,28 @@ void SWE_DimensionalSplittingStarPU::receiveGhostLayer() {
 	//if(topReceive)
 	//	printf("%d: Received top from %d, %f at %f\n", myRank, neighbourRankId[BND_TOP], h[1][ny + 1], originX);
 }
-
-void computeNumericalFluxesHorizontalKernel(SWE_DimensionalSplittingStarPU* block, float* maxTimestep, float* h_data, float* hu_data, float* hv_data, float* b_data,
-								float* hNetUpdatesLeft_data, float* hNetUpdatesRight_data, float* huNetUpdatesLeft_data, float* huNetUpdatesRight_data,
-								float* hNetUpdatesBelow_data, float* hNetUpdatesAbove_data, float* hvNetUpdatesBelow_data, float* hvNetUpdatesAbove_data,
-								float* hStar_data, float* huStar_data) {
+static void computeNumericalFluxesHorizontalKernel(void *handles[], void *arg) {
+//void computeNumericalFluxesHorizontalKernel(SWE_DimensionalSplittingStarPU* block, float* maxTimestep, float* h_data, float* hu_data, float* hv_data, float* b_data,
+//								float* hNetUpdatesLeft_data, float* hNetUpdatesRight_data, float* huNetUpdatesLeft_data, float* huNetUpdatesRight_data,
+//								float* hNetUpdatesBelow_data, float* hNetUpdatesAbove_data, float* hvNetUpdatesBelow_data, float* hvNetUpdatesAbove_data,
+//								float* hStar_data, float* huStar_data) {
 	// Set data pointers correctly
-	block->getModifiableWaterHeight().setRawPointer(h_data);
-	block->getModifiableMomentumHorizontal().setRawPointer(hu_data);
-	block->getModifiableMomentumVertical().setRawPointer(hv_data);
-	block->getModifiableBathymetry().setRawPointer(b_data);
-	block->hNetUpdatesLeft.setRawPointer(hNetUpdatesLeft_data);
-	block->hNetUpdatesRight.setRawPointer(hNetUpdatesRight_data);
-	block->huNetUpdatesLeft.setRawPointer(huNetUpdatesLeft_data);
-	block->huNetUpdatesRight.setRawPointer(huNetUpdatesRight_data);
-	block->hNetUpdatesBelow.setRawPointer(hNetUpdatesBelow_data);
-	block->hNetUpdatesAbove.setRawPointer(hNetUpdatesAbove_data);
-	block->hvNetUpdatesBelow.setRawPointer(hvNetUpdatesBelow_data);
-	block->hvNetUpdatesAbove.setRawPointer(hvNetUpdatesAbove_data);
-	block->hStar.setRawPointer(hStar_data);
-	block->huStar.setRawPointer(huStar_data);
+	SWE_DimensionalSplittingStarPU* block = (SWE_DimensionalSplittingStarPU*) handles[0];
+	float* maxTimestep = (float*) handles[1];
+	block->getModifiableWaterHeight().setRawPointer((float*) handles[2]);
+	block->getModifiableMomentumHorizontal().setRawPointer((float*) handles[3]);
+	block->getModifiableMomentumVertical().setRawPointer((float*) handles[4]);
+	block->getModifiableBathymetry().setRawPointer((float*) handles[5]);
+	block->hNetUpdatesLeft.setRawPointer((float*) handles[6]);
+	block->hNetUpdatesRight.setRawPointer((float*) handles[7]);
+	block->huNetUpdatesLeft.setRawPointer((float*) handles[8]);
+	block->huNetUpdatesRight.setRawPointer((float*) handles[9]);
+	block->hNetUpdatesBelow.setRawPointer((float*) handles[10]);
+	block->hNetUpdatesAbove.setRawPointer((float*) handles[11]);
+	block->hvNetUpdatesBelow.setRawPointer((float*) handles[12]);
+	block->hvNetUpdatesAbove.setRawPointer((float*) handles[13]);
+	block->hStar.setRawPointer((float*) handles[14]);
+	block->huStar.setRawPointer((float*) handles[15]);
 	
 	// Start compute clocks
 	block->computeClock = clock();
@@ -363,6 +369,13 @@ void computeNumericalFluxesHorizontalKernel(SWE_DimensionalSplittingStarPU* bloc
 	//usleep(10000);
 }
 
+static struct starpu_codelet computeNumericalFluxesHorizontalCodelet =
+{
+	.cpu_funcs = {computeNumericalFluxesHorizontalKernel}, /* cpu implementation(s) of the routine */
+	.nbuffers = 16, /* number of data handles referenced by this routine */
+	.modes = {STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW, STARPU_RW} /* access modes for each data handle */
+};
+
 /**
  * Compute net updates for the block.
  * The member variable #maxTimestep will be updated with the
@@ -388,7 +401,7 @@ void SWE_DimensionalSplittingStarPU::computeNumericalFluxesHorizontal() {
     starpu_variable_data_register(args + 14, STARPU_MAIN_RAM, (uintptr_t)this->hStar.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2) );
     starpu_variable_data_register(args + 15, STARPU_MAIN_RAM, (uintptr_t)this->huStar.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2) );
 
-	starpu_mpi_task_insert(MPI_COMM_WORLD, (void *)&computeNumericalFluxesHorizontalKernel,
+	starpu_mpi_task_insert(MPI_COMM_WORLD, &computeNumericalFluxesHorizontalCodelet,
 						   STARPU_RW, args[0],
 						   STARPU_RW, args[1],
 						   STARPU_RW, args[2],
@@ -408,25 +421,27 @@ void SWE_DimensionalSplittingStarPU::computeNumericalFluxesHorizontal() {
 						   0);
 }
 
-void computeNumericalFluxesVerticalKernel(SWE_DimensionalSplittingStarPU* block, float* h_data, float* hu_data, float* hv_data, float* b_data,
-								float* hNetUpdatesLeft_data, float* hNetUpdatesRight_data, float* huNetUpdatesLeft_data, float* huNetUpdatesRight_data,
-								float* hNetUpdatesBelow_data, float* hNetUpdatesAbove_data, float* hvNetUpdatesBelow_data, float* hvNetUpdatesAbove_data,
-								float* hStar_data, float* huStar_data) {
+static void computeNumericalFluxesVerticalKernel(void *handles[], void *arg) {
+//void computeNumericalFluxesVerticalKernel(SWE_DimensionalSplittingStarPU* block, float* h_data, float* hu_data, float* hv_data, float* b_data,
+//								float* hNetUpdatesLeft_data, float* hNetUpdatesRight_data, float* huNetUpdatesLeft_data, float* huNetUpdatesRight_data,
+//								float* hNetUpdatesBelow_data, float* hNetUpdatesAbove_data, float* hvNetUpdatesBelow_data, float* hvNetUpdatesAbove_data,
+//								float* hStar_data, float* huStar_data) {
 	// Set data pointers correctly
-	block->getModifiableWaterHeight().setRawPointer(h_data);
-	block->getModifiableMomentumHorizontal().setRawPointer(hu_data);
-	block->getModifiableMomentumVertical().setRawPointer(hv_data);
-	block->getModifiableBathymetry().setRawPointer(b_data);
-	block->hNetUpdatesLeft.setRawPointer(hNetUpdatesLeft_data);
-	block->hNetUpdatesRight.setRawPointer(hNetUpdatesRight_data);
-	block->huNetUpdatesLeft.setRawPointer(huNetUpdatesLeft_data);
-	block->huNetUpdatesRight.setRawPointer(huNetUpdatesRight_data);
-	block->hNetUpdatesBelow.setRawPointer(hNetUpdatesBelow_data);
-	block->hNetUpdatesAbove.setRawPointer(hNetUpdatesAbove_data);
-	block->hvNetUpdatesBelow.setRawPointer(hvNetUpdatesBelow_data);
-	block->hvNetUpdatesAbove.setRawPointer(hvNetUpdatesAbove_data);
-	block->hStar.setRawPointer(hStar_data);
-	block->huStar.setRawPointer(huStar_data);
+	SWE_DimensionalSplittingStarPU* block = (SWE_DimensionalSplittingStarPU*) handles[0];
+	block->getModifiableWaterHeight().setRawPointer((float*) handles[1]);
+	block->getModifiableMomentumHorizontal().setRawPointer((float*) handles[2]);
+	block->getModifiableMomentumVertical().setRawPointer((float*) handles[3]);
+	block->getModifiableBathymetry().setRawPointer((float*) handles[4]);
+	block->hNetUpdatesLeft.setRawPointer((float*) handles[5]);
+	block->hNetUpdatesRight.setRawPointer((float*) handles[6]);
+	block->huNetUpdatesLeft.setRawPointer((float*) handles[7]);
+	block->huNetUpdatesRight.setRawPointer((float*) handles[8]);
+	block->hNetUpdatesBelow.setRawPointer((float*) handles[9]);
+	block->hNetUpdatesAbove.setRawPointer((float*) handles[10]);
+	block->hvNetUpdatesBelow.setRawPointer((float*) handles[11]);
+	block->hvNetUpdatesAbove.setRawPointer((float*) handles[12]);
+	block->hStar.setRawPointer((float*) handles[13]);
+	block->huStar.setRawPointer((float*) handles[14]);
 	
 	// Start compute clocks
 	block->computeClock = clock();
@@ -477,6 +492,13 @@ void computeNumericalFluxesVerticalKernel(SWE_DimensionalSplittingStarPU* block,
 	block->computeTimeWall += (float) (block->endTime.tv_nsec - block->startTime.tv_nsec) / 1E9;
 }
 
+static struct starpu_codelet computeNumericalFluxesVerticalCodelet =
+{
+	.cpu_funcs = {computeNumericalFluxesVerticalKernel}, /* cpu implementation(s) of the routine */
+	.nbuffers = 3, /* number of data handles referenced by this routine */
+	.modes = {STARPU_R, STARPU_R, STARPU_RW} /* access modes for each data handle */
+};
+
 /**
  * Compute net updates for the block.
  * The member variable #maxTimestep will be updated with the
@@ -501,7 +523,7 @@ void SWE_DimensionalSplittingStarPU::computeNumericalFluxesVertical() {
     starpu_variable_data_register(args + 13, STARPU_MAIN_RAM, (uintptr_t)this->hStar.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2) );
     starpu_variable_data_register(args + 14, STARPU_MAIN_RAM, (uintptr_t)this->huStar.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2) );
 
-	starpu_mpi_task_insert(MPI_COMM_WORLD, (void *)&computeNumericalFluxesVerticalKernel,
+	starpu_mpi_task_insert(MPI_COMM_WORLD, &computeNumericalFluxesVerticalCodelet,
 						   STARPU_RW, args[0],
 						   STARPU_RW, args[1],
 						   STARPU_RW, args[2],
