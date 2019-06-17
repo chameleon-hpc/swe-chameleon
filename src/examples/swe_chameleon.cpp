@@ -38,6 +38,9 @@
 #include <vector>
 #include <numeric>
 
+#ifdef ITT
+#include <ittnotify.h>
+#endif
 #include "tools/args.hh"
 
 #ifdef WRITENETCDF
@@ -83,6 +86,7 @@ int main(int argc, char** argv) {
 	args.addOption("y-blockcount", 'j', "Block Count in y-direction", tools::Args::Required, false);
 	args.addOption("x-imbalance", 'u', "Imbalance in x-direction", tools::Args::Required, false);
 	args.addOption("y-imbalance", 'v', "Imbalance in y-direction", tools::Args::Required, false);
+	args.addOption("write", 'w', "Write results", tools::Args::Required, false);
 
 	// Parse command line arguments
 	tools::Args::Result ret = args.parse(argc, argv);
@@ -101,6 +105,9 @@ int main(int argc, char** argv) {
 	int nxRequested = args.getArgument<int>("resolution-horizontal");
 	int nyRequested = args.getArgument<int>("resolution-vertical");
 	std::string outputBaseName = args.getArgument<std::string>("output-basepath");
+	bool write = false;
+	if(args.isSet("write") && args.getArgument<int>("write") == 1)
+		write = true;
 
 	// Initialize Scenario
 #ifdef ASAGI
@@ -288,7 +295,8 @@ int main(int argc, char** argv) {
 	boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
 	boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
 	boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
-	writeBlock.initScenario(scenario, boundaries);
+	if(write && myRank == 0)
+		writeBlock.initScenario(scenario, boundaries);
 
 	// Prepare writeBlock for usage with One-Sided Communication
   	MPI_Win writeBlockWin_h;
@@ -305,7 +313,7 @@ int main(int argc, char** argv) {
 	// Construct a netCDF writer
 	std::string outputFileName = outputBaseName;
 	NetCdfWriter* writer;
-	if(myRank == 0) {
+	if(write && myRank == 0) {
 		writer = new NetCdfWriter(
 			outputFileName,
 			writeBlock.getBathymetry(),
@@ -332,7 +340,7 @@ int main(int argc, char** argv) {
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	if(myRank == 0) {
+	if(write && myRank == 0) {
 		writer->writeTimeStep(
 			writeBlock.getWaterHeight(),
 			writeBlock.getMomentumHorizontal(),
@@ -381,6 +389,9 @@ int main(int argc, char** argv) {
 	float timestep;
 	unsigned int iterations = 0;
 
+#ifdef ITT
+	__itt_resume();	
+#endif
 	// loop over the count of requested checkpoints
 	for(int i = 0; i < numberOfCheckPoints; i++) {
 		// Simulate until the checkpoint is reached
@@ -499,30 +510,32 @@ int main(int argc, char** argv) {
 		//printf("Write timestep to rank 0 (%fs)\n", t);
 
 		// write output
-		MPI_Win_fence(0, writeBlockWin_h);
-		MPI_Win_fence(0, writeBlockWin_hu);
-		MPI_Win_fence(0, writeBlockWin_hv);
-		for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-			for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
-				// Send all data to rank 0, which will write it to a single file
-				// send each column separately
-				for(int j=1; j<blocks[x][y]->nx+1; j++) {
-					int x_pos = x*x_blocksize;
-					int y_pos = y*y_blocksize;
-					MPI_Put(blocks[x][y]->h.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
-						0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_h);
-					MPI_Put(blocks[x][y]->hu.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
-						0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_hu);
-					MPI_Put(blocks[x][y]->hv.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
-						0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_hv);
+		if(write) {
+			MPI_Win_fence(0, writeBlockWin_h);
+			MPI_Win_fence(0, writeBlockWin_hu);
+			MPI_Win_fence(0, writeBlockWin_hv);
+			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+					// Send all data to rank 0, which will write it to a single file
+					// send each column separately
+					for(int j=1; j<blocks[x][y]->nx+1; j++) {
+						int x_pos = x*x_blocksize;
+						int y_pos = y*y_blocksize;
+						MPI_Put(blocks[x][y]->h.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
+							0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_h);
+						MPI_Put(blocks[x][y]->hu.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
+							0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_hu);
+						MPI_Put(blocks[x][y]->hv.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
+							0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_hv);
+					}
 				}
 			}
+			MPI_Win_fence(0, writeBlockWin_h);
+			MPI_Win_fence(0, writeBlockWin_hu);
+			MPI_Win_fence(0, writeBlockWin_hv);
 		}
-		MPI_Win_fence(0, writeBlockWin_h);
-		MPI_Win_fence(0, writeBlockWin_hu);
-		MPI_Win_fence(0, writeBlockWin_hv);
 
-		if(myRank == 0) {
+		if(write && myRank == 0) {
 			//printf("Write timestep (%fs)\n", t);
 			writer->writeTimeStep(
 				writeBlock.getWaterHeight(),
@@ -532,6 +545,9 @@ int main(int argc, char** argv) {
 		}
 		MPI_Barrier(MPI_COMM_WORLD);
 	}
+#ifdef ITT
+	__itt_detach();	
+#endif
 
 
 	/************

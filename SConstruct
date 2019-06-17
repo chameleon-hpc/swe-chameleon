@@ -181,6 +181,11 @@ vars.AddVariables(
         # FLOP measuring
         BoolVariable('countflops',
                      'enable flop counting; defines the macro COUNTFLOPS',
+                     False),
+
+        # ITT interface
+        BoolVariable('itt',
+                     'enable itt api interface',
                      False)
 )
 
@@ -530,6 +535,10 @@ if env['asagi']:
     if 'asagiInputDir' in env:
         env.Append(CPPFLAGS=['\'-DASAGI_INPUT_DIR="'
                              + env['asagiInputDir'] + '"\''])
+
+if env['itt']:
+    env.Append(CPPDEFINES=['ITT'])
+    env.Append(LIBS=['ittnotify'])
 
 # xml runtime parameters
 if env['xmlRuntime']:  # TODO

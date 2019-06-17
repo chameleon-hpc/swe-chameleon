@@ -51,7 +51,7 @@ charm:
 	scons openmp=true solver=hybrid parallelization=charm compiler=intel
 
 chameleon:
-	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=chameleon
+	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=chameleon itt=true
 
 chameleon_debug:
 	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=chameleon compileMode=debug
