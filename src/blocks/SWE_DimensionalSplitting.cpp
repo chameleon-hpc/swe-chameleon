@@ -192,6 +192,7 @@ void SWE_DimensionalSplitting::updateUnknowns (float dt) {
 	// this assertion has to hold since the intermediary star states were calculated internally using a timestep width of maxTimestep
 	assert(std::abs(dt - maxTimestep) < 0.00001);
 	//update cell averages with the net-updates
+	#pragma omp parallel for collapse(2)
 	for (int x = 1; x < nx+1; x++) {
 		for (int y = 1; y < ny + 1; y++) {
 			h[x][y] = hStar[x][y] - (maxTimestep / dx) * (hNetUpdatesBelow[x][y] + hNetUpdatesAbove[x][y]);
