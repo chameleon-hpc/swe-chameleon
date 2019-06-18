@@ -584,7 +584,7 @@ int main(int argc, char** argv) {
     }
     chameleon_finalize();
 
-	if(myRank == 0)
+	if(write && myRank == 0)
 		delete writer;
 	MPI_Finalize();
 
