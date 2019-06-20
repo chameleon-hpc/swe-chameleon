@@ -435,9 +435,11 @@ int main(int argc, char** argv) {
 
 			#pragma omp parallel 
 			{
+				int xLower = xBounds[myXRank]; int xUpper = xBounds[myXRank+1];
+				int yLower = yBounds[myYRank]; int yUpper = yBounds[myYRank+1];
 				#pragma omp for collapse(2)
-				for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-					for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+				for(int x = xLower; x < xUpper; x++) {
+					for(int y = yLower; y < yUpper; y++) {
 						// compute numerical flux on each edge
 						blocks[x][y]->computeNumericalFluxesHorizontal();
 					}
@@ -465,9 +467,11 @@ int main(int argc, char** argv) {
 			reductionTime += getTime()-lastTime; lastTime = getTime();
 			#pragma omp parallel
 			{
+				int xLower = xBounds[myXRank]; int xUpper = xBounds[myXRank+1];
+				int yLower = yBounds[myYRank]; int yUpper = yBounds[myYRank+1];
 				#pragma omp for collapse(2)
-				for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-					for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+				for(int x = xLower; x < xUpper; x++) {
+					for(int y = yLower; y < yUpper; y++) {
 						// compute numerical flux on each edge
 						blocks[x][y]->maxTimestep = timestep;
 						blocks[x][y]->computeNumericalFluxesVertical();
@@ -481,9 +485,11 @@ int main(int argc, char** argv) {
 			taskWaitVerticalTime += getTime()-lastTime; lastTime = getTime();
 			//if(myRank == 0) printf("After computeNumericalFluxesVertical() Task Wait %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 			
+			int xLower = xBounds[myXRank]; int xUpper = xBounds[myXRank+1];
+			int yLower = yBounds[myYRank]; int yUpper = yBounds[myYRank+1];
 			#pragma omp parallel for collapse(2)
-			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+			for(int x = xLower; x < xUpper; x++) {
+				for(int y = yLower; y < yUpper; y++) {
 					// update the cell values
 					blocks[x][y]->updateUnknowns(timestep);
 				}
