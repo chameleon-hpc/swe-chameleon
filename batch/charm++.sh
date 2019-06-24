@@ -34,5 +34,5 @@ export I_MPI_DEBUG=5
 export OMP_PROC_BIND=close
 
 ### Execute your application
-echo /home/sc427635/sw/charm/bin/charmrun +p48 ./build/SWE_intel_release_charm_omp_hybrid -t 1 -n 1 -x 1024 -y 1024 -o ./output/charm_batch
-/home/sc427635/sw/charm/bin/charmrun +p48 ./build/SWE_intel_release_charm_omp_hybrid -t 1 -n 1 -x 1024 -y 1024 -o ./output/charm_batch
+echo /home/sc427635/sw/charm/bin/charmrun +p48 ./cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_hybrid -t 1 -n 1 -x 1024 -y 1024 -o ./output/charm_batch
+/home/sc427635/sw/charm/bin/charmrun +p48 ./cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_hybrid -t 1 -n 1 -x 1024 -y 1024 -o ./output/charm_batch

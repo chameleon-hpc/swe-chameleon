@@ -38,5 +38,5 @@ export I_MPI_DEBUG=5
 export OMP_PROC_BIND=close
 
 ### Execute your application
-echo /home/sc427635/sw/upcxx/bin/upcxx-run -n 4 ./build/SWE_intel_release_upcxx_omp_hybrid -t 1 -n 1 -x 1024 -y 1024 -o ./output/upcxx
-/home/sc427635/sw/upcxx/bin/upcxx-run -n 4 ./build/SWE_intel_release_upcxx_omp_hybrid -t 1 -n 1 -x 1024 -y 1024 -o ./output/upcxx
+echo /home/sc427635/sw/upcxx/bin/upcxx-run -n 4 ./cpu_set_wrapper.sh ./build/SWE_intel_release_upcxx_omp_hybrid -t 1 -n 1 -x 1024 -y 1024 -o ./output/upcxx
+/home/sc427635/sw/upcxx/bin/upcxx-run -n 4 ./cpu_set_wrapper.sh ./build/SWE_intel_release_upcxx_omp_hybrid -t 1 -n 1 -x 1024 -y 1024 -o ./output/upcxx
