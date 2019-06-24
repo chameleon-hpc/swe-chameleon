@@ -33,6 +33,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <time.h>
 
 //-------- Methods for Visualistion of Results --------
 
@@ -114,6 +115,5 @@ inline std::string generateContainerFileName(std::string baseName, int timeStep)
 	FileName << baseName<<"_"<<timeStep<<".pvts";
 	return FileName.str();
 };
-
 
 #endif

@@ -57,12 +57,6 @@
 
 #include "blocks/SWE_DimensionalSplittingChameleon.hh"
 
-double getTime() {
-	struct timespec time;
-	clock_gettime(CLOCK_MONOTONIC, &time);
-	return (double) time.tv_sec + ((double)time.tv_nsec)/1E9;
-}
-
 int main(int argc, char** argv) {
 
 	/**************

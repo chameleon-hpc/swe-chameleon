@@ -34,6 +34,12 @@
 #include <unistd.h>
 #include "chameleon.h"
 
+double getTime() {
+	struct timespec time;
+	clock_gettime(CLOCK_MONOTONIC, &time);
+	return (double) time.tv_sec + ((double)time.tv_nsec)/1E9;
+}
+
 /*
  * Constructor of a SWE_DimensionalSplittingChameleon Block.
  * Computational domain is [1,...,nx]*[1,...,ny]
@@ -323,8 +329,7 @@ void computeNumericalFluxesHorizontalKernel(SWE_DimensionalSplittingChameleon* b
 	block->huStar.setRawPointer(huStar_data);
 	
 	// Start compute clocks
-	block->computeClock = clock();
-	clock_gettime(CLOCK_MONOTONIC, &(block->startTime));
+	block->computeClock = getTime();
 
 	//maximum (linearized) wave speed within one iteration
 	float maxHorizontalWaveSpeed = (float) 0.;
@@ -352,12 +357,8 @@ void computeNumericalFluxesHorizontalKernel(SWE_DimensionalSplittingChameleon* b
 	block->maxTimestep = (float) .4 * (block->dx / maxHorizontalWaveSpeed);
 
 	// Accumulate compute time
-	block->computeClock = clock() - block->computeClock;
-	block->computeTime += (float) block->computeClock / CLOCKS_PER_SEC;
 
-	clock_gettime(CLOCK_MONOTONIC, &(block->endTime));
-	block->computeTimeWall += (block->endTime.tv_sec - block->startTime.tv_sec);
-	block->computeTimeWall += (float) (block->endTime.tv_nsec - block->startTime.tv_nsec) / 1E9;
+	block->computeTimeWall += getTime() - block->computeClock;
 
 	*maxTimestep = block->maxTimestep;
 	//usleep(10000);
@@ -415,8 +416,7 @@ void computeNumericalFluxesVerticalKernel(SWE_DimensionalSplittingChameleon* blo
 	block->huStar.setRawPointer(huStar_data);
 	
 	// Start compute clocks
-	block->computeClock = clock();
-	clock_gettime(CLOCK_MONOTONIC, &(block->startTime));
+	block->computeClock = getTime();
 
 	//maximum (linearized) wave speed within one iteration
 	float maxVerticalWaveSpeed = (float) 0.;
@@ -455,12 +455,7 @@ void computeNumericalFluxesVerticalKernel(SWE_DimensionalSplittingChameleon* blo
 	#endif // NDEBUG
 
 	// Accumulate compute time
-	block->computeClock = clock() - block->computeClock;
-	block->computeTime += (float) block->computeClock / CLOCKS_PER_SEC;
-
-	clock_gettime(CLOCK_MONOTONIC, &(block->endTime));
-	block->computeTimeWall += (block->endTime.tv_sec - block->startTime.tv_sec);
-	block->computeTimeWall += (float) (block->endTime.tv_nsec - block->startTime.tv_nsec) / 1E9;
+	block->computeTimeWall += getTime() - block->computeClock;
 }
 
 /**
@@ -501,8 +496,7 @@ void SWE_DimensionalSplittingChameleon::computeNumericalFluxesVertical() {
  */
 void SWE_DimensionalSplittingChameleon::updateUnknowns (float dt) {
 	// Start compute clocks
-	computeClock = clock();
-	clock_gettime(CLOCK_MONOTONIC, &startTime);
+	computeClock = getTime();
 
 	//printf("%d: Update with %f and %f\n", myRank, dt, maxTimestep);
 
@@ -519,10 +513,5 @@ void SWE_DimensionalSplittingChameleon::updateUnknowns (float dt) {
 	}
 
 	// Accumulate compute time
-	computeClock = clock() - computeClock;
-	computeTime += (float) computeClock / CLOCKS_PER_SEC;
-
-	clock_gettime(CLOCK_MONOTONIC, &endTime);
-	computeTimeWall += (endTime.tv_sec - startTime.tv_sec);
-	computeTimeWall += (float) (endTime.tv_nsec - startTime.tv_nsec) / 1E9;
+	computeTimeWall += getTime() - computeClock;
 }

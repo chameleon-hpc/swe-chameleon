@@ -91,8 +91,11 @@ class SWE_DimensionalSplittingChameleon : public SWE_Block<Float2DNative> {
 		Float2DNative hvNetUpdatesAbove;
 
 		// timer
-		std::clock_t computeClock;
+		float computeClock;
 		struct timespec startTime;
 		struct timespec endTime;
 };
+
+double getTime();
+
 #endif /* SWEDIMENSIONALSPLITTING_HH_ */
