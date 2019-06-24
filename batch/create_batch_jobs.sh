@@ -2,12 +2,13 @@
 
 #EXPERIMENTS=(chameleon charm++ upcxx mpi)
 EXPERIMENTS=(chameleon)
-NUM_NODES=(1 2)
+SIZES=(2048 4096 8192)
+NODE_COUNTS=(1 2)
+NUM_TASKS_PER_NODE=2
 # Claix 16 settings
 NUM_CPUS_PER_TASK=12
 PROJECT=jara0001
 PARTITION=c16m
-
 CLUSTER=clx16
 
 # Claix 18 settings
@@ -20,10 +21,20 @@ fi
 
 for EXP in ${EXPERIMENTS[@]}
 do
-	for NUM in ${NUM_NODES[@]}
+	for NODE_COUNT in ${NODE_COUNTS[@]}
 	do
-		COMMAND="sbatch --partition=$PARTITION --nodes=$NUM --ntasks-per-node=2 --cpus-per-task=$NUM_CPUS_PER_TASK --job-name=swe_${CLUSTER}_${EXP}_${NUM} --output=output/swe_${CLUSTER}_${EXP}_${NUM}.txt --account=$PROJECT ${EXP}.sh"
-		echo $COMMAND
-		$COMMAND
+		for SIZE in ${SIZES[@]}
+		do
+			# Charm++ settings
+			if [ "${EXP}" = "charm" ]; then
+				NUM_TASKS_PER_NODE=$(($NUM_TASKS_PER_NODE * $NUM_CPUS_PER_TASK))
+				NUM_CPUS_PER_TASK=1
+			fi
+
+			OMP_NUM_THREADS=$NUM_CPUS_PER_TASK
+			COMMAND="sbatch --partition=$PARTITION --nodes=$NODE_COUNT --ntasks-per-node=$NUM_CPUS_PER_TASK --cpus-per-task=$NUM_CPUS_PER_TASK --job-name=swe_${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE} --output=output/swe_${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE}.txt --account=$PROJECT --export=NODE_COUNT,NUM_TASKS_PER_NODE,OMP_NUM_THREADS,SIZE ${EXP}.sh"
+			echo $COMMAND
+			$COMMAND
+		done
 	done
 done

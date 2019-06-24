@@ -1,8 +1,10 @@
-#!/usr/local_rwth/bin/zsh
+#!/bin/bash
 
 #EXPERIMENTS=(chameleon charm++ upcxx mpi)
 EXPERIMENTS=(chameleon)
-NUM_NODES=(1 2)
+#SIZES=(2048 4096 8192)
+SIZES=(2048)
+NODE_COUNTS=(1 2)
 # Claix 16 settings
 NUM_CPUS_PER_TASK=12
 PROJECT=jara0001
@@ -20,10 +22,15 @@ fi
 
 for EXP in ${EXPERIMENTS[@]}
 do
-	for NUM in ${NUM_NODES[@]}
+	echo "config,walltime" > ${EXP}.csv
+	for NODE_COUNT in ${NODE_COUNTS[@]}
 	do
-		COMMAND="cat output/swe_${CLUSTER}_${EXP}_${NUM}.txt | grep [RESULT] | sort"
-		echo $COMMAND
-		$COMMAND
+		for SIZE in ${SIZES[@]}
+		do
+			COMMAND="cat output/swe_${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE}.txt"
+			#echo $COMMAND
+			OUTPUT="${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE},"$($COMMAND | grep RESULT | sort | tail -n 1 | sed 's/[a-zA-Z:, ]//g')
+			echo $OUTPUT >> ${EXP}.csv
+		done
 	done
 done
