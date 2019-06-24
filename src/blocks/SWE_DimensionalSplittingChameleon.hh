@@ -55,7 +55,7 @@ class SWE_DimensionalSplittingChameleon : public SWE_Block<Float2DNative> {
 		void updateUnknowns(float dt);
 
 		float computeTime;
-		float computeTimeWall;
+		double computeTimeWall;
 
 		SWE_DimensionalSplittingChameleon* left;
 		SWE_DimensionalSplittingChameleon* right;
@@ -91,7 +91,7 @@ class SWE_DimensionalSplittingChameleon : public SWE_Block<Float2DNative> {
 		Float2DNative hvNetUpdatesAbove;
 
 		// timer
-		float computeClock;
+		double computeClock;
 		struct timespec startTime;
 		struct timespec endTime;
 };
