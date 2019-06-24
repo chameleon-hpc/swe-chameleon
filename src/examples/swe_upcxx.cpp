@@ -351,6 +351,7 @@ int main(int argc, char** argv) {
 	 ************/
 
 	printf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", myUpcxxRank, simulation.computeTime, simulation.computeTimeWall, wallTime); 
+	printf("RESULT: %f\n", wallTime); 
 
 	upcxx::finalize();
 

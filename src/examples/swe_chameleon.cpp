@@ -564,7 +564,7 @@ int main(int argc, char** argv) {
 	//TODO: Get times
 
 	//printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[xBounds[myXRank]][myYRank]->computeTime, blocks[xBounds[myXRank]][myYRank]->computeTimeWall, wallTime);
-	printf("Chameleon: Computation ended, walltime:%f\n", wallTime);
+	printf("RESULT: Chameleon: Computation ended, walltime:%f\n", wallTime);
 
 	printf("%d: setGhostLayerTime=%f\n", myRank, (float)setGhostLayerTime);
 	printf("%d: receiveGhostLayerTime=%f\n", myRank, (float)receiveGhostLayerTime);

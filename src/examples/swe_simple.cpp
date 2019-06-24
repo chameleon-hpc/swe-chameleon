@@ -290,6 +290,7 @@ int main(int argc, char** argv) {
 
 
 	printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", simulation.computeTime, simulation.computeTimeWall, wallTime); 
+	printf("RESULT: %f\n", wallTime); 
 
 	return 0;
 }

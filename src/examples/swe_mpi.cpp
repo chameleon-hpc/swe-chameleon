@@ -315,6 +315,7 @@ int main(int argc, char** argv) {
 	 ************/
 
 	printf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", myMpiRank, simulation.computeTime, simulation.computeTimeWall, wallTime); 
+	printf("RESULT: %f\n", wallTime); 
 
 	simulation.freeMpiType();
 	MPI_Finalize();

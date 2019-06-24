@@ -1753,6 +1753,7 @@ void SWE_DimensionalSplittingCharm::_serial_7() {
       wallTime += (endTime.tv_sec - startTime.tv_sec);
       wallTime += (float) (endTime.tv_nsec - startTime.tv_nsec) / 1E9;
       CkPrintf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", thisIndex, computeTime, computeTimeWall, wallTime);
+      CkPrintf("RESULT: %f\n", wallTime);
       mainProxy.done(thisIndex);
      }
     
