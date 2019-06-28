@@ -389,10 +389,11 @@ void SWE_DimensionalSplittingChameleon::computeNumericalFluxesHorizontal() {
     args[14] = chameleon_map_data_entry_create(this->hStar.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
     args[15] = chameleon_map_data_entry_create(this->huStar.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
 	
-	int32_t res = chameleon_add_task_manual(
+	cham_migratable_task_t *cur_task = chameleon_create_task(
         (void *)&computeNumericalFluxesHorizontalKernel,
         16, // number of args
         args);
+	int32_t res = chameleon_add_task(cur_task);
 }
 
 void computeNumericalFluxesVerticalKernel(SWE_DimensionalSplittingChameleon* block, float* h_data, float* hu_data, float* hv_data, float* b_data,
@@ -482,10 +483,11 @@ void SWE_DimensionalSplittingChameleon::computeNumericalFluxesVertical() {
     args[13] = chameleon_map_data_entry_create(this->hStar.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
     args[14] = chameleon_map_data_entry_create(this->huStar.getRawPointer(), sizeof(float)*(nx + 1)*(ny + 2), CHAM_OMP_TGT_MAPTYPE_TO | CHAM_OMP_TGT_MAPTYPE_FROM);
 	
-	int32_t res = chameleon_add_task_manual(
+	cham_migratable_task_t *cur_task = chameleon_create_task(
         (void *)&computeNumericalFluxesVerticalKernel,
         15, // number of args
         args);
+	int32_t res = chameleon_add_task(cur_task);
 }
 
 /**
