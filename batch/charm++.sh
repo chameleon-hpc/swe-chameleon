@@ -20,5 +20,5 @@ export I_MPI_DEBUG=5
 export OMP_PROC_BIND=close
 
 ### Execute your application
-echo /home/sc427635/sw/charm/bin/charmrun +p$NUM_TASKS_PER_NODE ++mpiexec ./cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_hybrid -t 1 -n 1 -x $SIZE -y $SIZE -o ./output/charm_batch
-/home/sc427635/sw/charm/bin/charmrun +p$NUM_TASKS_PER_NODE ++mpiexec ./cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_hybrid -t 1 -n 1 -x $SIZE -y $SIZE -o ./output/charm_batch
+echo /home/sc427635/sw/charm/bin/charmrun +p$NUM_TASKS_PER_NODE ++mpiexec ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_hybrid -t 1 -n 1 -x $SIZE -y $SIZE -o ./output/charm_batch
+/home/sc427635/sw/charm/bin/charmrun +p$NUM_TASKS_PER_NODE ++mpiexec ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_hybrid -t 1 -n 1 -x $SIZE -y $SIZE -o ./output/charm_batch

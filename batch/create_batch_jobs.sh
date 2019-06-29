@@ -31,8 +31,13 @@ do
 				NUM_CPUS_PER_TASK=1
 			fi
 
-			OMP_NUM_THREADS=$NUM_CPUS_PER_TASK
-			COMMAND="sbatch --partition=$PARTITION --nodes=$NODE_COUNT --ntasks-per-node=$NUM_CPUS_PER_TASK --cpus-per-task=$NUM_CPUS_PER_TASK --job-name=swe_${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE} --output=output/swe_${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE}.txt --account=$PROJECT --export=NODE_COUNT,NUM_TASKS_PER_NODE,OMP_NUM_THREADS,SIZE ${EXP}.sh"
+			export OMP_NUM_THREADS=$NUM_CPUS_PER_TASK
+			export SIZE=$SIZE
+			export NODE_COUNT=$NODE_COUNT
+			export EXP=$EXP
+			export CLUSTER=CLUSTER
+			COMMAND="sbatch --partition=$PARTITION --nodes=${NODE_COUNT} --ntasks-per-node=$NUM_TASKS_PER_NODE --cpus-per-task=$NUM_CPUS_PER_TASK --job-name=swe_${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE} --output=output/swe_${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE}.txt --account=$PROJECT ${EXP}.sh"
+			# --export=NODE_COUNT,NUM_TASKS_PER_NODE,OMP_NUM_THREADS,SIZE 
 			echo $COMMAND
 			$COMMAND
 		done
