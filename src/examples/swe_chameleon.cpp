@@ -553,11 +553,11 @@ int main(int argc, char** argv) {
 	float minTime=1000000.; float maxTime=0.;float avgTime=0.; int blockCount = 0;
 	for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 		for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
-			if(blocks[xBounds[myXRank]][myYRank]->computeTimeWall < minTime)
-				minTime = blocks[xBounds[myXRank]][myYRank]->computeTimeWall;
-			if(blocks[xBounds[myXRank]][myYRank]->computeTimeWall > maxTime)
-				maxTime = blocks[xBounds[myXRank]][myYRank]->computeTimeWall;
-			avgTime += blocks[xBounds[myXRank]][myYRank]->computeTimeWall;
+			if(blocks[x][y]->computeTimeWall < minTime)
+				minTime = blocks[x][y]->computeTimeWall;
+			if(blocks[x][y]->computeTimeWall > maxTime)
+				maxTime = blocks[x][y]->computeTimeWall;
+			avgTime += blocks[x][y]->computeTimeWall;
 			blockCount++;
 		}
 	}
