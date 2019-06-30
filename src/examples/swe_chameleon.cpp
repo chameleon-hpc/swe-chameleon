@@ -400,7 +400,9 @@ int main(int argc, char** argv) {
 
 			//TODO: exchange bathymetry
 
-			//#pragma omp parallel for
+			int xLower = xBounds[myXRank]; int xUpper = xBounds[myXRank+1];
+			int yLower = yBounds[myYRank]; int yUpper = yBounds[myYRank+1];
+			#pragma omp parallel for collapse(2)
 			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 					// set values in ghost cells.
@@ -412,7 +414,9 @@ int main(int argc, char** argv) {
 			setGhostLayerTime += getTime()-lastTime; lastTime = getTime();
 
 			//if(myRank == 0) printf("After setGhostLayer() %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
-			//#pragma omp parallel for
+			int xLower = xBounds[myXRank]; int xUpper = xBounds[myXRank+1];
+			int yLower = yBounds[myYRank]; int yUpper = yBounds[myYRank+1];
+			#pragma omp parallel for collapse(2)
 			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
 				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
 					blocks[x][y]->receiveGhostLayer();
