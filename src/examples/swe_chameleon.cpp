@@ -503,8 +503,8 @@ int main(int argc, char** argv) {
 			t += timestep;
 			iterations++;
 
-			MPI_Barrier(MPI_COMM_WORLD);
-			printf("%d: Step, current time:%f\n", myRank, t);
+			if(myRank == 0)
+				printf("%d: Step, current time:%f\n", myRank, t);
 		}
 
 		//printf("Write timestep to rank 0 (%fs)\n", t);
@@ -543,7 +543,8 @@ int main(int argc, char** argv) {
 				writeBlock.getMomentumVertical(),
 				t);
 		}
-		MPI_Barrier(MPI_COMM_WORLD);
+		if(write)
+			MPI_Barrier(MPI_COMM_WORLD);
 	}
 #ifdef ITT
 	__itt_detach();	
