@@ -334,7 +334,7 @@ void computeNumericalFluxesHorizontalKernel(SWE_DimensionalSplittingChameleon* b
 	//maximum (linearized) wave speed within one iteration
 	float maxHorizontalWaveSpeed = (float) 0.;
 	float maxVerticalWaveSpeed = (float) 0.;
-	solver::Hybrid<float> localSolver = block->solver;
+	solver::AugRie<float> localSolver = block->solver;
 
 	// x-sweep, compute the actual domain plus ghost rows above and below
 	// iterate over cells on the x-axis, leave out the last column (two cells per computation)
@@ -421,7 +421,7 @@ void computeNumericalFluxesVerticalKernel(SWE_DimensionalSplittingChameleon* blo
 
 	//maximum (linearized) wave speed within one iteration
 	float maxVerticalWaveSpeed = (float) 0.;
-	solver::Hybrid<float> localSolver = block->solver;
+	solver::AugRie<float> localSolver = block->solver;
 
 	// set intermediary Q* states
 	//#pragma omp for collapse(2)

@@ -37,7 +37,7 @@
 #include <time.h>
 #include <mpi.h>
 
-#include "solvers/Hybrid.hpp"
+#include "solvers/AugRie.hpp"
 
 class SWE_DimensionalSplittingChameleon : public SWE_Block<Float2DNative> {
 	public:
@@ -71,7 +71,7 @@ class SWE_DimensionalSplittingChameleon : public SWE_Block<Float2DNative> {
 		void setRank(int rank);
 		MPI_Datatype HORIZONTAL_BOUNDARY;
 
-		solver::Hybrid<float> solver;
+		solver::AugRie<float> solver;
 
 		// Temporary values after x-sweep and before y-sweep
 		Float2DNative hStar;
