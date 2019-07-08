@@ -31,30 +31,30 @@ debug_charm_test:
 	/home/jurek/repository/tum/ccs_tools/bin/charmdebug +p4 ./build/SWE_gnu_release_charm_hybrid -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/charm
 
 #ampi:
-#	scons writeNetCDF=True openmp=False solver=hybrid parallelization=ampi
+#	scons writeNetCDF=True openmp=False parallelization=ampi
 
 smp:
-	scons writeNetCDF=True openmp=True solver=hybrid parallelization=none asagi=true asagiDir=${ASAGI_PATH}
+	scons writeNetCDF=True openmp=True parallelization=none asagi=true asagiDir=${ASAGI_PATH}
 
 mpi_hybrid:
-	scons writeNetCDF=True openmp=True solver=hybrid parallelization=mpi compiler=intel
+	scons writeNetCDF=True openmp=True parallelization=mpi compiler=intel
 mpi:
-	scons writeNetCDF=True openmp=false solver=hybrid parallelization=mpi asagi=true asagiDir=${ASAGI_PATH}
+	scons writeNetCDF=True openmp=false parallelization=mpi asagi=true asagiDir=${ASAGI_PATH}
 
 upcxx_hybrid:
-	scons writeNetCDF=True openmp=True solver=hybrid parallelization=upcxx compiler=intel
-#	scons writeNetCDF=True openmp=True solver=hybrid parallelization=upcxx asagi=true asagiDir=${ASAGI_PATH} netCDFDir=${NETCDF_BASE}
+	scons writeNetCDF=True openmp=True parallelization=upcxx compiler=intel
+#	scons writeNetCDF=True openmp=True parallelization=upcxx asagi=true asagiDir=${ASAGI_PATH} netCDFDir=${NETCDF_BASE}
 upcxx:
-	scons openmp=false solver=hybrid parallelization=upcxx compiler=intel
+	scons openmp=false parallelization=upcxx compiler=intel
 
 charm:
-	scons openmp=true solver=hybrid parallelization=charm compiler=intel
+	scons openmp=true parallelization=charm compiler=intel
 
 chameleon:
-	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=chameleon
+	scons writeNetCDF=True compiler=intel openmp=true parallelization=chameleon
 
 chameleon_debug:
-	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=chameleon compileMode=debug
+	scons writeNetCDF=True compiler=intel openmp=true parallelization=chameleon compileMode=debug
 
 
 
