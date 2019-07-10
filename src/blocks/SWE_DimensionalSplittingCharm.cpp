@@ -5,7 +5,7 @@
 SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(CkMigrateMessage *msg) {}
 
 SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(int nx, int ny, float dx, float dy, float originX, float originY, int posX, int posY,
-							BoundaryType boundaries[], std::string outputFilename, std::string bathymetryFilename, std::string displacementFilename) :
+							BoundaryType boundaries[], std::string outputFilename, std::string bathymetryFilename, std::string displacementFilename, bool write) :
 		/*
 		 * Important note concerning grid allocations:
 		 * Since index shifts all over the place are bug-prone and maintenance unfriendly,
@@ -73,7 +73,12 @@ SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(int nx, int ny, flo
 
 	// Initialize writer
 	BoundarySize boundarySize = {{1, 1, 1, 1}};
-	writer = new VtkWriter(outputFilename, b, boundarySize, nx, ny, dx, dy, originX, originY);
+	if(write) {
+		writer = new VtkWriter(outputFilename, b, boundarySize, nx, ny, dx, dy, originX, originY);
+	}
+	else {
+		writer = NULL;
+	}
 
 	// output at t=0
 	writeTimestep();
@@ -362,7 +367,9 @@ void SWE_DimensionalSplittingCharm::sendCopyLayers(bool sendBathymetry) {
 }
 
 void SWE_DimensionalSplittingCharm::writeTimestep() {
-	writer->writeTimeStep(h, hu, hv, currentSimulationTime);
+	if(writer) {
+		writer->writeTimeStep(h, hu, hv, currentSimulationTime);
+	}
 }
 
 void SWE_DimensionalSplittingCharm::setGhostLayer() {

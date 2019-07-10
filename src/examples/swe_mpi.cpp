@@ -227,16 +227,19 @@ int main(int argc, char** argv) {
 	outputFileName = generateBaseFileName(outputBaseName, localBlockPositionX, localBlockPositionY);
 #ifdef WRITENETCDF
 	// Construct a netCDF writer
-	NetCdfWriter writer(
-			outputFileName,
-			simulation.getBathymetry(),
-			boundarySize,
-			nxLocal,
-			nyLocal,
-			dxSimulation,
-			dySimulation,
-			simulation.getOriginX(),
-			simulation.getOriginY());
+	NetCdfWriter* writer;
+	if(write) {
+		writer = new NetCdfWriter(
+				outputFileName,
+				simulation.getBathymetry(),
+				boundarySize,
+				nxLocal,
+				nyLocal,
+				dxSimulation,
+				dySimulation,
+				simulation.getOriginX(),
+				simulation.getOriginY());
+	}
 #else
 	// Construct a vtk writer
 	VtkWriter writer(
@@ -250,12 +253,13 @@ int main(int argc, char** argv) {
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	writer.writeTimeStep(
-			simulation.getWaterHeight(),
-			simulation.getMomentumHorizontal(),
-			simulation.getMomentumVertical(),
-			(float) 0.);
-
+	if(write) {
+		writer->writeTimeStep(
+				simulation.getWaterHeight(),
+				simulation.getMomentumHorizontal(),
+				simulation.getMomentumVertical(),
+				(float) 0.);
+	}
 
 	/********************
 	 * START SIMULATION *
@@ -308,7 +312,7 @@ int main(int argc, char** argv) {
 
 		// write output
 		if(write) {
-			writer.writeTimeStep(
+			writer->writeTimeStep(
 					simulation.getWaterHeight(),
 					simulation.getMomentumHorizontal(),
 					simulation.getMomentumVertical(),
@@ -324,6 +328,7 @@ int main(int argc, char** argv) {
 	printf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", myMpiRank, simulation.computeTime, simulation.computeTimeWall, wallTime); 
 	printf("RESULT: %f\n", wallTime); 
 
+	delete writer;
 	simulation.freeMpiType();
 	MPI_Finalize();
 
