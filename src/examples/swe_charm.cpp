@@ -78,6 +78,9 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	args.addOption("resolution-horizontal", 'x', "Number of simulation cells in horizontal direction");
 	args.addOption("resolution-vertical", 'y', "Number of simulated cells in y-direction");
 	args.addOption("output-basepath", 'o', "Output base file name");
+	args.addOption("x-imbalance", 'u', "Imbalance in x-direction", tools::Args::Required, false);
+	args.addOption("y-imbalance", 'v', "Imbalance in y-direction", tools::Args::Required, false);
+	args.addOption("write", 'w', "Write results", tools::Args::Required, false);
 
 
 	// Declare the variables needed to hold command line input
@@ -113,6 +116,9 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	displacementFilename = args.getArgument<std::string>("displacement-file");
 #endif
 	outputBasename = args.getArgument<std::string>("output-basepath");
+	bool write = false;
+	if(args.isSet("write") && args.getArgument<int>("write") == 1)
+		write = true;
 
 	// Initialize Scenario
 #ifdef ASAGI
@@ -187,10 +193,10 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 		// Spawn chare for the current block and insert it into the proxy array
 #ifdef ASAGI
 		blocks[i].insert(nxLocal, nyLocal, dxSimulation, dySimulation, localOriginX, localOriginY, localBlockPositionX[i], localBlockPositionY[i],
-				 boundaries, outputFilename, bathymetryFilename, displacementFilename);
+				 boundaries, outputFilename, bathymetryFilename, displacementFilename, write);
 #else
 		blocks[i].insert(nxLocal, nyLocal, dxSimulation, dySimulation, localOriginX, localOriginY, localBlockPositionX[i], localBlockPositionY[i],
-				 boundaries, outputFilename, "", "");
+				 boundaries, outputFilename, "", "", write);
 #endif
 	}
 	blocks.doneInserting();

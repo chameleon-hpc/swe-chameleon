@@ -504,10 +504,8 @@ int main(int argc, char** argv) {
 			iterations++;
 
 			if(myRank == 0)
-				printf("%d: Step, current time:%f\n", myRank, t);
+				printf("Step, current time:%f\n", t);
 		}
-
-		//printf("Write timestep to rank 0 (%fs)\n", t);
 
 		// write output
 		if(write) {
@@ -536,7 +534,6 @@ int main(int argc, char** argv) {
 		}
 
 		if(write && myRank == 0) {
-			//printf("Write timestep (%fs)\n", t);
 			writer->writeTimeStep(
 				writeBlock.getWaterHeight(),
 				writeBlock.getMomentumHorizontal(),
