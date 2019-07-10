@@ -39,7 +39,7 @@
 
 #include <upcxx/upcxx.hpp>
 
-#include "solvers/Hybrid.hpp"
+#include "solvers/AugRie.hpp"
 
 class SWE_DimensionalSplittingUpcxx : public SWE_Block<Float2DUpcxx> {
 	public:
@@ -62,7 +62,7 @@ class SWE_DimensionalSplittingUpcxx : public SWE_Block<Float2DUpcxx> {
 		float computeTimeWall;
 
 	private:
-		solver::Hybrid<float> solver;
+		solver::AugRie<float> solver;
 
 		// Max timestep reduced over all upcxx ranks
 		float maxTimestepGlobal;

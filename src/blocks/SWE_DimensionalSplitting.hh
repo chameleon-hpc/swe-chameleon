@@ -36,7 +36,7 @@
 #include <ctime>
 #include <time.h>
 
-#include "solvers/Hybrid.hpp"
+#include "solvers/AugRie.hpp"
 
 class SWE_DimensionalSplitting : public SWE_Block<Float2DNative> {
 	public:
@@ -53,7 +53,7 @@ class SWE_DimensionalSplitting : public SWE_Block<Float2DNative> {
 		float computeTimeWall;
 
 	private:
-		solver::Hybrid<float> solver;
+		solver::AugRie<float> solver;
 
 		// Temporary values after x-sweep and before y-sweep
 		Float2DNative hStar;

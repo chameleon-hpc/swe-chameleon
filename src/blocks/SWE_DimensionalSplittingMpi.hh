@@ -39,7 +39,7 @@
 
 #include <mpi.h>
 
-#include "solvers/Hybrid.hpp"
+#include "solvers/AugRie.hpp"
 
 class SWE_DimensionalSplittingMpi : public SWE_Block<Float2DNative> {
 	public:
@@ -62,7 +62,7 @@ class SWE_DimensionalSplittingMpi : public SWE_Block<Float2DNative> {
 		float computeTimeWall;
 
 	private:
-		solver::Hybrid<float> solver;
+		solver::AugRie<float> solver;
 
 		// Max timestep reduced over all upcxx ranks
 		float maxTimestepGlobal;
