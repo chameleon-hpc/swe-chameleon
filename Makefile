@@ -34,24 +34,33 @@ debug_charm_test:
 #	scons writeNetCDF=True openmp=False parallelization=ampi
 
 smp:
-	scons writeNetCDF=True openmp=True parallelization=none asagi=true asagiDir=${ASAGI_PATH}
+	scons writeNetCDF=True openmp=True parallelization=none compiler=intel
+smp_asagi:
+	scons writeNetCDF=True openmp=True parallelization=none compiler=intel asagi=true asagiDir=${ASAGI_PATH}
 
 mpi_hybrid:
 	scons writeNetCDF=True openmp=True parallelization=mpi compiler=intel
-mpi:
-	scons writeNetCDF=True openmp=false parallelization=mpi asagi=true asagiDir=${ASAGI_PATH}
+mpi_hybrid_asagi:
+	scons writeNetCDF=True openmp=True parallelization=mpi compiler=intel asagi=true asagiDir=${ASAGI_PATH}
+#mpi:
+#	scons writeNetCDF=True openmp=false parallelization=mpi asagi=true asagiDir=${ASAGI_PATH}
 
 upcxx_hybrid:
 	scons writeNetCDF=True openmp=True parallelization=upcxx compiler=intel
-#	scons writeNetCDF=True openmp=True parallelization=upcxx asagi=true asagiDir=${ASAGI_PATH} netCDFDir=${NETCDF_BASE}
-upcxx:
-	scons openmp=false parallelization=upcxx compiler=intel
+upcxx_hybrid_asagi:
+	scons writeNetCDF=True openmp=True parallelization=upcxx compiler=intel asagi=true asagiDir=${ASAGI_PATH}
+#upcxx:
+#	scons openmp=false parallelization=upcxx compiler=intel
 
 charm:
 	scons openmp=true parallelization=charm compiler=intel
+charm_asagi:
+	scons openmp=true parallelization=charm compiler=intel asagi=true asagiDir=${ASAGI_PATH}
 
 chameleon:
 	scons writeNetCDF=True compiler=intel openmp=true parallelization=chameleon
+chameleon_asagi:
+	scons writeNetCDF=True compiler=intel openmp=true parallelization=chameleon asagi=true asagiDir=${ASAGI_PATH}
 
 chameleon_debug:
 	scons writeNetCDF=True compiler=intel openmp=true parallelization=chameleon compileMode=debug
