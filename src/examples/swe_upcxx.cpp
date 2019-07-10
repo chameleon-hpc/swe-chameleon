@@ -263,7 +263,8 @@ int main(int argc, char** argv) {
 	outputFileName = generateBaseFileName(outputBaseName, localBlockPositionX, localBlockPositionY);
 #ifdef WRITENETCDF
 	// Construct a netCDF writer
-	NetCdfWriter writer(
+	NetCdfWriter* writer;
+	writer = new NetCdfWriter(
 			outputFileName,
 			simulation.getBathymetry(),
 			boundarySize,
@@ -286,7 +287,7 @@ int main(int argc, char** argv) {
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	writer.writeTimeStep(
+	writer->writeTimeStep(
 			simulation.getWaterHeight(),
 			simulation.getMomentumHorizontal(),
 			simulation.getMomentumVertical(),
@@ -338,13 +339,13 @@ int main(int argc, char** argv) {
 			iterations++;
 			upcxx::barrier();
 			if(myUpcxxRank == 0) {
-					printf("Step, current time:%f\n", t);
+				printf("Step, current time:%f\n", t);
 			}
 		}
 
 		if(write) {
 			// write output
-			writer.writeTimeStep(
+			writer->writeTimeStep(
 					simulation.getWaterHeight(),
 					simulation.getMomentumHorizontal(),
 					simulation.getMomentumVertical(),
@@ -361,6 +362,7 @@ int main(int argc, char** argv) {
 	printf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", myUpcxxRank, simulation.computeTime, simulation.computeTimeWall, wallTime); 
 	printf("RESULT: %f\n", wallTime); 
 
+	delete writer;
 	upcxx::finalize();
 
 	return 0;
