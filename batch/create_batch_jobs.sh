@@ -1,8 +1,8 @@
 #!/usr/local_rwth/bin/zsh
 
 #EXPERIMENTS=(chameleon charm++ upcxx mpi)
-EXPERIMENTS=(chameleon)
-SIZES=(4096 8192)
+EXPERIMENTS=(mpi)
+SIZES=(4096)
 NODE_COUNTS=(1 2 4 8)
 NUM_TASKS_PER_NODE=2
 # Claix 16 settings

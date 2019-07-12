@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #EXPERIMENTS=(chameleon charm++ upcxx mpi)
-EXPERIMENTS=(chameleon)
+EXPERIMENTS=(mpi)
 #SIZES=(2048 4096 8192)
-SIZES=(2048)
-NODE_COUNTS=(1 2)
+SIZES=(4096)
+NODE_COUNTS=(1 2 4 8)
 # Claix 16 settings
 NUM_CPUS_PER_TASK=12
 PROJECT=jara0001
