@@ -67,7 +67,7 @@ class CMessage_copyLayer:public CkMessage{
 };
 
 /* DECLS: array SWE_DimensionalSplittingCharm: ArrayElement{
-SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const std::string &bathymetryFile, const std::string &displacementFile, const bool &write);
+SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const bool &write, const std::string &bathymetryFile, const std::string &displacementFile);
 void compute();
 void receiveGhostLeft(copyLayer* impl_msg);
 void receiveGhostRight(copyLayer* impl_msg);
@@ -94,7 +94,7 @@ class CkIndex_SWE_DimensionalSplittingCharm:public CkIndex_ArrayElement{
 
     static int __idx;
     static void __register(const char *s, size_t size);
-    /* DECLS: SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const std::string &bathymetryFile, const std::string &displacementFile, const bool &write);
+    /* DECLS: SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const bool &write, const std::string &bathymetryFile, const std::string &displacementFile);
      */
     // Entry point registration at startup
     
@@ -107,7 +107,7 @@ class CkIndex_SWE_DimensionalSplittingCharm:public CkIndex_ArrayElement{
     }
 
     
-    static int ckNew(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const std::string &bathymetryFile, const std::string &displacementFile, const bool &write) { return idx_SWE_DimensionalSplittingCharm_marshall1(); }
+    static int ckNew(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const bool &write, const std::string &bathymetryFile, const std::string &displacementFile) { return idx_SWE_DimensionalSplittingCharm_marshall1(); }
     
     static void _call_SWE_DimensionalSplittingCharm_marshall1(void* impl_msg, void* impl_obj);
     
@@ -415,10 +415,10 @@ class CkIndex_SWE_DimensionalSplittingCharm:public CkIndex_ArrayElement{
         :CProxyElement_ArrayElement(aid,idx)
     {
 }
-/* DECLS: SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const std::string &bathymetryFile, const std::string &displacementFile, const bool &write);
+/* DECLS: SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const bool &write, const std::string &bathymetryFile, const std::string &displacementFile);
  */
     
-    void insert(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const std::string &bathymetryFile, const std::string &displacementFile, const bool &write, int onPE=-1, const CkEntryOptions *impl_e_opts=NULL);
+    void insert(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const bool &write, const std::string &bathymetryFile, const std::string &displacementFile, int onPE=-1, const CkEntryOptions *impl_e_opts=NULL);
 /* DECLS: void compute();
  */
     
@@ -539,13 +539,13 @@ PUPmarshall(CProxyElement_SWE_DimensionalSplittingCharm)
         :CProxy_ArrayElement(aid,CK_DELCTOR_ARGS) {}
     CProxy_SWE_DimensionalSplittingCharm(const CkArrayID &aid) 
         :CProxy_ArrayElement(aid) {}
-/* DECLS: SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const std::string &bathymetryFile, const std::string &displacementFile, const bool &write);
+/* DECLS: SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const bool &write, const std::string &bathymetryFile, const std::string &displacementFile);
  */
     
-    static CkArrayID ckNew(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const std::string &bathymetryFile, const std::string &displacementFile, const bool &write, const CkArrayOptions &opts = CkArrayOptions(), const CkEntryOptions *impl_e_opts=NULL);
-    static void      ckNew(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const std::string &bathymetryFile, const std::string &displacementFile, const bool &write, const CkArrayOptions &opts, CkCallback _ck_array_creation_cb, const CkEntryOptions *impl_e_opts=NULL);
-    static CkArrayID ckNew(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const std::string &bathymetryFile, const std::string &displacementFile, const bool &write, const int s1, const CkEntryOptions *impl_e_opts=NULL);
-    static void ckNew(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const std::string &bathymetryFile, const std::string &displacementFile, const bool &write, const int s1, CkCallback _ck_array_creation_cb, const CkEntryOptions *impl_e_opts=NULL);
+    static CkArrayID ckNew(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const bool &write, const std::string &bathymetryFile, const std::string &displacementFile, const CkArrayOptions &opts = CkArrayOptions(), const CkEntryOptions *impl_e_opts=NULL);
+    static void      ckNew(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const bool &write, const std::string &bathymetryFile, const std::string &displacementFile, const CkArrayOptions &opts, CkCallback _ck_array_creation_cb, const CkEntryOptions *impl_e_opts=NULL);
+    static CkArrayID ckNew(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const bool &write, const std::string &bathymetryFile, const std::string &displacementFile, const int s1, const CkEntryOptions *impl_e_opts=NULL);
+    static void ckNew(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const bool &write, const std::string &bathymetryFile, const std::string &displacementFile, const int s1, CkCallback _ck_array_creation_cb, const CkEntryOptions *impl_e_opts=NULL);
 
 /* DECLS: void compute();
  */
@@ -739,7 +739,7 @@ PUPmarshall(CProxy_SWE_DimensionalSplittingCharm)
     static void contribute(int dataSize,void *data,CkReduction::reducerType type, CkSectionInfo &sid, const CkCallback &cb, int userData=-1, int fragSize=-1);
     template <typename T>
     static void contribute(std::vector<T> &data, CkReduction::reducerType type, CkSectionInfo &sid, const CkCallback &cb, int userData=-1, int fragSize=-1);
-/* DECLS: SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const std::string &bathymetryFile, const std::string &displacementFile, const bool &write);
+/* DECLS: SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY, const BoundaryType *boundaries, const std::string &outputFilename, const bool &write, const std::string &bathymetryFile, const std::string &displacementFile);
  */
     
 

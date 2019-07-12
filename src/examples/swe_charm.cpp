@@ -78,8 +78,8 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	args.addOption("resolution-horizontal", 'x', "Number of simulation cells in horizontal direction");
 	args.addOption("resolution-vertical", 'y', "Number of simulated cells in y-direction");
 	args.addOption("output-basepath", 'o', "Output base file name");
-	args.addOption("x-imbalance", 'u', "Imbalance in x-direction", tools::Args::Required, false);
-	args.addOption("y-imbalance", 'v', "Imbalance in y-direction", tools::Args::Required, false);
+	args.addOption("x-blockcount", 'i', "Block Count in x-direction", tools::Args::Required, false);
+	args.addOption("y-blockcount", 'j', "Block Count in y-direction", tools::Args::Required, false);
 	args.addOption("write", 'w', "Write results", tools::Args::Required, false);
 
 
@@ -133,7 +133,7 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	 ****************************************/
 
 	// Spawn one chare per CPU
-	chareCount = CkNumPes();
+	//chareCount = CkNumPes();
 	mainProxy = thisProxy;
 
 	/*
@@ -150,9 +150,13 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	CProxy_SWE_DimensionalSplittingCharm blocks = CProxy_SWE_DimensionalSplittingCharm::ckNew();
 
 	// number of SWE-Blocks in x- and y-direction
-	blockCountY = std::sqrt(chareCount);
+	blockCountY = 16;
+	if(args.isSet("y-blockcount"))
+		blockCountY = args.getArgument<int>("y-blockcount");
 	while (chareCount % blockCountY != 0) blockCountY--;
-	blockCountX = chareCount / blockCountY;
+	blockCountX = 16;
+	if(args.isSet("x-blockcount"))
+		blockCountX = args.getArgument<int>("x-blockcount");
 
 	int localBlockPositionX[chareCount];
 	int localBlockPositionY[chareCount];
@@ -193,10 +197,10 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 		// Spawn chare for the current block and insert it into the proxy array
 #ifdef ASAGI
 		blocks[i].insert(nxLocal, nyLocal, dxSimulation, dySimulation, localOriginX, localOriginY, localBlockPositionX[i], localBlockPositionY[i],
-				 boundaries, outputFilename, bathymetryFilename, displacementFilename, write);
+				 boundaries, outputFilename, write, bathymetryFilename, displacementFilename);
 #else
 		blocks[i].insert(nxLocal, nyLocal, dxSimulation, dySimulation, localOriginX, localOriginY, localBlockPositionX[i], localBlockPositionY[i],
-				 boundaries, outputFilename, "", "", write);
+				 boundaries, outputFilename, write, "", "");
 #endif
 	}
 	blocks.doneInserting();

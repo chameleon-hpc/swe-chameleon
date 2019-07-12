@@ -35,7 +35,7 @@ class SWE_DimensionalSplittingCharm : public CBase_SWE_DimensionalSplittingCharm
 		SWE_DimensionalSplittingCharm(CkMigrateMessage *msg);
 		SWE_DimensionalSplittingCharm(int cellCountHorizontal, int cellCountVertical, float cellSizeHorizontal, float cellSizeVertical,
 						float originX, float originY, int posX, int posY, BoundaryType boundaries[],
-						std::string outputFileName, std::string bathymetryFileName = "", std::string displacementFileName = "");
+						std::string outputFileName, bool write, std::string bathymetryFileName = "", std::string displacementFileName = "");
 		~SWE_DimensionalSplittingCharm();
 
 		// Charm++ entry methods
