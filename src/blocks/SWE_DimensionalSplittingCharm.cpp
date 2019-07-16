@@ -86,7 +86,7 @@ SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(int nx, int ny, flo
 	char hostname[HOST_NAME_MAX];
         gethostname(hostname, HOST_NAME_MAX);
 
-	CkPrintf("%i Spawned at %s\n", thisIndex, hostname);
+	//CkPrintf("%i Spawned at %s\n", thisIndex, hostname);
 }
 
 SWE_DimensionalSplittingCharm::~SWE_DimensionalSplittingCharm() {}

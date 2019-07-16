@@ -8,7 +8,7 @@ source /home/sc427635/.zshrc
 cd /home/sc427635/master/swe-benchmark
 
 ### Load modules
-module load chameleon
+#module load chameleon
 
 ### Compile
 #make chameleon

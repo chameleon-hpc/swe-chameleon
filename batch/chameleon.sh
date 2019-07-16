@@ -22,8 +22,7 @@ export I_MPI_DEBUG=5
 export OMP_PROC_BIND=close
 
 ### Print execution statement
-env
-echo $MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_chameleon_omp_hybrid -t 1 -n 1 -x $SIZE -y $SIZE -o ./output/chameleon_batch
+echo $MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_chameleon_omp_augrie -t 1 -n 1 -x $SIZE -y $SIZE -o ./output/chameleon_batch
 
 ### Execute your application
-$MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_chameleon_omp_hybrid -t 1 -n 1 -x $SIZE -y $SIZE -o ./output/chameleon_batch
+$MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_chameleon_omp_augrie -t 1 -n 1 -x $SIZE -y $SIZE -o ./output/chameleon_batch

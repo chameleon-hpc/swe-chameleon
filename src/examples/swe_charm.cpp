@@ -56,6 +56,14 @@
 /* readonly */ float simulationDuration;
 /* readonly */ int checkpointCount;
 
+double getTime() {
+	struct timespec time;
+	clock_gettime(CLOCK_MONOTONIC, &time);
+	return (double) time.tv_sec + ((double)time.tv_nsec)/1E9;
+}
+
+double startTimeWhole;
+
 swe_charm::swe_charm(CkMigrateMessage *msg) {}
 
 swe_charm::swe_charm(CkArgMsg *msg) {
@@ -157,6 +165,7 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	blockCountX = 16;
 	if(args.isSet("x-blockcount"))
 		blockCountX = args.getArgument<int>("x-blockcount");
+	chareCount = blockCountX*blockCountY;
 
 	int localBlockPositionX[chareCount];
 	int localBlockPositionY[chareCount];
@@ -204,12 +213,16 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 #endif
 	}
 	blocks.doneInserting();
+	startTimeWhole = getTime();
 	blocks.compute();
 }
 
 void swe_charm::done(int index) {
-	if (--chareCount == 0)
+	if (--chareCount == 0){
+		double wallTimeWhole = getTime() - startTimeWhole;
+		CkPrintf("RESULT: %f\n", wallTimeWhole);
 		exit();
+	}
 }
 void swe_charm::exit() {
 	CkExit();

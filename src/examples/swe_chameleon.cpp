@@ -383,6 +383,7 @@ int main(int argc, char** argv) {
 	float timestep;
 	unsigned int iterations = 0;
 
+	double startTimeWhole = getTime();
 #ifdef ITT
 	__itt_resume();	
 #endif
@@ -569,7 +570,8 @@ int main(int argc, char** argv) {
 	//TODO: Get times
 
 	//printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[xBounds[myXRank]][myYRank]->computeTime, blocks[xBounds[myXRank]][myYRank]->computeTimeWall, wallTime);
-	printf("RESULT: Chameleon: Computation ended, walltime:%f\n", wallTime);
+	double wallTimeWhole = getTime() - startTimeWhole;
+	printf("RESULT: Chameleon: Computation ended, walltime:%f\n", wallTimeWhole);
 
 	printf("%d: setGhostLayerTime=%f\n", myRank, (float)setGhostLayerTime);
 	printf("%d: receiveGhostLayerTime=%f\n", myRank, (float)receiveGhostLayerTime);

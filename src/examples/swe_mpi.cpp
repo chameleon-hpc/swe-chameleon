@@ -54,6 +54,12 @@
 #include "blocks/SWE_DimensionalSplittingMpi.hh"
 #include <mpi.h>
 
+double getTime() {
+	struct timespec time;
+	clock_gettime(CLOCK_MONOTONIC, &time);
+	return (double) time.tv_sec + ((double)time.tv_nsec)/1E9;
+}
+
 int main(int argc, char** argv) {
 
 
@@ -271,6 +277,7 @@ int main(int argc, char** argv) {
 	struct timespec endTime;
 
 	float wallTime = 0.;
+	double startTimeWhole = getTime();
 
 	t = 0.0;
 
@@ -325,8 +332,9 @@ int main(int argc, char** argv) {
 	 * FINALIZE *
 	 ************/
 
-	printf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", myMpiRank, simulation.computeTime, simulation.computeTimeWall, wallTime); 
-	printf("RESULT: %f\n", wallTime); 
+	double wallTimeWhole = getTime() - startTimeWhole;
+	printf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", myMpiRank, simulation.computeTime, simulation.computeTimeWall, wallTimeWhole); 
+	printf("RESULT: %f\n", wallTimeWhole); 
 
 	if(write) {
 		delete writer;
