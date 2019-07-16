@@ -18,7 +18,7 @@
 //#include "writer/NetCdfWriter.hh"
 #include "writer/VtkWriter.hh"
 #include "tools/Float2DNative.hh"
-#include "solvers/Hybrid.hpp"
+#include "solvers/AugRie.hpp"
 
 extern CProxy_swe_charm mainProxy;
 extern int blockCountX;
@@ -54,7 +54,7 @@ class SWE_DimensionalSplittingCharm : public CBase_SWE_DimensionalSplittingCharm
 		// Interface implementation
 		void setGhostLayer();
 
-		solver::Hybrid<float> solver;
+		solver::AugRie<float> solver;
 		float *checkpointInstantOfTime;
 		VtkWriter *writer;
 		float currentSimulationTime;
