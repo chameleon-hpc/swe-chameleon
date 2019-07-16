@@ -402,7 +402,7 @@ int main(int argc, char** argv) {
 
 			int xLower = xBounds[myXRank]; int xUpper = xBounds[myXRank+1];
 			int yLower = yBounds[myYRank]; int yUpper = yBounds[myYRank+1];
-			#pragma omp parallel for collapse(2)
+			//#pragma omp parallel for collapse(2)
 			for(int x = xLower; x < xUpper; x++) {
 				for(int y = yLower; y < yUpper; y++) {
 					// set values in ghost cells.
@@ -414,7 +414,7 @@ int main(int argc, char** argv) {
 			setGhostLayerTime += getTime()-lastTime; lastTime = getTime();
 
 			//if(myRank == 0) printf("After setGhostLayer() %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
-			#pragma omp parallel for collapse(2)
+			//#pragma omp parallel for collapse(2)
 			for(int x = xLower; x < xUpper; x++) {
 				for(int y = yLower; y < yUpper; y++) {
 					blocks[x][y]->receiveGhostLayer();
