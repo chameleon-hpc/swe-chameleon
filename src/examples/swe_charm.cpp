@@ -89,6 +89,7 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	args.addOption("x-blockcount", 'i', "Block Count in x-direction", tools::Args::Required, false);
 	args.addOption("y-blockcount", 'j', "Block Count in y-direction", tools::Args::Required, false);
 	args.addOption("write", 'w', "Write results", tools::Args::Required, false);
+	args.addOption("iteration-count", 'i', "Iteration Count (Overrides t and n)", tools::Args::Required, false);
 
 
 	// Declare the variables needed to hold command line input
@@ -127,6 +128,12 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	bool write = false;
 	if(args.isSet("write") && args.getArgument<int>("write") == 1)
 		write = true;
+	int iteration_count = 1000000;
+	if(args.isSet("iteration-count")) {
+		iteration_count = args.getArgument<int>("iteration-count");
+		checkpointCount = 1;
+		simulationDuration = 1000000.0;
+	}
 
 	// Initialize Scenario
 #ifdef ASAGI
@@ -209,7 +216,7 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 				 boundaries, outputFilename, write, bathymetryFilename, displacementFilename);
 #else
 		blocks[i].insert(nxLocal, nyLocal, dxSimulation, dySimulation, localOriginX, localOriginY, localBlockPositionX[i], localBlockPositionY[i],
-				 boundaries, outputFilename, write, "", "");
+				 boundaries, outputFilename, write, iteration_count, "", "");
 #endif
 	}
 	blocks.doneInserting();

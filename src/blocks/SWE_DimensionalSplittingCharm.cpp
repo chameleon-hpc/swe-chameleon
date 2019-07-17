@@ -5,7 +5,7 @@
 SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(CkMigrateMessage *msg) {}
 
 SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(int nx, int ny, float dx, float dy, float originX, float originY, int posX, int posY,
-							BoundaryType boundaries[], std::string outputFilename, bool write, std::string bathymetryFilename, std::string displacementFilename) :
+							BoundaryType boundaries[], std::string outputFilename, bool write, int iteration_count, std::string bathymetryFilename, std::string displacementFilename) :
 		/*
 		 * Important note concerning grid allocations:
 		 * Since index shifts all over the place are bug-prone and maintenance unfriendly,
@@ -41,7 +41,8 @@ SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(int nx, int ny, flo
 		hNetUpdatesAbove(nx + 1, ny + 2),
 
 		hvNetUpdatesBelow(nx + 1, ny + 2),
-		hvNetUpdatesAbove(nx + 1, ny + 2) {
+		hvNetUpdatesAbove(nx + 1, ny + 2),
+		iteration_count(iteration_count) {
 
 	currentSimulationTime = 0.;
 	currentCheckpoint = 0;

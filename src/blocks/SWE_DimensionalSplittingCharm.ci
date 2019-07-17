@@ -15,7 +15,7 @@ module SWE_DimensionalSplittingCharm {
 
 	array [1D] SWE_DimensionalSplittingCharm {
 		entry SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY,
-							BoundaryType boundaries[4], std::string outputFilename, bool write, std::string bathymetryFile, std::string displacementFile);
+							BoundaryType boundaries[4], std::string outputFilename, bool write, int iteration_count, std::string bathymetryFile, std::string displacementFile);
 
 		entry void compute() {
 			serial {
@@ -77,7 +77,7 @@ module SWE_DimensionalSplittingCharm {
 						CkPrintf("Step, current time:%f\n", currentSimulationTime);
 					}
 					// If there is an iteration to go, propagate copy layers anew
-					if (currentSimulationTime < simulationDuration) {
+					if (currentSimulationTime < simulationDuration && iterations < iteration_count) {
 						sendCopyLayers(false);
 						setGhostLayer();
 					} else {

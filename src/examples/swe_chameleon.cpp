@@ -81,6 +81,7 @@ int main(int argc, char** argv) {
 	args.addOption("x-imbalance", 'u', "Imbalance in x-direction", tools::Args::Required, false);
 	args.addOption("y-imbalance", 'v', "Imbalance in y-direction", tools::Args::Required, false);
 	args.addOption("write", 'w', "Write results", tools::Args::Required, false);
+	args.addOption("iteration-count", 'i', "Iteration Count (Overrides t and n)", tools::Args::Required, false);
 
 	// Parse command line arguments
 	tools::Args::Result ret = args.parse(argc, argv);
@@ -102,6 +103,12 @@ int main(int argc, char** argv) {
 	bool write = false;
 	if(args.isSet("write") && args.getArgument<int>("write") == 1)
 		write = true;
+	int iteration_count = 1000000;
+	if(args.isSet("iteration-count")) {
+		iteration_count = args.getArgument<int>("iteration-count");
+		numberOfCheckPoints = 1;
+		simulationDuration = 1000000.0;
+	}
 
 	// Initialize Scenario
 #ifdef ASAGI
@@ -390,7 +397,7 @@ int main(int argc, char** argv) {
 	// loop over the count of requested checkpoints
 	for(int i = 0; i < numberOfCheckPoints; i++) {
 		// Simulate until the checkpoint is reached
-		while(t < checkpointInstantOfTime[i]) {
+		while(t < checkpointInstantOfTime[i] && iterations < iteration_count) {
 
 			// Start measurement
 			clock_gettime(CLOCK_MONOTONIC, &startTime);
