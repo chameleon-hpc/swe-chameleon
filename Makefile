@@ -19,11 +19,11 @@ run_mpi_asagi:
 #	./charmrun +p4 ./build/SWE_gnu_release_mpi_augrie -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/mpi -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
 
 run_charm:
-	mpiexec.hydra -np 24 ./build/SWE_intel_release_charm_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto mpiexec.hydra -np 24 ./build/SWE_intel_release_charm_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test
 run_charm_asagi:
-	mpiexec.hydra -np 24 ./build/SWE_intel_release_charm_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto mpiexec.hydra -np 24 ./build/SWE_intel_release_charm_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
 run_charm_test:
-	mpiexec.hydra -np 24 ./build/SWE_intel_release_charm_omp_augrie -t 0.01 -n 1 -x 320 -y 320 -o ./output/test -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto mpiexec.hydra -np 24 ./build/SWE_intel_release_charm_omp_augrie -t 0.01 -n 1 -x 320 -y 320 -o ./output/test -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
 
 run_chameleon:
 	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=11 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_chameleon_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -u 1 -v 1

@@ -324,7 +324,7 @@ void SWE_DimensionalSplittingMpi::computeNumericalFluxes () {
 	{
 		// x-sweep, compute the actual domain plus ghost rows above and below
 		// iterate over cells on the x-axis, leave out the last column (two cells per computation)
-		#pragma omp for reduction(max : maxHorizontalWaveSpeed) collapse(2)
+		#pragma omp for reduction(max : maxHorizontalWaveSpeed)
 		for (int x = 0; x < nx + 1; x++) {
 			// iterate over all rows, including ghost layer
 			for (int y = 0; y < ny + 2; y++) {
@@ -372,7 +372,7 @@ void SWE_DimensionalSplittingMpi::computeNumericalFluxes () {
 		#ifndef NDEBUG
 		#pragma omp for
 		#else
-		#pragma omp for reduction(max : maxVerticalWaveSpeed) collapse(2)
+		#pragma omp for reduction(max : maxVerticalWaveSpeed)
 		#endif
 		for (int x = 1; x < nx + 1; x++) {
 			for (int y = 0; y < ny + 1; y++) {

@@ -88,7 +88,7 @@ module SWE_DimensionalSplittingCharm {
 
 						//CkPrintf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", thisIndex, computeTime, computeTimeWall, wallTime);
 						//CkPrintf("RESULT: %f\n", wallTime);
-						if(originX =0 && originY == 0)
+						if(originX <= 0.0001 && originY <= 0.0001)
 							CkPrintf("Iterations: %d\n", iterations);
 						mainProxy.done(thisIndex);
 					}
