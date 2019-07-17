@@ -48,6 +48,7 @@ SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(int nx, int ny, flo
 
 	computeTime = 0.;
 	wallTime = 0.;
+	iterations = 0;
 
 	neighbourIndex[BND_LEFT] = (posX > 0) ? thisIndex - blockCountY : -1;
 	neighbourIndex[BND_RIGHT] = (posX < blockCountX - 1) ? thisIndex + blockCountY : -1;

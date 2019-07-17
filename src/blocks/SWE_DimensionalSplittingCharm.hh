@@ -92,6 +92,7 @@ class SWE_DimensionalSplittingCharm : public CBase_SWE_DimensionalSplittingCharm
 		float computeTime;
 		float computeTimeWall;
 		float wallTime;
+		int iterations;
 };
 
 class copyLayer : public CMessage_copyLayer {

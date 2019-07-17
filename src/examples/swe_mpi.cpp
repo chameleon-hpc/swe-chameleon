@@ -282,7 +282,7 @@ int main(int argc, char** argv) {
 	t = 0.0;
 
 	float timestep;
-	unsigned int iterations = 0;
+	int iterations = 0;
 	// loop over the count of requested checkpoints
 	for(int i = 0; i < numberOfCheckPoints; i++) {
 		// Simulate until the checkpoint is reached
@@ -333,7 +333,9 @@ int main(int argc, char** argv) {
 	 ************/
 
 	double wallTimeWhole = getTime() - startTimeWhole;
-	printf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", myMpiRank, simulation.computeTime, simulation.computeTimeWall, wallTimeWhole); 
+	//printf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", myMpiRank, simulation.computeTime, simulation.computeTimeWall, wallTimeWhole); 
+	if(myMpiRank == 0)
+		printf("Iterations: %d\n", iterations);
 	printf("RESULT: %f\n", wallTimeWhole); 
 
 	if(write) {

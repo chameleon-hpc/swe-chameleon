@@ -381,7 +381,7 @@ int main(int argc, char** argv) {
 
 	float t = 0.0;
 	float timestep;
-	unsigned int iterations = 0;
+	int iterations = 0;
 
 	double startTimeWhole = getTime();
 #ifdef ITT
@@ -571,6 +571,8 @@ int main(int argc, char** argv) {
 
 	//printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[xBounds[myXRank]][myYRank]->computeTime, blocks[xBounds[myXRank]][myYRank]->computeTimeWall, wallTime);
 	double wallTimeWhole = getTime() - startTimeWhole;
+	if(myRank == 0)
+		printf("Iterations: %d\n", iterations);
 	printf("RESULT: Chameleon: Computation ended, walltime:%f\n", wallTimeWhole);
 
 	printf("%d: setGhostLayerTime=%f\n", myRank, (float)setGhostLayerTime);

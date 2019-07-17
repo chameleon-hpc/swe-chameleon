@@ -1291,7 +1291,7 @@ void SWE_DimensionalSplittingCharm::_slist_0_end() {
 void SWE_DimensionalSplittingCharm::_serial_0() {
   _TRACE_BEGIN_EXECUTE_DETAILED(-1, -1, (_sdag_idx_SWE_DimensionalSplittingCharm_serial_0()), CkMyPe(), 0, ckGetArrayIndex().getProjectionID(), this); 
   { // begin serial block
-#line 18 "SWE_DimensionalSplittingCharm.ci"
+#line 18 "./SWE_DimensionalSplittingCharm.ci"
 
     clock_gettime(CLOCK_MONOTONIC, &startTime);
    
@@ -1343,7 +1343,7 @@ void SWE_DimensionalSplittingCharm::_slist_1_end() {
 void SWE_DimensionalSplittingCharm::_serial_1() {
   _TRACE_BEGIN_EXECUTE_DETAILED(-1, -1, (_sdag_idx_SWE_DimensionalSplittingCharm_serial_1()), CkMyPe(), 0, ckGetArrayIndex().getProjectionID(), this); 
   { // begin serial block
-#line 22 "SWE_DimensionalSplittingCharm.ci"
+#line 22 "./SWE_DimensionalSplittingCharm.ci"
 
      sendCopyLayers(true);
      setGhostLayer();
@@ -1468,7 +1468,7 @@ void SWE_DimensionalSplittingCharm::_serial_2(SDAG::CCounter* _co0, copyLayer* g
     {
       copyLayer*& msg = gen1;
       { // begin serial block
-#line 29 "SWE_DimensionalSplittingCharm.ci"
+#line 29 "./SWE_DimensionalSplittingCharm.ci"
  processCopyLayer(msg); 
 #line 1474 "SWE_DimensionalSplittingCharm.def.h"
       } // end serial block
@@ -1556,7 +1556,7 @@ void SWE_DimensionalSplittingCharm::_serial_3(SDAG::CCounter* _co0, copyLayer* g
     {
       copyLayer*& msg = gen1;
       { // begin serial block
-#line 33 "SWE_DimensionalSplittingCharm.ci"
+#line 33 "./SWE_DimensionalSplittingCharm.ci"
  processCopyLayer(msg); 
 #line 1562 "SWE_DimensionalSplittingCharm.def.h"
       } // end serial block
@@ -1644,7 +1644,7 @@ void SWE_DimensionalSplittingCharm::_serial_4(SDAG::CCounter* _co0, copyLayer* g
     {
       copyLayer*& msg = gen1;
       { // begin serial block
-#line 37 "SWE_DimensionalSplittingCharm.ci"
+#line 37 "./SWE_DimensionalSplittingCharm.ci"
  processCopyLayer(msg); 
 #line 1650 "SWE_DimensionalSplittingCharm.def.h"
       } // end serial block
@@ -1732,7 +1732,7 @@ void SWE_DimensionalSplittingCharm::_serial_5(SDAG::CCounter* _co0, copyLayer* g
     {
       copyLayer*& msg = gen1;
       { // begin serial block
-#line 41 "SWE_DimensionalSplittingCharm.ci"
+#line 41 "./SWE_DimensionalSplittingCharm.ci"
  processCopyLayer(msg); 
 #line 1738 "SWE_DimensionalSplittingCharm.def.h"
       } // end serial block
@@ -1748,11 +1748,12 @@ void SWE_DimensionalSplittingCharm::_serial_5(SDAG::CCounter* _co0, copyLayer* g
 void SWE_DimensionalSplittingCharm::_serial_6() {
   _TRACE_BEGIN_EXECUTE_DETAILED(-1, -1, (_sdag_idx_SWE_DimensionalSplittingCharm_serial_6()), CkMyPe(), 0, ckGetArrayIndex().getProjectionID(), this); 
   { // begin serial block
-#line 44 "SWE_DimensionalSplittingCharm.ci"
+#line 44 "./SWE_DimensionalSplittingCharm.ci"
 
+     iterations++;
      xSweep();
     
-#line 1756 "SWE_DimensionalSplittingCharm.def.h"
+#line 1757 "SWE_DimensionalSplittingCharm.def.h"
   } // end serial block
   _TRACE_END_EXECUTE(); 
   _when_4();
@@ -1789,7 +1790,7 @@ void SWE_DimensionalSplittingCharm::_when_4_end() {
 void SWE_DimensionalSplittingCharm::_serial_7() {
   _TRACE_BEGIN_EXECUTE_DETAILED(-1, -1, (_sdag_idx_SWE_DimensionalSplittingCharm_serial_7()), CkMyPe(), 0, ckGetArrayIndex().getProjectionID(), this); 
   { // begin serial block
-#line 48 "SWE_DimensionalSplittingCharm.ci"
+#line 49 "./SWE_DimensionalSplittingCharm.ci"
 
      ySweep();
      updateUnknowns(maxTimestep);
@@ -1814,10 +1815,12 @@ void SWE_DimensionalSplittingCharm::_serial_7() {
       clock_gettime(CLOCK_MONOTONIC, &endTime);
       wallTime += (endTime.tv_sec - startTime.tv_sec);
       wallTime += (float) (endTime.tv_nsec - startTime.tv_nsec) / 1E9;
+      if(originX =0 && originY == 0)
+       CkPrintf("Iterations: %d\n", iterations);
       mainProxy.done(thisIndex);
      }
     
-#line 1821 "SWE_DimensionalSplittingCharm.def.h"
+#line 1824 "SWE_DimensionalSplittingCharm.def.h"
   } // end serial block
   _TRACE_END_EXECUTE(); 
   _when_4_end();
