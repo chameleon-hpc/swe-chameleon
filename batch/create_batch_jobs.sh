@@ -1,7 +1,7 @@
 #!/usr/local_rwth/bin/zsh
 
 #EXPERIMENTS=(chameleon charm++ upcxx mpi)
-EXPERIMENTS=(charm++)
+EXPERIMENTS=(mpi)
 SIZES=(4096)
 NODE_COUNTS=(1 2 4 8)
 NUM_TASKS_PER_NODE=2
