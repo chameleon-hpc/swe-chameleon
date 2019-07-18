@@ -1,14 +1,14 @@
-srun -n 2 ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_chameleon_omp_augrie -t 1 -n 1 -x 4096 -y 4096 -o ./output/chameleon_batch
-lnm588.hpc.itc.rwth-aachen.de: pid 25376's current affinity list: 12-23
-lnm588.hpc.itc.rwth-aachen.de: pid 25375's current affinity list: 0-11
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=62ac10
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=62ac10
+srun -n 2 ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_chameleon_omp_augrie -t 1 -n 1 -x 4096 -y 4096 -o ./output/chameleon_batch -i 200
+lnn06.hpc.itc.rwth-aachen.de: pid 23386's current affinity list: 12-23
+lnn06.hpc.itc.rwth-aachen.de: pid 23385's current affinity list: 0-11
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=62bd60
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=62bd60
 [0] MPI startup(): Multi-threaded optimized library
 [0] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       25425    lnm588.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       25424    lnm588.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): Rank    Pid      Node name                     Pin cpu
+[0] MPI startup(): 0       23434    lnn06.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       23435    lnn06.hpc.itc.rwth-aachen.de  +1
 xRankCount=1, yRankCount=2
 1: xBlockCount=32, xBounds: 0 32
 1: yBlockCount=32, yBounds: 0 16 32
@@ -17,30 +17,30 @@ xRankCount=1, yRankCount=2
 xRankCount=1, yRankCount=2
 0: xBlockCount=32, xBounds: 0 32
 0: yBlockCount=32, yBounds: 0 16 32
-2019-07-17 00:38:40.288.997 ChameleonLib R#1 T#0 (OS_TID:25424): --> OMP_NUM_THREADS=11
-2019-07-17 00:38:40.289.090 ChameleonLib R#1 T#0 (OS_TID:25424): --> MIN_ABS_LOAD_IMBALANCE_BEFORE_MIGRATION=2.000000
-2019-07-17 00:38:40.289.002 ChameleonLib R#0 T#0 (OS_TID:25425): --> OMP_NUM_THREADS=11
-2019-07-17 00:38:40.289.100 ChameleonLib R#0 T#0 (OS_TID:25425): --> MIN_ABS_LOAD_IMBALANCE_BEFORE_MIGRATION=2.000000
-2019-07-17 00:38:40.289.113 ChameleonLib R#0 T#0 (OS_TID:25425): --> MIN_REL_LOAD_IMBALANCE_BEFORE_MIGRATION=0.050000
-2019-07-17 00:38:40.289.117 ChameleonLib R#0 T#0 (OS_TID:25425): --> TAG_NBITS_TASK_ID=16
-2019-07-17 00:38:40.289.120 ChameleonLib R#0 T#0 (OS_TID:25425): --> MIN_LOCAL_TASKS_IN_QUEUE_BEFORE_MIGRATION=2.000000
-2019-07-17 00:38:40.289.124 ChameleonLib R#0 T#0 (OS_TID:25425): --> MAX_TASKS_PER_RANK_TO_MIGRATE_AT_ONCE=1.000000
-2019-07-17 00:38:40.289.127 ChameleonLib R#0 T#0 (OS_TID:25425): --> PERCENTAGE_DIFF_TASKS_TO_MIGRATE=1.000000
-2019-07-17 00:38:40.289.130 ChameleonLib R#0 T#0 (OS_TID:25425): --> ENABLE_TRACE_FROM_SYNC_CYCLE=-1
-2019-07-17 00:38:40.289.104 ChameleonLib R#1 T#0 (OS_TID:25424): --> MIN_REL_LOAD_IMBALANCE_BEFORE_MIGRATION=0.050000
-2019-07-17 00:38:40.289.109 ChameleonLib R#1 T#0 (OS_TID:25424): --> TAG_NBITS_TASK_ID=16
-2019-07-17 00:38:40.289.112 ChameleonLib R#1 T#0 (OS_TID:25424): --> MIN_LOCAL_TASKS_IN_QUEUE_BEFORE_MIGRATION=2.000000
-2019-07-17 00:38:40.289.115 ChameleonLib R#1 T#0 (OS_TID:25424): --> MAX_TASKS_PER_RANK_TO_MIGRATE_AT_ONCE=1.000000
-2019-07-17 00:38:40.289.119 ChameleonLib R#1 T#0 (OS_TID:25424): --> PERCENTAGE_DIFF_TASKS_TO_MIGRATE=1.000000
-2019-07-17 00:38:40.289.122 ChameleonLib R#1 T#0 (OS_TID:25424): --> ENABLE_TRACE_FROM_SYNC_CYCLE=-1
-2019-07-17 00:38:40.289.125 ChameleonLib R#1 T#0 (OS_TID:25424): --> ENABLE_TRACE_TO_SYNC_CYCLE=2147483647
-2019-07-17 00:38:40.289.128 ChameleonLib R#1 T#0 (OS_TID:25424): --> MAX_PERCENTAGE_REPLICATED_TASKS=0.100000
+2019-07-18 07:28:56.673.338 ChameleonLib R#0 T#0 (OS_TID:23434): --> OMP_NUM_THREADS=11
+2019-07-18 07:28:56.673.424 ChameleonLib R#0 T#0 (OS_TID:23434): --> MIN_ABS_LOAD_IMBALANCE_BEFORE_MIGRATION=2.000000
+2019-07-18 07:28:56.673.453 ChameleonLib R#0 T#0 (OS_TID:23434): --> MIN_REL_LOAD_IMBALANCE_BEFORE_MIGRATION=0.050000
+2019-07-18 07:28:56.673.458 ChameleonLib R#0 T#0 (OS_TID:23434): --> TAG_NBITS_TASK_ID=16
+2019-07-18 07:28:56.673.340 ChameleonLib R#1 T#0 (OS_TID:23435): --> OMP_NUM_THREADS=11
+2019-07-18 07:28:56.673.441 ChameleonLib R#1 T#0 (OS_TID:23435): --> MIN_ABS_LOAD_IMBALANCE_BEFORE_MIGRATION=2.000000
+2019-07-18 07:28:56.673.457 ChameleonLib R#1 T#0 (OS_TID:23435): --> MIN_REL_LOAD_IMBALANCE_BEFORE_MIGRATION=0.050000
+2019-07-18 07:28:56.673.462 ChameleonLib R#1 T#0 (OS_TID:23435): --> TAG_NBITS_TASK_ID=16
+2019-07-18 07:28:56.673.473 ChameleonLib R#1 T#0 (OS_TID:23435): --> MIN_LOCAL_TASKS_IN_QUEUE_BEFORE_MIGRATION=2.000000
+2019-07-18 07:28:56.673.477 ChameleonLib R#1 T#0 (OS_TID:23435): --> MAX_TASKS_PER_RANK_TO_MIGRATE_AT_ONCE=1.000000
+2019-07-18 07:28:56.673.487 ChameleonLib R#1 T#0 (OS_TID:23435): --> PERCENTAGE_DIFF_TASKS_TO_MIGRATE=1.000000
+2019-07-18 07:28:56.673.491 ChameleonLib R#1 T#0 (OS_TID:23435): --> ENABLE_TRACE_FROM_SYNC_CYCLE=-1
+2019-07-18 07:28:56.673.494 ChameleonLib R#1 T#0 (OS_TID:23435): --> ENABLE_TRACE_TO_SYNC_CYCLE=2147483647
+2019-07-18 07:28:56.673.497 ChameleonLib R#1 T#0 (OS_TID:23435): --> MAX_PERCENTAGE_REPLICATED_TASKS=0.100000
 chameleon_init - dummy region
-2019-07-17 00:38:40.289.134 ChameleonLib R#0 T#0 (OS_TID:25425): --> ENABLE_TRACE_TO_SYNC_CYCLE=2147483647
-2019-07-17 00:38:40.289.139 ChameleonLib R#0 T#0 (OS_TID:25425): --> MAX_PERCENTAGE_REPLICATED_TASKS=0.100000
+2019-07-18 07:28:56.673.461 ChameleonLib R#0 T#0 (OS_TID:23434): --> MIN_LOCAL_TASKS_IN_QUEUE_BEFORE_MIGRATION=2.000000
+2019-07-18 07:28:56.673.490 ChameleonLib R#0 T#0 (OS_TID:23434): --> MAX_TASKS_PER_RANK_TO_MIGRATE_AT_ONCE=1.000000
+2019-07-18 07:28:56.673.494 ChameleonLib R#0 T#0 (OS_TID:23434): --> PERCENTAGE_DIFF_TASKS_TO_MIGRATE=1.000000
+2019-07-18 07:28:56.673.497 ChameleonLib R#0 T#0 (OS_TID:23434): --> ENABLE_TRACE_FROM_SYNC_CYCLE=-1
+2019-07-18 07:28:56.673.501 ChameleonLib R#0 T#0 (OS_TID:23434): --> ENABLE_TRACE_TO_SYNC_CYCLE=2147483647
+2019-07-18 07:28:56.673.504 ChameleonLib R#0 T#0 (OS_TID:23434): --> MAX_PERCENTAGE_REPLICATED_TASKS=0.100000
 chameleon_init - dummy region
-2019-07-17 00:38:40.302.081 ChameleonLib R#0 T#0 (OS_TID:25459): --> COMM_THREAD: Setting thread affinity to core 11
-2019-07-17 00:38:40.302.141 ChameleonLib R#1 T#0 (OS_TID:25458): --> COMM_THREAD: Setting thread affinity to core 23
+2019-07-18 07:28:56.686.739 ChameleonLib R#0 T#0 (OS_TID:23470): --> COMM_THREAD: Setting thread affinity to core 11
+2019-07-18 07:28:56.686.827 ChameleonLib R#1 T#0 (OS_TID:23469): --> COMM_THREAD: Setting thread affinity to core 23
 Step, current time:0.004025
 Step, current time:0.012076
 Step, current time:0.020126
@@ -175,137 +175,204 @@ Step, current time:0.979055
 Step, current time:0.986413
 Step, current time:0.993770
 Step, current time:1.001127
-0: min:0.306714, max:0.409613, avg:0.364850
-RESULT: Chameleon: Computation ended, walltime:18.573104
-0: setGhostLayerTime=0.765400
-0: receiveGhostLayerTime=0.034971
-0: taskCreateHorizontalTime=0.034112
-0: taskWaitHorizontalTime=8.329879
-0: reductionTime=0.005472
-0: taskCreateVerticalTime=0.039952
-0: taskWaitVerticalTime=8.399541
-0: updateUnknownsTime=0.906604
+Step, current time:1.008483
+Step, current time:1.015839
+Step, current time:1.023194
+Step, current time:1.030549
+Step, current time:1.037903
+Step, current time:1.045258
+Step, current time:1.052612
+Step, current time:1.059966
+Step, current time:1.067320
+Step, current time:1.074674
+Step, current time:1.082027
+Step, current time:1.089381
+Step, current time:1.096734
+Step, current time:1.104088
+Step, current time:1.111441
+Step, current time:1.118795
+Step, current time:1.126149
+Step, current time:1.133503
+Step, current time:1.140857
+Step, current time:1.148211
+Step, current time:1.155565
+Step, current time:1.162920
+Step, current time:1.170275
+Step, current time:1.177630
+Step, current time:1.184985
+Step, current time:1.192341
+Step, current time:1.199697
+Step, current time:1.207053
+Step, current time:1.214409
+Step, current time:1.221766
+Step, current time:1.229123
+Step, current time:1.236480
+Step, current time:1.243838
+Step, current time:1.251196
+Step, current time:1.258554
+Step, current time:1.265913
+Step, current time:1.273271
+Step, current time:1.280630
+Step, current time:1.287990
+Step, current time:1.295350
+Step, current time:1.302710
+Step, current time:1.310070
+Step, current time:1.317431
+Step, current time:1.324792
+Step, current time:1.332153
+Step, current time:1.339515
+Step, current time:1.346877
+Step, current time:1.354239
+Step, current time:1.361602
+Step, current time:1.368964
+Step, current time:1.376328
+Step, current time:1.383691
+Step, current time:1.391055
+Step, current time:1.398419
+Step, current time:1.405783
+Step, current time:1.413148
+Step, current time:1.420513
+Step, current time:1.427878
+Step, current time:1.435244
+Step, current time:1.442610
+Step, current time:1.449976
+Step, current time:1.457342
+Step, current time:1.464709
+Step, current time:1.472076
+Step, current time:1.479443
+Step, current time:1.486811
+0: min:0.472321, max:0.614498, avg:0.544916
+Iterations: 200
+RESULT: Chameleon: Computation ended, walltime:27.834541
+0: setGhostLayerTime=1.138900
+0: receiveGhostLayerTime=0.065340
+0: taskCreateHorizontalTime=0.027827
+0: taskWaitHorizontalTime=12.457761
+0: reductionTime=0.009113
+0: taskCreateVerticalTime=0.074758
+0: taskWaitVerticalTime=12.544134
+0: updateUnknownsTime=1.393652
 0: writeOutputTime=0.000000
-1: min:0.309667, max:0.402811, avg:0.364757
-RESULT: Chameleon: Computation ended, walltime:18.573091
-1: setGhostLayerTime=0.761517
-1: receiveGhostLayerTime=0.034385
-1: taskCreateHorizontalTime=0.020653
-1: taskWaitHorizontalTime=8.328979
-1: reductionTime=0.005559
-1: taskCreateVerticalTime=0.040019
-1: taskWaitVerticalTime=8.400425
-1: updateUnknownsTime=0.914386
+1: min:0.462282, max:0.607617, avg:0.544854
+RESULT: Chameleon: Computation ended, walltime:27.834554
+1: setGhostLayerTime=1.143837
+1: receiveGhostLayerTime=0.096964
+1: taskCreateHorizontalTime=0.046709
+1: taskWaitHorizontalTime=12.467445
+1: reductionTime=0.007430
+1: taskCreateVerticalTime=0.044167
+1: taskWaitVerticalTime=12.556324
+1: updateUnknownsTime=1.354127
 1: writeOutputTime=0.000000
 Stats R#0:	_num_overall_ranks	2
-Stats R#0:	_num_executed_tasks_local	134474
-Stats R#0:	_num_executed_tasks_stolen	2689
+Stats R#0:	_num_executed_tasks_local	201004
+Stats R#0:	_num_executed_tasks_stolen	3564
 Stats R#0:	_num_executed_tasks_replicated	0
-Stats R#0:	_num_executed_tasks_overall	137163
-Stats R#0:	_num_tasks_offloaded	2742
+Stats R#0:	_num_executed_tasks_overall	204568
+Stats R#0:	_num_tasks_offloaded	3796
 Stats R#0:	_num_tasks_canceled	0
-Stats R#0:	_num_migration_decision_performed	4727644
-Stats R#0:	_num_migration_done	2742
-Stats R#0:	_num_load_exchanges_performed	4258538
+Stats R#0:	_num_migration_decision_performed	7140369
+Stats R#0:	_num_migration_done	3796
+Stats R#0:	_num_load_exchanges_performed	6596334
 Stats R#0:	_num_slow_communication_operations	0
-Stats R#0:	_time_task_execution_local_sum	sum=	177.3958740234	count=	134474	mean=	0.0013191834
-Stats R#0:	_time_task_execution_stolen_sum	sum=	3.5022187233	count=	2689	mean=	0.0013024242
+Stats R#0:	_time_task_execution_local_sum	sum=	264.9934732914	count=	201004	mean=	0.0013183493
+Stats R#0:	_time_task_execution_stolen_sum	sum=	4.6633055210	count=	3564	mean=	0.0013084471
 Stats R#0:	_time_task_execution_replicated_sum	sum=	0.0000000000	count=	0	mean=	0
-Stats R#0:	_time_task_execution_overall_sum	sum=	180.8980927467	count=	137163	mean=	0.0013188549
-Stats R#0:	_time_encode_sum	sum=	0.0015299320	count=	2742	mean=	0.0000005580
-Stats R#0:	_time_decode_sum	sum=	0.0276055336	count=	2689	mean=	0.0000102661
-Stats R#0:	_time_between_load_exchange_sum	sum=	16.3653542995	count=	4258270	mean=	0.0000038432
-Stats R#0:	_time_between_allgather_and_exchange_sum	sum=	4.8365130424	count=	4258538	mean=	0.0000011357
-Stats R#0:	_time_taskwait_sum	sum=	183.9761149883	count=	2948	mean=	0.0624070946
-Stats R#0:	_time_taskwait_idling_sum	sum=	3.0780222416	count=	2948	mean=	0.0010441052
-Stats R#0:	_time_commthread_active_sum	sum=	16.7154448032	count=	269	mean=	0.0621392000
+Stats R#0:	_time_task_execution_overall_sum	sum=	269.6567788124	count=	204568	mean=	0.0013181767
+Stats R#0:	_time_encode_sum	sum=	0.0023472309	count=	3796	mean=	0.0000006183
+Stats R#0:	_time_decode_sum	sum=	0.0513527393	count=	3564	mean=	0.0000144087
+Stats R#0:	_time_between_load_exchange_sum	sum=	24.3962066174	count=	6595934	mean=	0.0000036987
+Stats R#0:	_time_between_allgather_and_exchange_sum	sum=	7.1049053669	count=	6596334	mean=	0.0000010771
+Stats R#0:	_time_taskwait_sum	sum=	274.9494812489	count=	4400	mean=	0.0624885185
+Stats R#0:	_time_taskwait_idling_sum	sum=	5.2927024364	count=	4400	mean=	0.0012028869
+Stats R#0:	_time_commthread_active_sum	sum=	24.9697041512	count=	401	mean=	0.0622685889
 Stats R#0:	_time_data_submit_sum	sum=	0.0000000000	count=	0	mean=	0
-Stats R#0:	_throughput_send_sum (MB/s, not reliable)	12661638.305510
-Stats R#0:	_throughput_send_count	5431
-Stats R#0:	_throughput_send_min (MB/s, not reliable)	sum=	164.4703306625	count=	1	mean=	164.4703306625
-Stats R#0:	_throughput_send_max (MB/s, not reliable)	sum=	3604.2619839709	count=	1	mean=	3604.2619839709
-Stats R#0:	_throughput_send_avg (MB/s, not reliable)	sum=	2331.3640776119	count=	1	mean=	2331.3640776119
-Stats R#0:	_bytes_send_per_message_sum (Bytes)	2664483580.000000
-Stats R#0:	_bytes_send_per_message_count	8173
+Stats R#0:	_throughput_send_sum (MB/s, not reliable)	15193361.468008
+Stats R#0:	_throughput_send_count	7360
+Stats R#0:	_throughput_send_min (MB/s, not reliable)	sum=	172.3642217046	count=	1	mean=	172.3642217046
+Stats R#0:	_throughput_send_max (MB/s, not reliable)	sum=	3630.6910360990	count=	1	mean=	3630.6910360990
+Stats R#0:	_throughput_send_avg (MB/s, not reliable)	sum=	2064.3154168489	count=	1	mean=	2064.3154168489
+Stats R#0:	_bytes_send_per_message_sum (Bytes)	3595188952.000000
+Stats R#0:	_bytes_send_per_message_count	11156
 Stats R#0:	_bytes_send_per_message_min (Bytes)	sum=	252.0000000000	count=	1	mean=	252.0000000000
 Stats R#0:	_bytes_send_per_message_max (Bytes)	sum=	944000.0000000000	count=	1	mean=	944000.0000000000
-Stats R#0:	_bytes_send_per_message_avg (Bytes)	sum=	326010.4710632571	count=	1	mean=	326010.4710632571
-Stats R#0:	_throughput_recv_sum (MB/s, not reliable)	15872289.179451
-Stats R#0:	_throughput_recv_count	5431
-Stats R#0:	_throughput_recv_min (MB/s, not reliable)	sum=	358.2233427457	count=	1	mean=	358.2233427457
-Stats R#0:	_throughput_recv_max (MB/s, not reliable)	sum=	3629.1686306141	count=	1	mean=	3629.1686306141
-Stats R#0:	_throughput_recv_avg (MB/s, not reliable)	sum=	2922.5352935833	count=	1	mean=	2922.5352935833
-Stats R#0:	_bytes_recv_per_message_sum (Bytes)	2637304244.000000
-Stats R#0:	_bytes_recv_per_message_count	5431
+Stats R#0:	_bytes_send_per_message_avg (Bytes)	sum=	322265.0548583724	count=	1	mean=	322265.0548583724
+Stats R#0:	_throughput_recv_sum (MB/s, not reliable)	19968788.713597
+Stats R#0:	_throughput_recv_count	7360
+Stats R#0:	_throughput_recv_min (MB/s, not reliable)	sum=	356.0417927451	count=	1	mean=	356.0417927451
+Stats R#0:	_throughput_recv_max (MB/s, not reliable)	sum=	3778.0753587786	count=	1	mean=	3778.0753587786
+Stats R#0:	_throughput_recv_avg (MB/s, not reliable)	sum=	2713.1506404344	count=	1	mean=	2713.1506404344
+Stats R#0:	_bytes_recv_per_message_sum (Bytes)	3496788248.000000
+Stats R#0:	_bytes_recv_per_message_count	7360
 Stats R#0:	_bytes_recv_per_message_min (Bytes)	sum=	270404.0000000000	count=	1	mean=	270404.0000000000
 Stats R#0:	_bytes_recv_per_message_max (Bytes)	sum=	944000.0000000000	count=	1	mean=	944000.0000000000
-Stats R#0:	_bytes_recv_per_message_avg (Bytes)	sum=	485601.9598600625	count=	1	mean=	485601.9598600625
-Stats R#0:	_time_comm_send_sum (sec, not reliable)	1.354649
-Stats R#0:	_time_comm_send_count	5431
+Stats R#0:	_bytes_recv_per_message_avg (Bytes)	sum=	475107.0989130435	count=	1	mean=	475107.0989130435
+Stats R#0:	_time_comm_send_sum (sec, not reliable)	2.184079
+Stats R#0:	_time_comm_send_count	7360
 Stats R#0:	_time_comm_send_min (sec, not reliable)	sum=	0.0000889301	count=	1	mean=	0.0000889301
-Stats R#0:	_time_comm_send_max (sec, not reliable)	sum=	0.0027449131	count=	1	mean=	0.0027449131
-Stats R#0:	_time_comm_send_avg (sec, not reliable)	sum=	0.0002494290	count=	1	mean=	0.0002494290
-Stats R#0:	_time_comm_recv_sum (sec, not reliable)	0.979514
-Stats R#0:	_time_comm_recv_count	5431
+Stats R#0:	_time_comm_send_max (sec, not reliable)	sum=	0.0036759377	count=	1	mean=	0.0036759377
+Stats R#0:	_time_comm_send_avg (sec, not reliable)	sum=	0.0002967499	count=	1	mean=	0.0002967499
+Stats R#0:	_time_comm_recv_sum (sec, not reliable)	1.475930
+Stats R#0:	_time_comm_recv_count	7360
 Stats R#0:	_time_comm_recv_min (sec, not reliable)	sum=	0.0000848770	count=	1	mean=	0.0000848770
-Stats R#0:	_time_comm_recv_max (sec, not reliable)	sum=	0.0025370121	count=	1	mean=	0.0025370121
-Stats R#0:	_time_comm_recv_avg (sec, not reliable)	sum=	0.0001803560	count=	1	mean=	0.0001803560
-Stats R#0:	sending	effective throughput=	-128.473 MB/s
-Stats R#0:	receiving	effective throughput=	-128.473 MB/s
+Stats R#0:	_time_comm_recv_max (sec, not reliable)	sum=	0.0017838478	count=	1	mean=	0.0017838478
+Stats R#0:	_time_comm_recv_avg (sec, not reliable)	sum=	0.0002005339	count=	1	mean=	0.0002005339
+Stats R#0:	sending	effective throughput=	-86.004 MB/s
+Stats R#0:	receiving	effective throughput=	-86.004 MB/s
 Stats R#1:	_num_overall_ranks	2
-Stats R#1:	_num_executed_tasks_local	134527
-Stats R#1:	_num_executed_tasks_stolen	2742
+Stats R#1:	_num_executed_tasks_local	201236
+Stats R#1:	_num_executed_tasks_stolen	3796
 Stats R#1:	_num_executed_tasks_replicated	0
-Stats R#1:	_num_executed_tasks_overall	137269
-Stats R#1:	_num_tasks_offloaded	2689
+Stats R#1:	_num_executed_tasks_overall	205032
+Stats R#1:	_num_tasks_offloaded	3564
 Stats R#1:	_num_tasks_canceled	0
-Stats R#1:	_num_migration_decision_performed	4714838
-Stats R#1:	_num_migration_done	2689
-Stats R#1:	_num_load_exchanges_performed	4258538
+Stats R#1:	_num_migration_decision_performed	7113486
+Stats R#1:	_num_migration_done	3564
+Stats R#1:	_num_load_exchanges_performed	6596334
 Stats R#1:	_num_slow_communication_operations	0
-Stats R#1:	_time_task_execution_local_sum	sum=	177.3226604462	count=	134527	mean=	0.0013181195
-Stats R#1:	_time_task_execution_stolen_sum	sum=	3.5719304085	count=	2742	mean=	0.0013026734
+Stats R#1:	_time_task_execution_local_sum	sum=	264.9793560505	count=	201236	mean=	0.0013167592
+Stats R#1:	_time_task_execution_stolen_sum	sum=	4.9992847443	count=	3796	mean=	0.0013169876
 Stats R#1:	_time_task_execution_replicated_sum	sum=	0.0000000000	count=	0	mean=	0
-Stats R#1:	_time_task_execution_overall_sum	sum=	180.8945908546	count=	137269	mean=	0.0013178109
-Stats R#1:	_time_encode_sum	sum=	0.0014834404	count=	2689	mean=	0.0000005517
-Stats R#1:	_time_decode_sum	sum=	0.0198702812	count=	2742	mean=	0.0000072466
-Stats R#1:	_time_between_load_exchange_sum	sum=	16.3675479889	count=	4258270	mean=	0.0000038437
-Stats R#1:	_time_between_allgather_and_exchange_sum	sum=	4.2310955524	count=	4258538	mean=	0.0000009936
-Stats R#1:	_time_taskwait_sum	sum=	183.9780781269	count=	2948	mean=	0.0624077606
-Stats R#1:	_time_taskwait_idling_sum	sum=	3.0834872723	count=	2948	mean=	0.0010459590
-Stats R#1:	_time_commthread_active_sum	sum=	16.7158763409	count=	269	mean=	0.0621408042
+Stats R#1:	_time_task_execution_overall_sum	sum=	269.9786407948	count=	205032	mean=	0.0013167634
+Stats R#1:	_time_encode_sum	sum=	0.0020034313	count=	3564	mean=	0.0000005621
+Stats R#1:	_time_decode_sum	sum=	0.0539851189	count=	3796	mean=	0.0000142216
+Stats R#1:	_time_between_load_exchange_sum	sum=	24.4091033936	count=	6595934	mean=	0.0000037006
+Stats R#1:	_time_between_allgather_and_exchange_sum	sum=	6.4412016869	count=	6596334	mean=	0.0000009765
+Stats R#1:	_time_taskwait_sum	sum=	275.1794226170	count=	4400	mean=	0.0625407779
+Stats R#1:	_time_taskwait_idling_sum	sum=	5.2007818222	count=	4400	mean=	0.0011819959
+Stats R#1:	_time_commthread_active_sum	sum=	24.9808597565	count=	401	mean=	0.0622964084
 Stats R#1:	_time_data_submit_sum	sum=	0.0000000000	count=	0	mean=	0
-Stats R#1:	_throughput_send_sum (MB/s, not reliable)	12249914.147829
-Stats R#1:	_throughput_send_count	5431
-Stats R#1:	_throughput_send_min (MB/s, not reliable)	sum=	159.1968572161	count=	1	mean=	159.1968572161
-Stats R#1:	_throughput_send_max (MB/s, not reliable)	sum=	3459.4619392000	count=	1	mean=	3459.4619392000
-Stats R#1:	_throughput_send_avg (MB/s, not reliable)	sum=	2255.5540688325	count=	1	mean=	2255.5540688325
-Stats R#1:	_bytes_send_per_message_sum (Bytes)	2638129040.000000
-Stats R#1:	_bytes_send_per_message_count	8120
+Stats R#1:	_throughput_send_sum (MB/s, not reliable)	15059791.384596
+Stats R#1:	_throughput_send_count	7360
+Stats R#1:	_throughput_send_min (MB/s, not reliable)	sum=	98.0498039101	count=	1	mean=	98.0498039101
+Stats R#1:	_throughput_send_max (MB/s, not reliable)	sum=	3385.5418122940	count=	1	mean=	3385.5418122940
+Stats R#1:	_throughput_send_avg (MB/s, not reliable)	sum=	2046.1673076896	count=	1	mean=	2046.1673076896
+Stats R#1:	_bytes_send_per_message_sum (Bytes)	3497868536.000000
+Stats R#1:	_bytes_send_per_message_count	10924
 Stats R#1:	_bytes_send_per_message_min (Bytes)	sum=	252.0000000000	count=	1	mean=	252.0000000000
 Stats R#1:	_bytes_send_per_message_max (Bytes)	sum=	944000.0000000000	count=	1	mean=	944000.0000000000
-Stats R#1:	_bytes_send_per_message_avg (Bytes)	sum=	324892.7389162568	count=	1	mean=	324892.7389162568
-Stats R#1:	_throughput_recv_sum (MB/s, not reliable)	16182354.337895
-Stats R#1:	_throughput_recv_count	5431
-Stats R#1:	_throughput_recv_min (MB/s, not reliable)	sum=	353.6977453552	count=	1	mean=	353.6977453552
-Stats R#1:	_throughput_recv_max (MB/s, not reliable)	sum=	3840.3714607177	count=	1	mean=	3840.3714607177
-Stats R#1:	_throughput_recv_avg (MB/s, not reliable)	sum=	2979.6270185775	count=	1	mean=	2979.6270185775
-Stats R#1:	_bytes_recv_per_message_sum (Bytes)	2663638804.000000
-Stats R#1:	_bytes_recv_per_message_count	5431
+Stats R#1:	_bytes_send_per_message_avg (Bytes)	sum=	320200.3419992689	count=	1	mean=	320200.3419992689
+Stats R#1:	_throughput_recv_sum (MB/s, not reliable)	19820729.954769
+Stats R#1:	_throughput_recv_count	7360
+Stats R#1:	_throughput_recv_min (MB/s, not reliable)	sum=	260.1289649826	count=	1	mean=	260.1289649826
+Stats R#1:	_throughput_recv_max (MB/s, not reliable)	sum=	3851.5787704280	count=	1	mean=	3851.5787704280
+Stats R#1:	_throughput_recv_avg (MB/s, not reliable)	sum=	2693.0339612458	count=	1	mean=	2693.0339612458
+Stats R#1:	_bytes_recv_per_message_sum (Bytes)	3594028888.000000
+Stats R#1:	_bytes_recv_per_message_count	7360
 Stats R#1:	_bytes_recv_per_message_min (Bytes)	sum=	270404.0000000000	count=	1	mean=	270404.0000000000
 Stats R#1:	_bytes_recv_per_message_max (Bytes)	sum=	944000.0000000000	count=	1	mean=	944000.0000000000
-Stats R#1:	_bytes_recv_per_message_avg (Bytes)	sum=	490450.8937580556	count=	1	mean=	490450.8937580556
-Stats R#1:	_time_comm_send_sum (sec, not reliable)	1.415908
-Stats R#1:	_time_comm_send_count	5431
+Stats R#1:	_bytes_recv_per_message_avg (Bytes)	sum=	488319.1423913042	count=	1	mean=	488319.1423913042
+Stats R#1:	_time_comm_send_sum (sec, not reliable)	2.166315
+Stats R#1:	_time_comm_send_count	7360
 Stats R#1:	_time_comm_send_min (sec, not reliable)	sum=	0.0000889301	count=	1	mean=	0.0000889301
-Stats R#1:	_time_comm_send_max (sec, not reliable)	sum=	0.0025520325	count=	1	mean=	0.0025520325
-Stats R#1:	_time_comm_send_avg (sec, not reliable)	sum=	0.0002607085	count=	1	mean=	0.0002607085
-Stats R#1:	_time_comm_recv_sum (sec, not reliable)	0.939889
-Stats R#1:	_time_comm_recv_count	5431
-Stats R#1:	_time_comm_recv_min (sec, not reliable)	sum=	0.0000839233	count=	1	mean=	0.0000839233
-Stats R#1:	_time_comm_recv_max (sec, not reliable)	sum=	0.0026438236	count=	1	mean=	0.0026438236
-Stats R#1:	_time_comm_recv_avg (sec, not reliable)	sum=	0.0001730601	count=	1	mean=	0.0001730601
-Stats R#1:	sending	effective throughput=	-128.470 MB/s
-Stats R#1:	receiving	effective throughput=	-128.470 MB/s
+Stats R#1:	_time_comm_send_max (sec, not reliable)	sum=	0.0041048527	count=	1	mean=	0.0041048527
+Stats R#1:	_time_comm_send_avg (sec, not reliable)	sum=	0.0002943363	count=	1	mean=	0.0002943363
+Stats R#1:	_time_comm_recv_sum (sec, not reliable)	1.544530
+Stats R#1:	_time_comm_recv_count	7360
+Stats R#1:	_time_comm_recv_min (sec, not reliable)	sum=	0.0000848770	count=	1	mean=	0.0000848770
+Stats R#1:	_time_comm_recv_max (sec, not reliable)	sum=	0.0036289692	count=	1	mean=	0.0036289692
+Stats R#1:	_time_comm_recv_avg (sec, not reliable)	sum=	0.0002098546	count=	1	mean=	0.0002098546
+Stats R#1:	sending	effective throughput=	-85.965 MB/s
+Stats R#1:	receiving	effective throughput=	-85.965 MB/s
 Stats R#0:	total	effective throughput=	0.000 MB/s
 Stats R#1:	total	effective throughput=	0.000 MB/s

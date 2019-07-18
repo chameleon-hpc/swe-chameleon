@@ -1,14 +1,14 @@
-srun -n 2 ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_augrie -t 1 -n 1 -x 4096 -y 4096 -o ./output/charm_batch
-lnm145.hpc.itc.rwth-aachen.de: pid 31400's current affinity list: 12-23
-lnm145.hpc.itc.rwth-aachen.de: pid 31399's current affinity list: 0-11
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=988df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=988df0
+srun -n 2 ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_augrie -t 1 -n 1 -x 4096 -y 4096 -o ./output/charm_batch -i 200
+lnn06.hpc.itc.rwth-aachen.de: pid 24763's current affinity list: 0-11
+lnn06.hpc.itc.rwth-aachen.de: pid 24764's current affinity list: 12-23
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=987df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=987df0
 [0] MPI startup(): Multi-threaded optimized library
 [0] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       31448    lnm145.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       31447    lnm145.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): Rank    Pid      Node name                     Pin cpu
+[0] MPI startup(): 0       24811    lnn06.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       24812    lnn06.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
 Charm++> Running on MPI version: 3.1
@@ -18,7 +18,7 @@ Converse/Charm++ Commit ID: v6.9.0-0-gc3d50ef
 Warning> Randomization of virtual memory (ASLR) is turned on in the kernel, thread migration may not work! Run 'echo 0 > /proc/sys/kernel/randomize_va_space' as root to disable it, or try running with '+isomalloc_sync'.
 CharmLB> Load balancer assumes all CPUs are same.
 Charm++> Running on 1 hosts (2 sockets x 12 cores x 1 PUs = 24-way SMP)
-Charm++> cpu topology info is gathered in 0.001 seconds.
+Charm++> cpu topology info is gathered in 0.003 seconds.
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -72,7 +72,7 @@ Step, current time:0.377089
 Step, current time:0.384464
 Step, current time:0.391839
 Step, current time:0.399213
-Step, current time:0.406586
+Step, current time:0.406585
 Step, current time:0.413957
 Step, current time:0.421328
 Step, current time:0.428698
@@ -88,14 +88,14 @@ Step, current time:0.494963
 Step, current time:0.502318
 Step, current time:0.509670
 Step, current time:0.517021
-Step, current time:0.524370
+Step, current time:0.524369
 Step, current time:0.531716
 Step, current time:0.539061
 Step, current time:0.546403
 Step, current time:0.553744
 Step, current time:0.561082
 Step, current time:0.568418
-Step, current time:0.575753
+Step, current time:0.575752
 Step, current time:0.583085
 Step, current time:0.590415
 Step, current time:0.597743
@@ -114,11 +114,11 @@ Step, current time:0.685531
 Step, current time:0.692835
 Step, current time:0.700138
 Step, current time:0.707438
-Step, current time:0.714738
+Step, current time:0.714737
 Step, current time:0.722035
 Step, current time:0.729331
-Step, current time:0.736626
-Step, current time:0.743919
+Step, current time:0.736625
+Step, current time:0.743918
 Step, current time:0.751210
 Step, current time:0.758500
 Step, current time:0.765789
@@ -126,12 +126,12 @@ Step, current time:0.773076
 Step, current time:0.780362
 Step, current time:0.787647
 Step, current time:0.794930
-Step, current time:0.802213
+Step, current time:0.802212
 Step, current time:0.809493
 Step, current time:0.816773
 Step, current time:0.824052
 Step, current time:0.831329
-Step, current time:0.838606
+Step, current time:0.838605
 Step, current time:0.845881
 Step, current time:0.853155
 Step, current time:0.860428
@@ -142,7 +142,7 @@ Step, current time:0.889511
 Step, current time:0.896779
 Step, current time:0.904046
 Step, current time:0.911313
-Step, current time:0.918579
+Step, current time:0.918578
 Step, current time:0.925843
 Step, current time:0.933107
 Step, current time:0.940371
@@ -153,7 +153,72 @@ Step, current time:0.969416
 Step, current time:0.976676
 Step, current time:0.983935
 Step, current time:0.991193
-Step, current time:0.998451
+Step, current time:0.998450
 Step, current time:1.005708
-RESULT: 16.818276
+Step, current time:1.012964
+Step, current time:1.020220
+Step, current time:1.027475
+Step, current time:1.034730
+Step, current time:1.041984
+Step, current time:1.049238
+Step, current time:1.056491
+Step, current time:1.063743
+Step, current time:1.070996
+Step, current time:1.078248
+Step, current time:1.085499
+Step, current time:1.092750
+Step, current time:1.100001
+Step, current time:1.107251
+Step, current time:1.114501
+Step, current time:1.121750
+Step, current time:1.129000
+Step, current time:1.136248
+Step, current time:1.143497
+Step, current time:1.150745
+Step, current time:1.157993
+Step, current time:1.165241
+Step, current time:1.172488
+Step, current time:1.179736
+Step, current time:1.186983
+Step, current time:1.194229
+Step, current time:1.201476
+Step, current time:1.208722
+Step, current time:1.215968
+Step, current time:1.223214
+Step, current time:1.230460
+Step, current time:1.237705
+Step, current time:1.244951
+Step, current time:1.252196
+Step, current time:1.259441
+Step, current time:1.266686
+Step, current time:1.273931
+Step, current time:1.281176
+Step, current time:1.288421
+Step, current time:1.295666
+Step, current time:1.302910
+Step, current time:1.310155
+Step, current time:1.317399
+Step, current time:1.324644
+Step, current time:1.331888
+Step, current time:1.339133
+Step, current time:1.346377
+Step, current time:1.353621
+Step, current time:1.360866
+Step, current time:1.368110
+Step, current time:1.375354
+Step, current time:1.382598
+Step, current time:1.389843
+Step, current time:1.397087
+Step, current time:1.404331
+Step, current time:1.411576
+Step, current time:1.418820
+Step, current time:1.426064
+Step, current time:1.433309
+Step, current time:1.440554
+Step, current time:1.447798
+Step, current time:1.455043
+Step, current time:1.462288
+Step, current time:1.469532
+Iterations: 200
+RESULT: 40.093153
 [Partition 0][Node 0] End of program

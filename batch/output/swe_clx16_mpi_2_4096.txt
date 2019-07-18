@@ -1,28 +1,28 @@
-srun -n 4 ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_mpi_omp_augrie -t 1 -n 1 -x 4096 -y 4096 -o ./output/mpi_batch
-lnm340.hpc.itc.rwth-aachen.de: pid 28879's current affinity list: 12-23
-lnm340.hpc.itc.rwth-aachen.de: pid 28878's current affinity list: 0-11
-lnm339.hpc.itc.rwth-aachen.de: pid 31527's current affinity list: 0-11
-lnm339.hpc.itc.rwth-aachen.de: pid 31528's current affinity list: 12-23
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=6262d0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=6262d0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=6262d0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=6262d0
+srun -n 4 ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_mpi_omp_augrie -t 1 -n 1 -x 4096 -y 4096 -o ./output/mpi_batch -i 200
+lnn04.hpc.itc.rwth-aachen.de: pid 20519's current affinity list: 0-11
+lnn04.hpc.itc.rwth-aachen.de: pid 20520's current affinity list: 12-23
+lnn03.hpc.itc.rwth-aachen.de: pid 12207's current affinity list: 12-23
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=626450
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=626450
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=626450
+lnn03.hpc.itc.rwth-aachen.de: pid 12206's current affinity list: 0-11
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=626450
 [0] MPI startup(): Multi-threaded optimized library
+[3] MPI startup(): shm and tmi data transfer modes
+[2] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
-[2] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       31575    lnm339.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       31580    lnm339.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       28889    lnm340.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       28888    lnm340.hpc.itc.rwth-aachen.de  +1
-1 Spawned at lnm339.hpc.itc.rwth-aachen.de
-2 Spawned at lnm340.hpc.itc.rwth-aachen.de
-3 Spawned at lnm340.hpc.itc.rwth-aachen.de
+[0] MPI startup(): Rank    Pid      Node name                     Pin cpu
+[0] MPI startup(): 0       12268    lnn03.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       12264    lnn03.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       20529    lnn04.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       20530    lnn04.hpc.itc.rwth-aachen.de  +1
+2 Spawned at lnn04.hpc.itc.rwth-aachen.de
+1 Spawned at lnn03.hpc.itc.rwth-aachen.de
+3 Spawned at lnn04.hpc.itc.rwth-aachen.de
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
-0 Spawned at lnm339.hpc.itc.rwth-aachen.de
+0 Spawned at lnn03.hpc.itc.rwth-aachen.de
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -143,16 +143,88 @@ Step, current time:0.941902
 Step, current time:0.949952
 Step, current time:0.958003
 Step, current time:0.966053
-Step, current time:0.974104
+Step, current time:0.974103
 Step, current time:0.982154
 Step, current time:0.990204
 Step, current time:0.998255
 Step, current time:1.006305
-Rank 0 : Compute Time (CPU): 114.210297s - (WALL): 9.532351s | Total Time (Wall): 9.582644s
-RESULT: 9.582644
-Rank 2 : Compute Time (CPU): 113.620232s - (WALL): 9.478292s | Total Time (Wall): 9.584612s
-RESULT: 9.584612
-Rank 1 : Compute Time (CPU): 113.890228s - (WALL): 9.515167s | Total Time (Wall): 9.582854s
-RESULT: 9.582854
-Rank 3 : Compute Time (CPU): 113.470200s - (WALL): 9.475515s | Total Time (Wall): 9.584356s
-RESULT: 9.584356
+Step, current time:1.014355
+Step, current time:1.022405
+Step, current time:1.030455
+Step, current time:1.038505
+Step, current time:1.046555
+Step, current time:1.054605
+Step, current time:1.062654
+Step, current time:1.070703
+Step, current time:1.078752
+Step, current time:1.086800
+Step, current time:1.094848
+Step, current time:1.102895
+Step, current time:1.110942
+Step, current time:1.118988
+Step, current time:1.127032
+Step, current time:1.135076
+Step, current time:1.143118
+Step, current time:1.151159
+Step, current time:1.159198
+Step, current time:1.167236
+Step, current time:1.175271
+Step, current time:1.183304
+Step, current time:1.191335
+Step, current time:1.199363
+Step, current time:1.207388
+Step, current time:1.215410
+Step, current time:1.223428
+Step, current time:1.231442
+Step, current time:1.239453
+Step, current time:1.247459
+Step, current time:1.255461
+Step, current time:1.263459
+Step, current time:1.271451
+Step, current time:1.279438
+Step, current time:1.287420
+Step, current time:1.295396
+Step, current time:1.303366
+Step, current time:1.311330
+Step, current time:1.319288
+Step, current time:1.327240
+Step, current time:1.335184
+Step, current time:1.343123
+Step, current time:1.351054
+Step, current time:1.358978
+Step, current time:1.366895
+Step, current time:1.374805
+Step, current time:1.382707
+Step, current time:1.390602
+Step, current time:1.398490
+Step, current time:1.406369
+Step, current time:1.414241
+Step, current time:1.422106
+Step, current time:1.429962
+Step, current time:1.437811
+Step, current time:1.445651
+Step, current time:1.453484
+Step, current time:1.461309
+Step, current time:1.469126
+Step, current time:1.476935
+Step, current time:1.484736
+Step, current time:1.492529
+Step, current time:1.500314
+Step, current time:1.508092
+Step, current time:1.515861
+Step, current time:1.523623
+Step, current time:1.531376
+Step, current time:1.539122
+Step, current time:1.546860
+Step, current time:1.554591
+Step, current time:1.562313
+Step, current time:1.570029
+Step, current time:1.577736
+Step, current time:1.585436
+Step, current time:1.593128
+Step, current time:1.600813
+Iterations: 200
+RESULT: 13.558593
+RESULT: 13.558828
+RESULT: 13.558162
+RESULT: 13.558164
