@@ -3,7 +3,7 @@
 #EXPERIMENTS=(chameleon charm++ upcxx mpi)
 EXPERIMENTS=(mpi chameleon charm++)
 SIZES=(4096)
-NODE_COUNTS=(1 2 4 8)
+NODE_COUNTS=(2)
 NUM_TASKS_PER_NODE=2
 # Claix 16 settings
 NUM_CPUS_PER_TASK=12

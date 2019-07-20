@@ -11,7 +11,7 @@ run_upcxx_test:
 run_mpi_single:
 
 run_mpi:
-	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=12 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_mpi_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -u 1 -v 1
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=12 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_mpi_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -i 200 
 run_mpi_asagi:
 	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=12 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_mpi_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -u 1 -v 1 -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
 
@@ -26,7 +26,7 @@ run_charm_test:
 	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto mpiexec.hydra -np 24 ./build/SWE_intel_release_charm_omp_augrie -t 0.01 -n 1 -x 320 -y 320 -o ./output/test -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
 
 run_chameleon:
-	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=11 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_chameleon_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -u 1 -v 1
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=11 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_chameleon_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -i 200
 run_chameleon_asagi:
 	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=11 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_chameleon_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -u 1 -v 1 -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
 run_chameleon_test:
