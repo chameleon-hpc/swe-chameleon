@@ -4,7 +4,8 @@
 EXPERIMENTS=(mpi charm++ chameleon)
 #SIZES=(2048 4096 8192)
 SIZES=(4096)
-NODE_COUNTS=(1 2 4 8)
+NODE_COUNTS=(2)
+IMBALANCES=(0.0 0.1 0.2 0.3 0.4 0.5)
 # Claix 16 settings
 NUM_CPUS_PER_TASK=12
 PROJECT=jara0001
@@ -20,17 +21,20 @@ if [ "${CLX18}" = "1" ]; then
 	CLUSTER=clx18
 fi
 
-for EXP in ${EXPERIMENTS[@]}
+for IMBALANCE in ${IMBALANCES[@]}
 do
-	echo "config,walltime" > ${EXP}.csv
-	for NODE_COUNT in ${NODE_COUNTS[@]}
+	echo "config,walltime" > ${IMBALANCE}.csv
+	for EXP in ${EXPERIMENTS[@]}
 	do
-		for SIZE in ${SIZES[@]}
+		for NODE_COUNT in ${NODE_COUNTS[@]}
 		do
-			COMMAND="cat output/swe_${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE}.txt"
-			#echo $COMMAND
-			OUTPUT="${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE},"$($COMMAND | grep RESULT | sort | tail -n 1 | sed 's/[a-zA-Z:, ]//g')
-			echo $OUTPUT >> ${EXP}.csv
+			for SIZE in ${SIZES[@]}
+			do
+				COMMAND="cat output/swe_${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE}_${IMBALANCE}.txt"
+				#echo $COMMAND
+				OUTPUT="${CLUSTER}_${EXP}_${NODE_COUNT}_${SIZE}_${IMBALANCE},"$($COMMAND | grep RESULT | sort | tail -n 1 | sed 's/[a-zA-Z:, ]//g')
+				echo $OUTPUT >> ${IMBALANCE}.csv
+			done
 		done
 	done
 done
