@@ -4,7 +4,10 @@
 EXPERIMENTS=(mpi chameleon charm++)
 SIZES=(4096)
 NODE_COUNTS=(2)
+<<<<<<< HEAD
 IMBALANCES=(0.0 0.1 0.2 0.3 0.4 0.5)
+=======
+>>>>>>> 0d0404fb3ad228f64fed2acb6dc417d870cbbd3a
 NUM_TASKS_PER_NODE=2
 # Claix 16 settings
 NUM_CPUS_PER_TASK=12

@@ -53,7 +53,11 @@ class SWE_RadialDamBreakScenario : public SWE_Scenario {
     };
 
     float getWaterHeight(float x, float y) { 
+<<<<<<< HEAD
        if(x < 1000.0 * dryPart)
+=======
+       if(x < 0.f)
+>>>>>>> 0d0404fb3ad228f64fed2acb6dc417d870cbbd3a
           return 0.f;
        return ( sqrt( (x-500.f)*(x-500.f) + (y-500.f)*(y-500.f) ) < 100.f ) ? 15.f: 10.0f;
     };
