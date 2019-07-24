@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#EXPERIMENTS=(chameleon charm++ upcxx mpi)
-EXPERIMENTS=(mpi charm++ chameleon)
+#FRAMEWORKS=(chameleon charm++ upcxx mpi)
+FRAMEWORKS=(mpi charm++ chameleon)
 #SIZES=(2048 4096 8192)
 SIZES=(4096)
 NODE_COUNTS=(2)
@@ -24,7 +24,7 @@ fi
 for IMBALANCE in ${IMBALANCES[@]}
 do
 	echo "config,walltime" > ${IMBALANCE}.csv
-	for EXP in ${EXPERIMENTS[@]}
+	for EXP in ${FRAMEWORKS[@]}
 	do
 		for NODE_COUNT in ${NODE_COUNTS[@]}
 		do
