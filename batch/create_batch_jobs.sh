@@ -12,7 +12,7 @@ CLUSTER=clx16
 # Claix 18 settings
 if [ "${CLX18}" = "1" ]; then
   NUM_CPUS_PER_TASK=24
-  PROJECT=thes0570
+  PROJECT=thes0573
   PARTITION=c18m
   CLUSTER=clx18
 fi
@@ -49,7 +49,7 @@ do
             COMMAND+="--cpus-per-task=$NUM_CPUS_PER_TASK "
             COMMAND+="--job-name=swe_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_${GRID_DIMENSION}_${BLOCK_COUNT}_${DRY_FRACTION}_${EXTRA} "
             COMMAND+="--output=output/swe_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_${GRID_DIMENSION}_${BLOCK_COUNT}_${DRY_FRACTION}_${EXTRA}.txt "
-            COMMAND+="--export=NODE_COUNT,NUM_TASKS_PER_NODE,OMP_NUM_THREADS,GRID_DIMENSION,DRY_FRACTION "
+            COMMAND+="--export=NODE_COUNT,NUM_TASKS_PER_NODE,OMP_NUM_THREADS,GRID_DIMENSION,BLOCK_COUNT,DRY_FRACTION "
             COMMAND+="--account=$PROJECT "
             COMMAND+="${FRAMEWORK}.sh"
             echo $COMMAND
@@ -69,6 +69,13 @@ DRY_FRACTIONS=(0.0)
 EXTRAS=(none)
 }
 
+FRAMEWORKS=(mpi)
+NODE_COUNTS=(2)
+GRID_DIMENSIONS=(4096)
+BLOCK_COUNTS=(16)
+DRY_FRACTIONS=(0.0)
+EXTRAS=(none)
+
 create_scaling_jobs() {
   FRAMEWORKS=(mpi chameleon charm++)
   NODE_COUNTS=(1 2 4 8)
@@ -83,7 +90,7 @@ create_imbalance_jobs() {
 }
 
 create_granularity_jobs() {
-  FRAMEWORKS=(mpi chameleon charm++)
+  FRAMEWORKS=(chameleon charm++)
   NODE_COUNTS=(4)
   BLOCK_COUNTS=(8 16 32 64 128)
   create_batch_jobs
