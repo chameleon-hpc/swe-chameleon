@@ -25,7 +25,7 @@ do
     do
       for BLOCK_COUNT in ${BLOCK_COUNTS[@]}
       do
-        for IMBALANCE in ${IMBALANCES[@]}
+        for DRY_FRACTION in ${DRY_FRACTIONS[@]}
         do
           for EXTRA in ${EXTRAS[@]}
           do
@@ -35,20 +35,21 @@ do
               NUM_CPUS_PER_TASK=1
             fi
 
+            export CLUSTER=$CLUSTER
+            export FRAMEWORK=$FRAMEWORK
+            export NODE_COUNT=$NODE_COUNT
             export OMP_NUM_THREADS=$NUM_CPUS_PER_TASK
             export GRID_DIMENSION=$GRID_DIMENSION
-            export NODE_COUNT=$NODE_COUNT
-            export FRAMEWORK=$FRAMEWORK
-            export CLUSTER=$CLUSTER
-            export DRY_PART=$IMBALANCE
+            export BLOCK_COUNT=$BLOCK_COUNT
+            export DRY_FRACTION=$DRY_FRACTION
             COMMAND="sbatch "
             COMMAND+="--partition=$PARTITION "
             COMMAND+="--nodes=${NODE_COUNT} "
             COMMAND+="--ntasks-per-node=$NUM_TASKS_PER_NODE "
             COMMAND+="--cpus-per-task=$NUM_CPUS_PER_TASK "
-            COMMAND+="--job-name=swe_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_${GRID_DIMENSION}_${BLOCK_COUNT}_${IMBALANCE}_${EXTRA} "
-            COMMAND+="--output=output/swe_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_${GRID_DIMENSION}_${BLOCK_COUNT}_${IMBALANCE}_${EXTRA}.txt "
-            COMMAND+="--export=NODE_COUNT,NUM_TASKS_PER_NODE,OMP_NUM_THREADS,GRID_DIMENSION,DRY_PART "
+            COMMAND+="--job-name=swe_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_${GRID_DIMENSION}_${BLOCK_COUNT}_${DRY_FRACTION}_${EXTRA} "
+            COMMAND+="--output=output/swe_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_${GRID_DIMENSION}_${BLOCK_COUNT}_${DRY_FRACTION}_${EXTRA}.txt "
+            COMMAND+="--export=NODE_COUNT,NUM_TASKS_PER_NODE,OMP_NUM_THREADS,GRID_DIMENSION,DRY_FRACTION "
             COMMAND+="--account=$PROJECT "
             COMMAND+="${FRAMEWORK}.sh"
             echo $COMMAND
@@ -64,7 +65,7 @@ FRAMEWORKS=(mpi)
 NODE_COUNTS=(2)
 GRID_DIMENSIONS=(4096)
 BLOCK_COUNTS=(16)
-IMBALANCES=(0.0)
+DRY_FRACTIONS=(0.0)
 EXTRAS=(none)
 }
 
@@ -77,7 +78,7 @@ create_scaling_jobs() {
 create_imbalance_jobs() {
   FRAMEWORKS=(mpi chameleon charm++)
   NODE_COUNTS=(4)
-  IMBALANCES=(0.0 0.1 0.2 0.3 0.4 0.5)
+  DRY_FRACTIONS=(0.0 0.1 0.2 0.3 0.4 0.5)
   create_batch_jobs
 }
 

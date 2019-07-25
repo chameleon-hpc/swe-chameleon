@@ -8,6 +8,7 @@ source /home/sc427635/.zshrc
 cd /home/sc427635/master/swe-benchmark
 
 ### Load modules
+#module load chameleon
 
 ### Compile
 #CHARM_PATH=/home/sc427635/sw/charm make charm
@@ -20,5 +21,13 @@ export I_MPI_DEBUG=5
 export OMP_PROC_BIND=close
 
 ### Execute your application
-echo $MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_augrie -t 1 -n 1 -x $SIZE -y $SIZE -o ./output/charm_batch -i 200
-$MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_augrie -t 1 -n 1 -x $SIZE -y $SIZE -o ./output/charm_batch -i 200
+COMMAND="$MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_augrie "
+COMMAND+="-t 1 -n 1 "  
+COMMAND+="-x $GRID_DIMENSION -y $GRID_DIMENSION "
+#COMMAND+="-i $BLOCK_COUNT -j $BLOCK_COUNT "
+COMMAND+="-o ./output/charm_batch -i 200"
+
+echo $COMMAND
+
+### Execute your application
+$COMMAND
