@@ -61,6 +61,7 @@ do
   done
 done
 
+JOB_CATEGORY=default
 FRAMEWORKS=(mpi)
 NODE_COUNTS=(2)
 GRID_DIMENSIONS=(4096)
@@ -69,6 +70,7 @@ DRY_FRACTIONS=(0.0)
 EXTRAS=(none)
 }
 
+JOB_CATEGORY=default
 FRAMEWORKS=(mpi)
 NODE_COUNTS=(2)
 GRID_DIMENSIONS=(4096)
@@ -77,12 +79,14 @@ DRY_FRACTIONS=(0.0)
 EXTRAS=(none)
 
 create_scaling_jobs() {
+  JOB_CATEGORY=scaling
   FRAMEWORKS=(mpi chameleon charm++)
   NODE_COUNTS=(1 2 4 8)
   create_batch_jobs
 }
 
 create_imbalance_jobs() {
+  JOB_CATEGORY=imbalance
   FRAMEWORKS=(mpi chameleon charm++)
   NODE_COUNTS=(4)
   DRY_FRACTIONS=(0.0 0.1 0.2 0.3 0.4 0.5)
@@ -90,6 +94,7 @@ create_imbalance_jobs() {
 }
 
 create_granularity_jobs() {
+  JOB_CATEGORY=granularity
   FRAMEWORKS=(chameleon charm++)
   NODE_COUNTS=(4)
   BLOCK_COUNTS=(8 16 32 64 128)
