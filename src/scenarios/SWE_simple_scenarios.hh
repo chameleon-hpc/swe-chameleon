@@ -40,11 +40,11 @@
 class SWE_RadialDamBreakScenario : public SWE_Scenario {
 
   public:
-    float dryPart = 0.0f;
+    float dryFraction = 0.0f;
     SWE_RadialDamBreakScenario() {
-      if(const char* env = std::getenv("DRY_PART")) {
-        dryPart = atof(env);
-        printf("DryPart: %f \n", dryPart);
+      if(const char* env = std::getenv("DRY_FRACTION")) {
+        dryFraction = atof(env);
+        printf("dryFraction: %f \n", dryFraction);
       }
     };
 
@@ -53,11 +53,7 @@ class SWE_RadialDamBreakScenario : public SWE_Scenario {
     };
 
     float getWaterHeight(float x, float y) { 
-<<<<<<< HEAD
-       if(x < 1000.0 * dryPart)
-=======
-       if(x < 0.f)
->>>>>>> 0d0404fb3ad228f64fed2acb6dc417d870cbbd3a
+       if(x < 1000.0 * dryFraction)
           return 0.f;
        return ( sqrt( (x-500.f)*(x-500.f) + (y-500.f)*(y-500.f) ) < 100.f ) ? 15.f: 10.0f;
     };
