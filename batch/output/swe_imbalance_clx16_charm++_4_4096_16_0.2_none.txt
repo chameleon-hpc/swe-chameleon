@@ -1,14 +1,14 @@
 srun -n 8 ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_augrie -t 1 -n 1 -x 4096 -y 4096 -o ./output/charm_batch -i 200
-lnm401.hpc.itc.rwth-aachen.de: pid 19902's current affinity list: 0-11
-lnm400.hpc.itc.rwth-aachen.de: pid 362's current affinity list: 0-11
-lnm401.hpc.itc.rwth-aachen.de: pid 19903's current affinity list: 12-23
-lnm399.hpc.itc.rwth-aachen.de: pid 10923's current affinity list: 12-23
-lnm400.hpc.itc.rwth-aachen.de: pid 363's current affinity list: 12-23
-lnm399.hpc.itc.rwth-aachen.de: pid 10922's current affinity list: 0-11
-lnm398.hpc.itc.rwth-aachen.de: pid 26895's current affinity list: 0-11
+lnm019.hpc.itc.rwth-aachen.de: pid 17810's current affinity list: 0-11
+lnm017.hpc.itc.rwth-aachen.de: pid 26724's current affinity list: 12-23
+lnm018.hpc.itc.rwth-aachen.de: pid 26958's current affinity list: 12-23
+lnm019.hpc.itc.rwth-aachen.de: pid 17811's current affinity list: 12-23
+lnm017.hpc.itc.rwth-aachen.de: pid 26723's current affinity list: 0-11
+lnm018.hpc.itc.rwth-aachen.de: pid 26957's current affinity list: 0-11
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=988df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=988df0
-lnm398.hpc.itc.rwth-aachen.de: pid 26896's current affinity list: 12-23
+lnm016.hpc.itc.rwth-aachen.de: pid 28761's current affinity list: 0-11
+lnm016.hpc.itc.rwth-aachen.de: pid 28762's current affinity list: 12-23
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=988df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=988df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=988df0
@@ -16,23 +16,23 @@ lnm398.hpc.itc.rwth-aachen.de: pid 26896's current affinity list: 12-23
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=988df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=988df0
 [0] MPI startup(): Multi-threaded optimized library
-[6] MPI startup(): shm and tmi data transfer modes
 [7] MPI startup(): shm and tmi data transfer modes
-[1] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
+[6] MPI startup(): shm and tmi data transfer modes
+[3] MPI startup(): shm and tmi data transfer modes
+[2] MPI startup(): shm and tmi data transfer modes
 [4] MPI startup(): shm and tmi data transfer modes
 [5] MPI startup(): shm and tmi data transfer modes
-[2] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       26950    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       26949    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       10933    lnm399.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       10932    lnm399.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 4       373      lnm400.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 5       372      lnm400.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 6       19912    lnm401.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 7       19913    lnm401.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       28814    lnm016.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       28818    lnm016.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       26735    lnm017.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       26734    lnm017.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 4       26968    lnm018.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 5       26967    lnm018.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 6       17820    lnm019.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 7       17821    lnm019.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
 Charm++> Running on MPI version: 3.1
@@ -42,7 +42,7 @@ Converse/Charm++ Commit ID: v6.9.0-0-gc3d50ef
 Warning> Randomization of virtual memory (ASLR) is turned on in the kernel, thread migration may not work! Run 'echo 0 > /proc/sys/kernel/randomize_va_space' as root to disable it, or try running with '+isomalloc_sync'.
 CharmLB> Load balancer assumes all CPUs are same.
 Charm++> Running on 4 hosts (2 sockets x 12 cores x 1 PUs = 24-way SMP)
-Charm++> cpu topology info is gathered in 0.003 seconds.
+Charm++> cpu topology info is gathered in 0.001 seconds.
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -244,5 +244,5 @@ Step, current time:1.455043
 Step, current time:1.462288
 Step, current time:1.469532
 Iterations: 200
-RESULT: 10.398574
+RESULT: 10.156360
 [Partition 0][Node 0] End of program
