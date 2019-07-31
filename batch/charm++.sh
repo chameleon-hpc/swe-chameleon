@@ -19,6 +19,7 @@ export I_MPI_PIN=1
 export I_MPI_PIN_DOMAIN=auto
 export I_MPI_DEBUG=5
 export OMP_PROC_BIND=close
+export DRY_FRACTION=$DRY_FRACTION
 
 ### Execute your application
 COMMAND="$MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_augrie "
