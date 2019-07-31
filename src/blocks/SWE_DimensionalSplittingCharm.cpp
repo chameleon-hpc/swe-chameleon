@@ -101,11 +101,11 @@ void SWE_DimensionalSplittingCharm::xSweep() {
 	// maximum (linearized) wave speed within one iteration
 	float maxHorizontalWaveSpeed = (float) 0.;
 
-	#pragma omp parallel private(solver)
+	//#pragma omp parallel private(solver)
 	{
 		// x-sweep, compute the actual domain plus ghost rows above and below
 		// iterate over cells on the x-axis, leave out the last column (two cells per computation)
-		#pragma omp for reduction(max : maxHorizontalWaveSpeed) collapse(2)
+		//#pragma omp for reduction(max : maxHorizontalWaveSpeed) collapse(2)
 		for (int x = 0; x < nx + 1; x++) {
 			// iterate over all rows, including ghost layer
 			for (int y = 0; y < ny + 2; y++) {
@@ -147,10 +147,10 @@ void SWE_DimensionalSplittingCharm::ySweep() {
 
 	float maxVerticalWaveSpeed = (float) 0.;
 
-	#pragma omp parallel private(solver)
+	//#pragma omp parallel private(solver)
 	{
 		// set intermediary Q* states
-		#pragma omp for collapse(2)
+		//#pragma omp for collapse(2)
 		for (int x = 1; x < nx + 1; x++) {
 			for (int y = 0; y < ny + 2; y++) {
 				hStar[x][y] = h[x][y] - (maxTimestep / dx) * (hNetUpdatesLeft[x][y] + hNetUpdatesRight[x][y]);
@@ -160,9 +160,9 @@ void SWE_DimensionalSplittingCharm::ySweep() {
 
 		// y-sweep
 		#ifndef NDEBUG
-		#pragma omp for
+		//#pragma omp for
 		#else
-		#pragma omp for reduction(max : maxVerticalWaveSpeed) collapse(2)
+		//#pragma omp for reduction(max : maxVerticalWaveSpeed) collapse(2)
 		#endif
 		for (int x = 1; x < nx + 1; x++) {
 			for (int y = 0; y < ny + 1; y++) {
@@ -178,7 +178,7 @@ void SWE_DimensionalSplittingCharm::ySweep() {
 		}
 
 		#ifndef NDEBUG
-		#pragma omp single
+		//#pragma omp single
 		{
 			// check if the cfl condition holds in the y-direction
 			assert(maxTimestep < (float) .5 * (dy / maxVerticalWaveSpeed));
