@@ -291,7 +291,7 @@ if env['parallelization'] in ['charm', 'ampi']:
                            suffix='.decl.h',
                            src_suffix='.ci')
     env.Append(BUILDERS={'charmBuilder': charmBuilder})
-    env.Append(CCFLAGS=['-balancer GreedyLB -tracemode summary'])
+    env.Append(CCFLAGS=['-balancer GreedyLB -g'])
 
 ################################
 # Chameleon specific
