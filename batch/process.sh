@@ -65,3 +65,6 @@ do
 		echo -n ",$OUTPUT" >> ${JOB_CATEGORY}.csv
 	done
 done
+
+# plot charts
+python3 process.py

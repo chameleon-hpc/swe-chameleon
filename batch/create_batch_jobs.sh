@@ -30,7 +30,7 @@ do
           for EXTRA in ${EXTRAS[@]}
           do
             # Charm++ settings
-            if [ "${FRAMEWORK}" = "charm" ]; then
+            if [ "${FRAMEWORK}" = "charm++" ]; then
               NUM_TASKS_PER_NODE=$(($NUM_TASKS_PER_NODE * $NUM_CPUS_PER_TASK))
               NUM_CPUS_PER_TASK=1
             fi
