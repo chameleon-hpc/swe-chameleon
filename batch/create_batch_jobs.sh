@@ -2,6 +2,7 @@
 
 create_batch_jobs() {
 NUM_TASKS_PER_NODE=2
+NUM_EXECUTIONS=5
 
 # Claix 16 settings
 NUM_CPUS_PER_TASK=12
@@ -35,6 +36,7 @@ do
               NUM_CPUS_PER_TASK=1
             fi
 
+            export NUM_EXECUTIONS=$NUM_EXECUTIONS
             export CLUSTER=$CLUSTER
             export FRAMEWORK=$FRAMEWORK
             export NODE_COUNT=$NODE_COUNT

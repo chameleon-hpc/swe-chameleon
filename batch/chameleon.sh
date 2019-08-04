@@ -32,4 +32,9 @@ COMMAND+="-o ./output/chameleon_batch -i 200"
 echo $COMMAND
 
 ### Execute your application
-$COMMAND
+
+for i in $( eval echo {0..$NUM_EXECUTIONS} )
+do
+	$COMMAND
+	echo %
+done
