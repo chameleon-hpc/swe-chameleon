@@ -33,7 +33,7 @@ echo $COMMAND
 
 ### Execute your application
 
-for i in $( eval echo {0..$NUM_EXECUTIONS} )
+for i in $( eval echo {1..$NUM_EXECUTIONS} )
 do
 	$COMMAND
 	echo %

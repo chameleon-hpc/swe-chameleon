@@ -5,6 +5,8 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 
+NUM_EXECUTIONS = 5
+
 F_SIZE = 16
 
 plt.rc('font', size=F_SIZE)             # controls default text sizes
@@ -17,6 +19,16 @@ plt.rc('figure', titlesize=F_SIZE)      # fontsize of the figure title
 
 def to_float_array(input):
   return [float(val) for val in input]
+
+def to_medians_mins_maxs(input, length):
+  print(length)
+  medians = []; mins = []; maxs = [];
+  for i in range(length):
+    values = input[1+i*NUM_EXECUTIONS:1+i*(NUM_EXECUTIONS+1)]
+    medians.append(st.median(values))
+    mins.append(min(values))
+    maxs.append(max(values))
+  return medians, mins, maxs
 
 def plotData(target_file_path, x_values, y_names, y_valuess, text_x_axis, text_y_axis):
     xtick = list(range(len(x_values)))
@@ -31,7 +43,7 @@ def plotData(target_file_path, x_values, y_names, y_valuess, text_x_axis, text_y
     # plot versions
     for i in range(len(y_valuess)):
         #ax.plot(xtick, np.array(y_valuess[i]), 'x-', linewidth=2, color=tmp_colors[i])
-        ax.plot(xtick, np.array(y_valuess[i]))
+        ax.plot(xtick, np.array(y_valuess[i]), marker="^")
         labels.append(y_names[i])
     plt.xticks(xtick, x_values)
     ax.minorticks_on()
@@ -57,24 +69,20 @@ if __name__ == "__main__":
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
       scaling_values.append(row)
-  scaling_values = [*zip(*scaling_values)]
-  #print(scaling_values)
 
   target_file = os.path.join(target_folder_plot, "scaling")
   y_names = [row[0] for row in scaling_values[1:]]
   y_valuess = [row[1:] for row in scaling_values[1:]]
   y_valuess = [to_float_array(y_values) for y_values in y_valuess]
-  plotData(target_file, scaling_values[0][1:], y_names, y_valuess, "#Nodes", "Walltime")
+  y_valuess_medians = []
+  y_valuess_mins = []
+  y_valuess_maxs = []
 
+  x_values = sorted(list(set(scaling_values[0])))
+  for i in range(len(y_valuess)):
+    medians, mins, maxs = to_medians_mins_maxs(y_valuess[i], len(y_valuess[i])/NUM_EXECUTIONS)
+    y_valuess_medians.append(medians)
+    y_valuess_mins.append(mins)
+    y_valuess_maxs.append(maxs)
 
-
-    # plot results
-#    tmp_target_file_name = "plot_granularity_" + str(int(gran))
-#    tmp_target_file_path = os.path.join(target_folder_plot, "imbalance")
-#    node_counts = [1, 2, 4, 8]
-#    plotData(tmp_target_file_path, unique_n_threads, arr_types, arr_time_original, y_valuess, arr_n_tasks_remote, title_prefix + " - Granularity " + str(int(gran)), "# threads per rank")
-#    
-#    plotDataMinMaxAvg(tmp_target_file_path + "_bytes_send", unique_n_threads, arr_types, arr_bytes_send_per_msg_min, arr_bytes_send_per_msg_max, arr_bytes_send_per_msg_avg, title_prefix + " - Granularity " + str(int(gran)) + " - Bytes Send", "# threads per rank", "Data Volume [KB]", True, divisor=1000)
-#    plotDataMinMaxAvg(tmp_target_file_path + "_bytes_recv", unique_n_threads, arr_types, arr_bytes_recv_per_msg_min, arr_bytes_recv_per_msg_max, arr_bytes_recv_per_msg_avg, title_prefix + " - Granularity " + str(int(gran)) + " - Bytes Recv", "# threads per rank", "Data Volume [KB]", True, divisor=1000)
-#    plotDataMinMaxAvg(tmp_target_file_path + "_throughput_send", unique_n_threads, arr_types, arr_throughput_send_min, arr_throughput_send_max, arr_throughput_send_avg, title_prefix + " - Granularity " + str(int(gran)) + " - Throughput Send", "# threads per rank", "Throughput [MB/s]")
-#    plotDataMinMaxAvg(tmp_target_file_path + "_throughput_recv", unique_n_threads, arr_types, arr_throughput_recv_min, arr_throughput_recv_max, arr_throughput_recv_avg, title_prefix + " - Granularity " + str(int(gran)) + " - Throughput Recv", "# threads per rank", "Throughput [MB/s]")
+  plotData(target_file, x_values, y_names, y_valuess_medians, "#Nodes", "Walltime")
