@@ -8,7 +8,7 @@ CLUSTER=clx16
 FRAMEWORKS=(mpi chameleon charm++)
 NODE_COUNTS=(1 2 4 8)
 GRID_DIMENSIONS=(4096)
-BLOCK_COUNTS=(16)
+BLOCK_COUNTS=(32)
 DRY_FRACTIONS=(0.0)
 EXTRAS=(none)
 
@@ -26,7 +26,7 @@ do
 	echo -n "$FRAMEWORK" >> ${JOB_CATEGORY}.csv
 	for NODE_COUNT in ${NODE_COUNTS[@]}
 	do
-		FILE="output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_4096_16_0.0_none.txt"
+		FILE="output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_4096_32_0.0_none.txt"
 		INPUT=$(head -n -1 $FILE)
 		# delimiter between experiments
 		IFS='%'
@@ -45,9 +45,9 @@ done
 JOB_CATEGORY=imbalance
 CLUSTER=clx16
 FRAMEWORKS=(mpi chameleon charm++)
-NODE_COUNTS=(4)
+NODE_COUNTS=(2)
 GRID_DIMENSIONS=(4096)
-BLOCK_COUNTS=(16)
+BLOCK_COUNTS=(32)
 DRY_FRACTIONS=(0.0 0.1 0.2 0.3 0.4 0.5)
 EXTRAS=(none)
 
@@ -65,7 +65,7 @@ do
 	echo -n "$FRAMEWORK" >> ${JOB_CATEGORY}.csv
 	for DRY_FRACTION in ${DRY_FRACTIONS[@]}
 	do
-		FILE="output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_4_4096_16_${DRY_FRACTION}_none.txt"
+		FILE="output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_2_4096_32_${DRY_FRACTION}_none.txt"
 		INPUT=$(head -n -1 $FILE)
 		# delimiter between experiments
 		IFS='%'
@@ -84,10 +84,10 @@ done
 JOB_CATEGORY=granularity
 CLUSTER=clx16
 FRAMEWORKS=(chameleon charm++)
-NODE_COUNTS=(4)
+NODE_COUNTS=(2)
 GRID_DIMENSIONS=(4096)
 BLOCK_COUNTS=(8 16 32 64 128)
-DRY_FRACTIONS=(0.0)
+DRY_FRACTIONS=(0.2)
 EXTRAS=(none)
 
 echo -n "Frameworks/#Blocks" > ${JOB_CATEGORY}.csv
@@ -104,7 +104,7 @@ do
 	echo -n "$FRAMEWORK" >> ${JOB_CATEGORY}.csv
 	for BLOCK_COUNT in ${BLOCK_COUNTS[@]}
 	do
-		FILE="output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_4_4096_${BLOCK_COUNT}_0.0_none.txt"
+		FILE="output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_2_4096_${BLOCK_COUNT}_0.2_none.txt"
 		INPUT=$(head -n -1 $FILE)
 		# delimiter between experiments
 		IFS='%'

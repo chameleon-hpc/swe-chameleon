@@ -30,36 +30,30 @@ do
         do
           for EXTRA in ${EXTRAS[@]}
           do
+            ACTUAL_NUM_TASKS_PER_NODE=NUM_TASKS_PER_NODE
+            ACTUAL_NUM_CPUS_PER_TASK=NUM_CPUS_PER_TASK
             # Charm++ settings
             if [ "${FRAMEWORK}" = "charm++" ]; then
-              NUM_TASKS_PER_NODE=$(($NUM_TASKS_PER_NODE * $NUM_CPUS_PER_TASK))
-              NUM_CPUS_PER_TASK=1
-            fi
-            # MPI settings
-            if [ "${FRAMEWORK}" = "mpi" ]; then
-              NUM_CPUS_PER_TASK=$(($NUM_CPUS_PER_TASK-1))
-            fi
-            # Chameleon settings
-            if [ "${FRAMEWORK}" = "mpi" ]; then
-              NUM_CPUS_PER_TASK=$(($NUM_CPUS_PER_TASK-1))
+              ACTUAL_NUM_TASKS_PER_NODE=$(($ACTUAL_NUM_TASKS_PER_NODE * $ACTUAL_NUM_CPUS_PER_TASK))
+              ACTUAL_NUM_CPUS_PER_TASK=1
             fi
 
             export NUM_EXECUTIONS=$NUM_EXECUTIONS
             export CLUSTER=$CLUSTER
             export FRAMEWORK=$FRAMEWORK
             export NODE_COUNT=$NODE_COUNT
-            export OMP_NUM_THREADS=$NUM_CPUS_PER_TASK
+            export OMP_NUM_THREADS=$ACTUAL_NUM_CPUS_PER_TASK
             export GRID_DIMENSION=$GRID_DIMENSION
             export BLOCK_COUNT=$BLOCK_COUNT
             export DRY_FRACTION=$DRY_FRACTION
             COMMAND="sbatch "
             COMMAND+="--partition=$PARTITION "
             COMMAND+="--nodes=${NODE_COUNT} "
-            COMMAND+="--ntasks-per-node=$NUM_TASKS_PER_NODE "
-            COMMAND+="--cpus-per-task=$NUM_CPUS_PER_TASK "
+            COMMAND+="--ntasks-per-node=$ACTUAL_NUM_TASKS_PER_NODE "
+            COMMAND+="--cpus-per-task=$ACTUAL_NUM_CPUS_PER_TASK "
             COMMAND+="--job-name=swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_${GRID_DIMENSION}_${BLOCK_COUNT}_${DRY_FRACTION}_${EXTRA} "
             COMMAND+="--output=output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_${GRID_DIMENSION}_${BLOCK_COUNT}_${DRY_FRACTION}_${EXTRA}.txt "
-            COMMAND+="--export=NUM_EXECUTIONS,NODE_COUNT,NUM_TASKS_PER_NODE,OMP_NUM_THREADS,GRID_DIMENSION,BLOCK_COUNT,DRY_FRACTION "
+            COMMAND+="--export=NUM_EXECUTIONS,NODE_COUNT,ACTUAL_NUM_TASKS_PER_NODE,OMP_NUM_THREADS,GRID_DIMENSION,BLOCK_COUNT,DRY_FRACTION "
             COMMAND+="--account=$PROJECT "
             COMMAND+="${FRAMEWORK}.sh"
             echo $COMMAND

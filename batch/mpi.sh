@@ -15,6 +15,7 @@ cd /home/sc427635/master/swe-benchmark
 
 ### Set environment variables
 #export OMP_NUM_THREADS=12
+OMP_NUM_THREADS=$(($OMP_NUM_THREADS - 1))
 export I_MPI_PIN=1
 export I_MPI_PIN_DOMAIN=auto
 export I_MPI_DEBUG=5

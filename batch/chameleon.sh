@@ -14,7 +14,7 @@ module load chameleon
 #make chameleon
 
 ### Set environment variables
-OMP_NUM_THREADS=$(($OMP_NUM_THREADS - 1))
+OMP_NUM_THREADS=$(($OMP_NUM_THREADS - 2))
 export OMP_NUM_THREADS=$OMP_NUM_THREADS
 export I_MPI_PIN=1
 export I_MPI_PIN_DOMAIN=auto
