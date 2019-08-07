@@ -25,7 +25,7 @@ export DRY_FRACTION=$DRY_FRACTION
 COMMAND="$MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_augrie "
 COMMAND+="-t 1 -n 1 "  
 COMMAND+="-x $GRID_DIMENSION -y $GRID_DIMENSION "
-#COMMAND+="-i $BLOCK_COUNT -j $BLOCK_COUNT "
+COMMAND+="-i $BLOCK_COUNT -j $BLOCK_COUNT "
 COMMAND+="-o ./output/charm_batch -i 200"
 
 echo $COMMAND
