@@ -150,7 +150,7 @@ void SWE_DimensionalSplittingCharm::ySweep() {
 	//#pragma omp parallel private(solver)
 	{
 		// set intermediary Q* states
-		//#pragma omp for collapse(2)
+		#pragma omp parallel for collapse(2)
 		for (int x = 1; x < nx + 1; x++) {
 			for (int y = 0; y < ny + 2; y++) {
 				hStar[x][y] = h[x][y] - (maxTimestep / dx) * (hNetUpdatesLeft[x][y] + hNetUpdatesRight[x][y]);
