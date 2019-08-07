@@ -35,6 +35,11 @@ do
               NUM_TASKS_PER_NODE=$(($NUM_TASKS_PER_NODE * $NUM_CPUS_PER_TASK))
               NUM_CPUS_PER_TASK=1
             fi
+            # Charm++ settings
+            if [ "${FRAMEWORK}" = "charm++" ]; then
+              NUM_TASKS_PER_NODE=$(($NUM_TASKS_PER_NODE * $NUM_CPUS_PER_TASK))
+              NUM_CPUS_PER_TASK=1
+            fi
 
             export NUM_EXECUTIONS=$NUM_EXECUTIONS
             export CLUSTER=$CLUSTER
@@ -67,7 +72,7 @@ JOB_CATEGORY=default
 FRAMEWORKS=(mpi)
 NODE_COUNTS=(2)
 GRID_DIMENSIONS=(4096)
-BLOCK_COUNTS=(16)
+BLOCK_COUNTS=(32)
 DRY_FRACTIONS=(0.0)
 EXTRAS=(none)
 }
@@ -76,7 +81,7 @@ JOB_CATEGORY=default
 FRAMEWORKS=(mpi)
 NODE_COUNTS=(2)
 GRID_DIMENSIONS=(4096)
-BLOCK_COUNTS=(16)
+BLOCK_COUNTS=(32)
 DRY_FRACTIONS=(0.0)
 EXTRAS=(none)
 
@@ -90,7 +95,7 @@ create_scaling_jobs() {
 create_imbalance_jobs() {
   JOB_CATEGORY=imbalance
   FRAMEWORKS=(mpi chameleon charm++)
-  NODE_COUNTS=(4)
+  NODE_COUNTS=(2)
   DRY_FRACTIONS=(0.0 0.1 0.2 0.3 0.4 0.5)
   create_batch_jobs
 }
@@ -98,7 +103,8 @@ create_imbalance_jobs() {
 create_granularity_jobs() {
   JOB_CATEGORY=granularity
   FRAMEWORKS=(chameleon charm++)
-  NODE_COUNTS=(4)
+  NODE_COUNTS=(2)
+  DRY_FRACTIONS=(0.2)
   BLOCK_COUNTS=(8 16 32 64 128)
   create_batch_jobs
 }
