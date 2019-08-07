@@ -165,13 +165,14 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	CProxy_SWE_DimensionalSplittingCharm blocks = CProxy_SWE_DimensionalSplittingCharm::ckNew();
 
 	// number of SWE-Blocks in x- and y-direction
-	blockCountY = 16;
+	blockCountY = 32;
 	if(args.isSet("y-blockcount"))
 		blockCountY = args.getArgument<int>("y-blockcount");
-	while (chareCount % blockCountY != 0) blockCountY--;
-	blockCountX = 16;
+	blockCountX = 32;
 	if(args.isSet("x-blockcount"))
 		blockCountX = args.getArgument<int>("x-blockcount");
+	assert(nxRequested % xBlockCount == 0);
+	assert(nyRequested % yBlockCount == 0);
 	chareCount = blockCountX*blockCountY;
 
 	int localBlockPositionX[chareCount];
