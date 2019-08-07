@@ -35,10 +35,13 @@ do
               NUM_TASKS_PER_NODE=$(($NUM_TASKS_PER_NODE * $NUM_CPUS_PER_TASK))
               NUM_CPUS_PER_TASK=1
             fi
-            # Charm++ settings
-            if [ "${FRAMEWORK}" = "charm++" ]; then
-              NUM_TASKS_PER_NODE=$(($NUM_TASKS_PER_NODE * $NUM_CPUS_PER_TASK))
-              NUM_CPUS_PER_TASK=1
+            # MPI settings
+            if [ "${FRAMEWORK}" = "mpi" ]; then
+              NUM_CPUS_PER_TASK=$(($NUM_CPUS_PER_TASK-1))
+            fi
+            # Chameleon settings
+            if [ "${FRAMEWORK}" = "mpi" ]; then
+              NUM_CPUS_PER_TASK=$(($NUM_CPUS_PER_TASK-1))
             fi
 
             export NUM_EXECUTIONS=$NUM_EXECUTIONS
