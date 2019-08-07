@@ -30,8 +30,8 @@ do
         do
           for EXTRA in ${EXTRAS[@]}
           do
-            ACTUAL_NUM_TASKS_PER_NODE=NUM_TASKS_PER_NODE
-            ACTUAL_NUM_CPUS_PER_TASK=NUM_CPUS_PER_TASK
+            ACTUAL_NUM_TASKS_PER_NODE=$NUM_TASKS_PER_NODE
+            ACTUAL_NUM_CPUS_PER_TASK=$NUM_CPUS_PER_TASK
             # Charm++ settings
             if [ "${FRAMEWORK}" = "charm++" ]; then
               ACTUAL_NUM_TASKS_PER_NODE=$(($ACTUAL_NUM_TASKS_PER_NODE * $ACTUAL_NUM_CPUS_PER_TASK))
