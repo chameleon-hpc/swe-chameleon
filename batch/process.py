@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 NUM_EXECUTIONS = 5
 
-F_SIZE = 16
+F_SIZE = 13
 
 plt.rc('font', size=F_SIZE)             # controls default text sizes
 plt.rc('axes', titlesize=F_SIZE)        # fontsize of the axes title
@@ -18,14 +18,14 @@ plt.rc('legend', fontsize=F_SIZE)       # legend fontsize
 plt.rc('figure', titlesize=F_SIZE)      # fontsize of the figure title
 
 def remove_duplicates_sorted(input):
-  print(input)
+  #print(input)
   last_element = None
   output = []
   for element in input:
     if element != last_element:
       output.append(element)
     last_element = element
-  print(output)
+  #print(output)
   return output
 
 def to_float_array(input):
@@ -64,7 +64,7 @@ def plotData(target_file_path, x_values, y_names, y_valuess, text_x_axis, text_y
     # plot versions
     for i in range(len(y_valuess_medians)):
         #ax.plot(xtick, np.array(y_valuess[i]), 'x-', linewidth=2, color=tmp_colors[i])
-        ax.errorbar(xtick, np.array(y_valuess_medians[i]), [y_valuess_mins[i], y_valuess_maxs[i]], elinewidth=1, capsize=2)
+        ax.errorbar(xtick, np.array(y_valuess_medians[i]), [y_valuess_mins[i], y_valuess_maxs[i]], elinewidth=1, capsize=2, marker=".")
         labels.append(y_names[i])
     plt.xticks(xtick, x_values)
     ax.minorticks_on()
@@ -73,7 +73,9 @@ def plotData(target_file_path, x_values, y_names, y_valuess, text_x_axis, text_y
     ax.grid(b=True, which='minor', axis="both", linestyle='-', linewidth=0.4)
     ax.set_xlabel(text_x_axis)
     ax.set_ylabel(text_y_axis)
-    ax.set_ylim(ymin=0)
+    _,current_top_ylim=ax.get_ylim()
+    ax.set_ylim([0, current_top_ylim*1.1])
+
     #ax.set_title(text_header + " - Execution Time" )
     fig.savefig(path_result_img, dpi=None, facecolor='w', edgecolor='w', 
         format="pdf", transparent=False, bbox_inches='tight', pad_inches=0,

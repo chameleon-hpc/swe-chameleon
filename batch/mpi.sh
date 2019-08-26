@@ -1,7 +1,5 @@
 #!/usr/local_rwth/bin/zsh
 #SBATCH --exclusive
-# ask for memory (per node)
-#SBATCH --mem=16G   #M is the default and can therefore be omitted, but could also be K(ilo)|G(iga)|T(era)
 
 ### Change to the work directory
 source /home/sc427635/.zshrc
