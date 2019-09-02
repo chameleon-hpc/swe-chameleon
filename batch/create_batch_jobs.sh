@@ -53,7 +53,7 @@ do
             COMMAND+="--cpus-per-task=$ACTUAL_NUM_CPUS_PER_TASK "
             COMMAND+="--job-name=swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_${GRID_DIMENSION}_${BLOCK_COUNT}_${DRY_FRACTION}_${EXTRA} "
             COMMAND+="--output=output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_${NODE_COUNT}_${GRID_DIMENSION}_${BLOCK_COUNT}_${DRY_FRACTION}_${EXTRA}.txt "
-            COMMAND+="--export=NUM_EXECUTIONS,NODE_COUNT,ACTUAL_NUM_TASKS_PER_NODE,OMP_NUM_THREADS,GRID_DIMENSION,BLOCK_COUNT,DRY_FRACTION "
+            COMMAND+="--export=NUM_EXECUTIONS,NODE_COUNT,ACTUAL_NUM_TASKS_PER_NODE,OMP_NUM_THREADS,GRID_DIMENSION,BLOCK_COUNT,DRY_FRACTION,EXTRA "
             COMMAND+="--account=$PROJECT "
             COMMAND+="${FRAMEWORK}.sh"
             echo $COMMAND
@@ -97,6 +97,15 @@ create_imbalance_jobs() {
   create_batch_jobs
 }
 
+create_interference_jobs() {
+  JOB_CATEGORY=interference
+  FRAMEWORKS=(mpi chameleon charm++)
+  NODE_COUNTS=(2)
+  DRY_FRACTIONS=(0.2)
+  EXTRAS=(0 1 2 4 8 16 32)
+  create_batch_jobs
+}
+
 create_granularity_jobs() {
   JOB_CATEGORY=granularity
   FRAMEWORKS=(chameleon charm++)
@@ -108,4 +117,5 @@ create_granularity_jobs() {
 
 create_scaling_jobs
 create_imbalance_jobs
+create_interference_jobs
 create_granularity_jobs
