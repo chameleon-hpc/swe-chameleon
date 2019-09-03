@@ -102,6 +102,19 @@ if __name__ == "__main__":
 
   plotData(target_file, x_values, y_names, y_valuess, "#Nodes", "Walltime [s]")
 
+  # speedups
+  target_file = os.path.join(target_folder_plot, "scaling_speedups")
+  print(len(y_valuess[0]))
+  print(len(y_valuess))
+  for i in range(len(y_valuess[0])):
+    for j in range(len(y_valuess)):
+      print(y_valuess[0][i])
+      print(y_valuess[j][i])
+      y_valuess[j][i] = y_valuess[0][i] / y_valuess[j][i]
+  print(y_valuess[1])
+
+  plotData(target_file, x_values, y_names, y_valuess, "#Nodes", "Speedup over MPI/OpenMP")
+
   # read imbalance data
   scaling_values = []
   with open('imbalance.csv') as csv_file:
