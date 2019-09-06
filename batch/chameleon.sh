@@ -30,7 +30,7 @@ COMMAND+="-o ./output/chameleon_batch -i 200"
 
 echo $COMMAND
 
-if [ $EXTRA != none ] 
+if [ "$EXTRA" != "none" ] 
 then
 	INTERFERENCE_COMMAND="$MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./batch/interference/main $EXTRA"
 	echo $INTERFERENCE_COMMAND
@@ -46,7 +46,7 @@ do
 	echo %
 done
 
-if [ $EXTRA != none ] 
+if [ "$EXTRA" != "none" ] 
 then
 	echo "Killing $PID"
 	kill $PID

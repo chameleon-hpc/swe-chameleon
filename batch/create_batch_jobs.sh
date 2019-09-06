@@ -46,6 +46,7 @@ do
             export GRID_DIMENSION=$GRID_DIMENSION
             export BLOCK_COUNT=$BLOCK_COUNT
             export DRY_FRACTION=$DRY_FRACTION
+            export EXTRA=$EXTRA
             COMMAND="sbatch "
             COMMAND+="--partition=$PARTITION "
             COMMAND+="--nodes=${NODE_COUNT} "
@@ -115,7 +116,7 @@ create_granularity_jobs() {
   create_batch_jobs
 }
 
-create_scaling_jobs
-create_imbalance_jobs
+#create_scaling_jobs
+#create_imbalance_jobs
 create_interference_jobs
-create_granularity_jobs
+#create_granularity_jobs
