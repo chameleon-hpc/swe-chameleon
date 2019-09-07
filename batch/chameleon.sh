@@ -22,7 +22,7 @@ export OMP_PROC_BIND=close
 export DRY_FRACTION=$DRY_FRACTION
 
 ### Print execution statement
-COMMAND="$MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_chameleon_omp_augrie "
+COMMAND="mpiexec $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_chameleon_omp_augrie "
 COMMAND+="-t 1 -n 1 "
 COMMAND+="-x $GRID_DIMENSION -y $GRID_DIMENSION "
 COMMAND+="-i $BLOCK_COUNT -j $BLOCK_COUNT "
@@ -32,7 +32,7 @@ echo $COMMAND
 
 if [ "$EXTRA" != "none" ] 
 then
-	INTERFERENCE_COMMAND="$MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./batch/interference/main $EXTRA"
+	INTERFERENCE_COMMAND="mpiexec $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./batch/interference/main $EXTRA"
 	echo $INTERFERENCE_COMMAND
 	$INTERFERENCE_COMMAND &
 	PID=$!
@@ -48,6 +48,5 @@ done
 
 if [ "$EXTRA" != "none" ] 
 then
-	echo "Killing $PID"
-	kill $PID
+	killall main
 fi

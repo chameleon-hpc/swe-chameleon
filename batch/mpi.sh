@@ -32,7 +32,7 @@ echo $COMMAND
 if [ "$EXTRA" != "none" ] 
 then
 	echo $EXTRA
-	INTERFERENCE_COMMAND="$MPIEXEC $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./batch/interference/main $EXTRA"
+	INTERFERENCE_COMMAND="mpiexec $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./batch/interference/main $EXTRA"
 	echo $INTERFERENCE_COMMAND
 	$INTERFERENCE_COMMAND &
 	PID=$!
@@ -48,6 +48,5 @@ done
 
 if [ "$EXTRA" != "none" ] 
 then
-	echo "Killing $PID"
-	kill $PID
+	killall main
 fi
