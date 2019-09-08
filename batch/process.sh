@@ -41,6 +41,45 @@ do
 	echo "" >> ${JOB_CATEGORY}.csv
 done
 
+#interference
+JOB_CATEGORY=interference
+CLUSTER=clx16
+FRAMEWORKS=(mpi chameleon charm++)
+NODE_COUNTS=(2)
+GRID_DIMENSIONS=(4096)
+BLOCK_COUNTS=(32)
+DRY_FRACTIONS=(0.2)
+EXTRAS=(0 1 2 4 8 16 32)
+
+echo -n "Frameworks/Interference" > ${JOB_CATEGORY}.csv
+for EXTRA in ${EXTRAS[@]}
+do
+	for i in $( eval echo {1..$NUM_EXECUTIONS} )
+	do
+		echo -n ",${EXTRA}" >> ${JOB_CATEGORY}.csv
+	done
+done
+echo "" >> ${JOB_CATEGORY}.csv
+for FRAMEWORK in ${FRAMEWORKS[@]}
+do
+	echo -n "$FRAMEWORK" >> ${JOB_CATEGORY}.csv
+	for EXTRA in ${EXTRAS[@]}
+	do
+		FILE="output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_2_4096_32_0.2_${EXTRA}.txt"
+		INPUT=$(head -n -2 $FILE)
+		# delimiter between experiments
+		IFS='%'
+				read -d '' -ra RUNS <<< "$INPUT"
+		IFS=' '
+		for RUN in "${RUNS[@]}"
+		do
+			OUTPUT=$(echo $RUN | grep RESULT | sort | tail -n 1 | sed 's/[a-zA-Z:, ]//g')
+			echo -n ",$OUTPUT" >> ${JOB_CATEGORY}.csv
+		done
+	done
+	echo "" >> ${JOB_CATEGORY}.csv
+done
+
 #imbalance
 JOB_CATEGORY=imbalance
 CLUSTER=clx16

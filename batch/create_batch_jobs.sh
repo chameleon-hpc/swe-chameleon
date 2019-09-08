@@ -103,7 +103,16 @@ create_interference_jobs() {
   FRAMEWORKS=(mpi chameleon charm++)
   NODE_COUNTS=(2)
   DRY_FRACTIONS=(0.2)
-  EXTRAS=(0 1 2 4 8 16 32)
+  EXTRAS=(0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5)
+  create_batch_jobs
+}
+
+create_single_interference_jobs() {
+  JOB_CATEGORY=interference
+  FRAMEWORKS=(mpi chameleon charm++)
+  NODE_COUNTS=(2)
+  DRY_FRACTIONS=(0.2)
+  EXTRAS=(1.05 1.1 1.15 1.2 1.25 1.3 1.35 1.4 1.45 1.5)
   create_batch_jobs
 }
 

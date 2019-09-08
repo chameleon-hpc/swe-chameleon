@@ -4,6 +4,7 @@ from datetime import datetime
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
+from copy import deepcopy
 
 NUM_EXECUTIONS = 5
 
@@ -104,14 +105,11 @@ if __name__ == "__main__":
 
   # speedups
   target_file = os.path.join(target_folder_plot, "scaling_speedups")
-  print(len(y_valuess[0]))
-  print(len(y_valuess))
-  for i in range(len(y_valuess[0])):
-    for j in range(len(y_valuess)):
-      print(y_valuess[0][i])
-      print(y_valuess[j][i])
-      y_valuess[j][i] = y_valuess[0][i] / y_valuess[j][i]
-  print(y_valuess[1])
+  y_valuess_tmp = deepcopy(y_valuess)
+  for i in range(len(y_valuess_tmp[0])):
+    for j in range(len(y_valuess_tmp)):
+      y_valuess_tmp[j][i] = y_valuess[0][i] / y_valuess[j][i]
+  y_valuess = y_valuess_tmp
 
   plotData(target_file, x_values, y_names, y_valuess, "#Nodes", "Speedup over MPI/OpenMP")
 

@@ -2,95 +2,56 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <mpi.h>
 #include <omp.h>
 #include <thread>
 #include <chrono>
-#include <random>
 
-volatile bool run = true;
-thread_local std::mt19937 gen(1024);
-thread_local std::uniform_int_distribution<> dis(1, 6);
-
-int power(int base, int exp, int limit) {
-	int res = 1;
-	for(int i = 0; i < exp; i++) {
-		res *= base;
-		res = res % limit;
-		//printf("res=%d\n", res);
-	}
-	return res;
-}
-
-int pseudo_random(int limit, int seed) {
-	std::uniform_int_distribution<> dis(0, limit-1);
-	return dis(gen);
-	/*
-	int low_seed = seed%8 + 2;
-	int high_seed = seed%29 + 3;
-	int first = power(low_seed, high_seed, 1000000000);
-	printf("first = %d\n", first);
-	//printf("%d\n", power(power((25+seed)%30, 2+(seed%8))%30 + (seed%13), (5+seed)%8)%limit);
-	printf("res = %d\n", first%limit);
-	return first%limit;
-	*/
-}
-
-bool is_active(int round, int num_total_interference_threads, int rank, int numRanks, int thread, int numThreads) {
-	for(int i = 0; i < num_total_interference_threads; i++) {
-		int random_rank = pseudo_random(numRanks, round*i);
-		int random_thread = pseudo_random(numThreads, round*i+1);
-		if(rank == random_rank && thread == random_thread)
-			return true;
-	}
-	return false;
-}
-
-void kernel() {
-	int vec_len = 1 << 16;
-	double vector[vec_len];
-	for(int i = 0; i < vec_len; i++)
-		vector[i] = 1.0;
-	while(run) {
-		for(int i = 0; i < vec_len; i++)
-			vector[i] = vector[i]+1.000001 + 1;
-	}
-	//printf("Exit kernel\n");
+double getTime() {
+    struct timespec time;
+    clock_gettime(CLOCK_MONOTONIC, &time);
+    return (double) time.tv_sec + ((double)time.tv_nsec)/1E9;
 }
 
 int main(int argc, char **argv)
 {
-    MPI_Init(&argc, &argv);
+	float time_fraction = atof(argv[1]);
+	bool all_cores = true;
+	if(time_fraction > 1.0) {
+		all_cores = false;
+		time_fraction -= 1.0;
+	}
+	if(all_cores)
+		printf("all cores, time_fraction=%f\n, ", time_fraction);
+	else
+		printf("one core, time_fraction=%f\n", time_fraction);
 
-	int num_total_interference_threads = atoi(argv[1]);
-	printf("num_total_interference_threads=%d\n", num_total_interference_threads);
-
-    int myRank, numRanks;
-    MPI_Comm_rank(MPI_COMM_WORLD, &myRank);
-    MPI_Comm_size(MPI_COMM_WORLD, &numRanks);
-
-    int round = 0;
     while(true) {
-    	run = true;
+		printf("step\n");
     	#pragma omp parallel
     	{
-	    	//if(is_active(round, num_total_interference_threads, myRank, numRanks, omp_get_thread_num(), omp_get_num_threads()) && omp_get_thread_num() != 0) {
-	    	if(is_active(round, num_total_interference_threads, myRank, numRanks, omp_get_thread_num(), omp_get_num_threads())) {
-	    		//printf("active on rank %d, thread%d\n", myRank, omp_get_thread_num());
-	    		kernel();
+    		double start_time = getTime();
+    		//if(omp_get_thread_num() == 0)
+			//	printf("start time = %lf\n", start_time);
+    		if(all_cores || omp_get_thread_num() == 0) {
+	    		while(getTime() - start_time < 0.1*time_fraction) {
+		    			int vec_len = 1 << 10;
+		    			int iteration_count = 1 << 10;
+						double vector[vec_len];
+						for(int i = 0; i < vec_len; i++)
+							vector[i] = 1.0;
+						for(int j = 0; j < iteration_count; j++)
+							for(int i = 0; i < vec_len; i++)
+								vector[i] = vector[i]+1.000001 + 1;
+		    	}
 	    	}
-	    	else
-		    	std::this_thread::sleep_for(std::chrono::milliseconds(50));
-
-			//printf("%d, %d:Set run to false\n", myRank, omp_get_thread_num());
-		    run = false;
-		    #pragma omp barrier
+	    	#pragma omp barrier
+    		//if(omp_get_thread_num() == 0)
+			//	printf("wait start time = %lf\n", getTime()-start_time);
+	    	int num_milliseconds = (int)100*(1-time_fraction);
+	    	std::this_thread::sleep_for(std::chrono::milliseconds(num_milliseconds));
+    		//if(omp_get_thread_num() == 0)
+			//	printf("wait end time = %lf\n", getTime()-start_time);
     	}
-
-    	round++;
     }
-
-    MPI_Finalize();
     return 0;
 }
- 
