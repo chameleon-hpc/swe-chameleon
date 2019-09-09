@@ -1,35 +1,38 @@
-/var/spool/slurm/job8453130/slurm_script:32: command not found: NODES
-
+lnm334 lnm339
+lnm334
+ssh -f lnm334 export OMP_NUM_THREADS=24 OMP_PLACES=cores OMP_PROC_BIND=close; ~/master/swe-benchmark/batch/interference/main 0.45
+lnm339
+ssh -f lnm339 export OMP_NUM_THREADS=24 OMP_PLACES=cores OMP_PROC_BIND=close; ~/master/swe-benchmark/batch/interference/main 0.45
 srun -n 4 ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_mpi_omp_augrie -t 1 -n 1 -x 4096 -y 4096 -o ./output/mpi_batch -i 200
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm228.hpc.itc.rwth-aachen.de: pid 28407's current affinity list: 12-23
-lnm228.hpc.itc.rwth-aachen.de: pid 28406's current affinity list: 0-11
-lnm227.hpc.itc.rwth-aachen.de: pid 5935's current affinity list: 0-11
+lnm339.hpc.itc.rwth-aachen.de: pid 4080's current affinity list: 12-23
+lnm339.hpc.itc.rwth-aachen.de: pid 4079's current affinity list: 0-11
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
-lnm227.hpc.itc.rwth-aachen.de: pid 5936's current affinity list: 12-23
+lnm334.hpc.itc.rwth-aachen.de: pid 30888's current affinity list: 0-11
+lnm334.hpc.itc.rwth-aachen.de: pid 30889's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 [0] MPI startup(): Multi-threaded optimized library
-[1] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
 [2] MPI startup(): shm and tmi data transfer modes
 [3] MPI startup(): shm and tmi data transfer modes
+1 Spawned at lnm334.hpc.itc.rwth-aachen.de
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       5987     lnm227.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       5988     lnm227.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       28417    lnm228.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       28416    lnm228.hpc.itc.rwth-aachen.de  +1
-1 Spawned at lnm227.hpc.itc.rwth-aachen.de
-2 Spawned at lnm228.hpc.itc.rwth-aachen.de
-3 Spawned at lnm228.hpc.itc.rwth-aachen.de
+[0] MPI startup(): 0       30938    lnm334.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       30939    lnm334.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       4099     lnm339.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       4098     lnm339.hpc.itc.rwth-aachen.de  +1
+2 Spawned at lnm339.hpc.itc.rwth-aachen.de
+3 Spawned at lnm339.hpc.itc.rwth-aachen.de
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
-0 Spawned at lnm227.hpc.itc.rwth-aachen.de
+0 Spawned at lnm334.hpc.itc.rwth-aachen.de
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -229,42 +232,42 @@ Step, current time:1.570029
 Step, current time:1.577736
 Step, current time:1.585436
 Step, current time:1.593128
+RESULT: 32.641650
+RESULT: 32.641650
 Step, current time:1.600813
 Iterations: 200
-RESULT: 12.927914
-RESULT: 12.928146
-RESULT: 12.931371
-RESULT: 12.933348
+RESULT: 32.643465
+RESULT: 32.659577
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm228.hpc.itc.rwth-aachen.de: pid 28461's current affinity list: 0-11
-lnm228.hpc.itc.rwth-aachen.de: pid 28462's current affinity list: 12-23
+lnm339.hpc.itc.rwth-aachen.de: pid 4593's current affinity list: 12-23
+lnm339.hpc.itc.rwth-aachen.de: pid 4592's current affinity list: 0-11
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
-lnm227.hpc.itc.rwth-aachen.de: pid 6186's current affinity list: 12-23
-lnm227.hpc.itc.rwth-aachen.de: pid 6185's current affinity list: 0-11
+lnm334.hpc.itc.rwth-aachen.de: pid 31527's current affinity list: 12-23
+lnm334.hpc.itc.rwth-aachen.de: pid 31526's current affinity list: 0-11
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 [0] MPI startup(): Multi-threaded optimized library
-[0] MPI startup(): shm and tmi data transfer modes
-[1] MPI startup(): shm and tmi data transfer modes
 [2] MPI startup(): shm and tmi data transfer modes
 [3] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
+1 Spawned at lnm334.hpc.itc.rwth-aachen.de
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       6236     lnm227.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       6235     lnm227.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       28471    lnm228.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       28472    lnm228.hpc.itc.rwth-aachen.de  +1
-1 Spawned at lnm227.hpc.itc.rwth-aachen.de
-2 Spawned at lnm228.hpc.itc.rwth-aachen.de
-3 Spawned at lnm228.hpc.itc.rwth-aachen.de
+[0] MPI startup(): 0       31577    lnm334.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       31574    lnm334.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       4603     lnm339.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       4602     lnm339.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
-0 Spawned at lnm227.hpc.itc.rwth-aachen.de
+0 Spawned at lnm334.hpc.itc.rwth-aachen.de
+2 Spawned at lnm339.hpc.itc.rwth-aachen.de
+3 Spawned at lnm339.hpc.itc.rwth-aachen.de
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -466,40 +469,40 @@ Step, current time:1.585436
 Step, current time:1.593128
 Step, current time:1.600813
 Iterations: 200
-RESULT: 13.010262
-RESULT: 13.011282
-RESULT: 13.006749
-RESULT: 13.006755
+RESULT: 32.119251
+RESULT: 32.129646
+RESULT: 32.128529
+RESULT: 32.122170
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm228.hpc.itc.rwth-aachen.de: pid 28644's current affinity list: 0-11
-lnm228.hpc.itc.rwth-aachen.de: pid 28645's current affinity list: 12-23
+lnm339.hpc.itc.rwth-aachen.de: pid 5182's current affinity list: 0-11
+lnm339.hpc.itc.rwth-aachen.de: pid 5183's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
-lnm227.hpc.itc.rwth-aachen.de: pid 6298's current affinity list: 12-23
-lnm227.hpc.itc.rwth-aachen.de: pid 6297's current affinity list: 0-11
+lnm334.hpc.itc.rwth-aachen.de: pid 32172's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
+lnm334.hpc.itc.rwth-aachen.de: pid 32171's current affinity list: 0-11
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 [0] MPI startup(): Multi-threaded optimized library
+[2] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): shm and tmi data transfer modes
 [3] MPI startup(): shm and tmi data transfer modes
-[2] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
-1 Spawned at lnm227.hpc.itc.rwth-aachen.de
-2 Spawned at lnm228.hpc.itc.rwth-aachen.de
-3 Spawned at lnm228.hpc.itc.rwth-aachen.de
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       6348     lnm227.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       6347     lnm227.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       28654    lnm228.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       28655    lnm228.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       32222    lnm334.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       32218    lnm334.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       5192     lnm339.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       5193     lnm339.hpc.itc.rwth-aachen.de  +1
+2 Spawned at lnm339.hpc.itc.rwth-aachen.de
+1 Spawned at lnm334.hpc.itc.rwth-aachen.de
+3 Spawned at lnm339.hpc.itc.rwth-aachen.de
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
-0 Spawned at lnm227.hpc.itc.rwth-aachen.de
+0 Spawned at lnm334.hpc.itc.rwth-aachen.de
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -699,47 +702,1673 @@ Step, current time:1.570029
 Step, current time:1.577736
 Step, current time:1.585436
 Step, current time:1.593128
+RESULT: 31.995504
+RESULT: 31.992204
 Step, current time:1.600813
 Iterations: 200
-RESULT: 13.575509
-RESULT: 13.575733
-RESULT: 13.573545
-RESULT: 13.573809
+RESULT: 31.991256
+RESULT: 32.011943
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm228.hpc.itc.rwth-aachen.de: pid 29180's current affinity list: 0-11
-lnm228.hpc.itc.rwth-aachen.de: pid 29181's current affinity list: 12-23
+lnm339.hpc.itc.rwth-aachen.de: pid 5361's current affinity list: 12-23
+lnm339.hpc.itc.rwth-aachen.de: pid 5360's current affinity list: 0-11
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
-lnm227.hpc.itc.rwth-aachen.de: pid 6900's current affinity list: 12-23
-lnm227.hpc.itc.rwth-aachen.de: pid 6899's current affinity list: 0-11
+lnm334.hpc.itc.rwth-aachen.de: pid 32383's current affinity list: 0-11
+lnm334.hpc.itc.rwth-aachen.de: pid 32384's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 [0] MPI startup(): Multi-threaded optimized library
-[0] MPI startup(): shm and tmi data transfer modes
 [2] MPI startup(): shm and tmi data transfer modes
 [3] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
+1 Spawned at lnm334.hpc.itc.rwth-aachen.de
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       6950     lnm227.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       6948     lnm227.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       29190    lnm228.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       29191    lnm228.hpc.itc.rwth-aachen.de  +1
-2 Spawned at lnm228.hpc.itc.rwth-aachen.de
-1 Spawned at lnm227.hpc.itc.rwth-aachen.de
-3 Spawned at lnm228.hpc.itc.rwth-aachen.de
+[0] MPI startup(): 0       32433    lnm334.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       32434    lnm334.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       5371     lnm339.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       5370     lnm339.hpc.itc.rwth-aachen.de  +1
+2 Spawned at lnm339.hpc.itc.rwth-aachen.de
+3 Spawned at lnm339.hpc.itc.rwth-aachen.de
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
-0 Spawned at lnm227.hpc.itc.rwth-aachen.de
+0 Spawned at lnm334.hpc.itc.rwth-aachen.de
 Step, current time:0.008050
+all cores, time_fraction=0.450000
+, step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
 Step, current time:0.016101
 Step, current time:0.024151
 Step, current time:0.032202
 Step, current time:0.040252
+all cores, time_fraction=0.450000
+, step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
 Step, current time:0.048303
 Step, current time:0.056353
 Step, current time:0.064404
@@ -936,40 +2565,40 @@ Step, current time:1.585436
 Step, current time:1.593128
 Step, current time:1.600813
 Iterations: 200
-RESULT: 12.918064
-RESULT: 12.918300
-RESULT: 12.916878
-RESULT: 12.916885
+RESULT: 32.311481
+RESULT: 32.311227
+RESULT: 32.331404
+RESULT: 32.324329
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm228.hpc.itc.rwth-aachen.de: pid 29233's current affinity list: 0-11
-lnm228.hpc.itc.rwth-aachen.de: pid 29234's current affinity list: 12-23
+lnm339.hpc.itc.rwth-aachen.de: pid 5981's current affinity list: 0-11
+lnm339.hpc.itc.rwth-aachen.de: pid 5982's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
-lnm227.hpc.itc.rwth-aachen.de: pid 7040's current affinity list: 12-23
-lnm227.hpc.itc.rwth-aachen.de: pid 7039's current affinity list: 0-11
+lnm334.hpc.itc.rwth-aachen.de: pid 554's current affinity list: 0-11
+lnm334.hpc.itc.rwth-aachen.de: pid 555's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 [0] MPI startup(): Multi-threaded optimized library
 [0] MPI startup(): shm and tmi data transfer modes
+[2] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
 [3] MPI startup(): shm and tmi data transfer modes
-[2] MPI startup(): shm and tmi data transfer modes
-1 Spawned at lnm227.hpc.itc.rwth-aachen.de
-2 Spawned at lnm228.hpc.itc.rwth-aachen.de
-3 Spawned at lnm228.hpc.itc.rwth-aachen.de
+2 Spawned at lnm339.hpc.itc.rwth-aachen.de
+3 Spawned at lnm339.hpc.itc.rwth-aachen.de
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       7090     lnm227.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       7088     lnm227.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       29243    lnm228.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       29244    lnm228.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       603      lnm334.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       607      lnm334.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       5991     lnm339.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       5992     lnm339.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
-0 Spawned at lnm227.hpc.itc.rwth-aachen.de
+0 Spawned at lnm334.hpc.itc.rwth-aachen.de
+1 Spawned at lnm334.hpc.itc.rwth-aachen.de
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -1169,11 +2798,12 @@ Step, current time:1.570029
 Step, current time:1.577736
 Step, current time:1.585436
 Step, current time:1.593128
+RESULT: 33.237082
 Step, current time:1.600813
 Iterations: 200
-RESULT: 13.080170
-RESULT: 13.080397
-RESULT: 13.080499
-RESULT: 13.080507
+RESULT: 33.220234
+RESULT: 33.226574
+RESULT: 33.219945
 %
-ssh: no process found
+Killed by signal 15.
+Killed by signal 15.

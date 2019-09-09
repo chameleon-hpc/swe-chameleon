@@ -1,75 +1,58 @@
-/var/spool/slurm/job8453173/slurm_script:31: command not found: NODES
-
+lnm089 lnm090
+lnm089
+ssh -f lnm089 export OMP_NUM_THREADS=24 OMP_PLACES=cores OMP_PROC_BIND=close; ~/master/swe-benchmark/batch/interference/main 1.1
+lnm090
+ssh -f lnm090 export OMP_NUM_THREADS=24 OMP_PLACES=cores OMP_PROC_BIND=close; ~/master/swe-benchmark/batch/interference/main 1.1
 srun -n 48 ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_augrie -t 1 -n 1 -x 4096 -y 4096 -i 32 -j 32 -o ./output/charm_batch -i 200
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm463.hpc.itc.rwth-aachen.de: pid 21245's current affinity list: 6
-lnm463.hpc.itc.rwth-aachen.de: pid 21247's current affinity list: 7
-lnm463.hpc.itc.rwth-aachen.de: pid 21238's current affinity list: 14
-lnm463.hpc.itc.rwth-aachen.de: pid 21244's current affinity list: 17
-lnm463.hpc.itc.rwth-aachen.de: pid 21248's current affinity list: 19
-lnm463.hpc.itc.rwth-aachen.de: pid 21252's current affinity list: 21
-lnm463.hpc.itc.rwth-aachen.de: pid 21237's current affinity list: 2
-lnm463.hpc.itc.rwth-aachen.de: pid 21249's current affinity list: 8
-lnm463.hpc.itc.rwth-aachen.de: pid 21254's current affinity list: 22
-lnm463.hpc.itc.rwth-aachen.de: pid 21250's current affinity list: 20
-lnm463.hpc.itc.rwth-aachen.de: pid 21242's current affinity list: 16
-lnm463.hpc.itc.rwth-aachen.de: pid 21234's current affinity list: 12
-lnm463.hpc.itc.rwth-aachen.de: pid 21255's current affinity list: 11
-lnm463.hpc.itc.rwth-aachen.de: pid 21243's current affinity list: 5
-lnm463.hpc.itc.rwth-aachen.de: pid 21251's current affinity list: 9
-lnm463.hpc.itc.rwth-aachen.de: pid 21236's current affinity list: 13
-lnm463.hpc.itc.rwth-aachen.de: pid 21246's current affinity list: 18
-lnm463.hpc.itc.rwth-aachen.de: pid 21239's current affinity list: 3
-lnm463.hpc.itc.rwth-aachen.de: pid 21241's current affinity list: 4
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-lnm464.hpc.itc.rwth-aachen.de: pid 29182's current affinity list: 15
-lnm464.hpc.itc.rwth-aachen.de: pid 29188's current affinity list: 18
-lnm464.hpc.itc.rwth-aachen.de: pid 29190's current affinity list: 19
-lnm464.hpc.itc.rwth-aachen.de: pid 29189's current affinity list: 7
-lnm464.hpc.itc.rwth-aachen.de: pid 29178's current affinity list: 13
-lnm464.hpc.itc.rwth-aachen.de: pid 29175's current affinity list: 0
-lnm464.hpc.itc.rwth-aachen.de: pid 29176's current affinity list: 12
-lnm464.hpc.itc.rwth-aachen.de: pid 29196's current affinity list: 22
-lnm464.hpc.itc.rwth-aachen.de: pid 29184's current affinity list: 16
-lnm464.hpc.itc.rwth-aachen.de: pid 29181's current affinity list: 3
-lnm464.hpc.itc.rwth-aachen.de: pid 29198's current affinity list: 23
-lnm464.hpc.itc.rwth-aachen.de: pid 29191's current affinity list: 8
-lnm464.hpc.itc.rwth-aachen.de: pid 29177's current affinity list: 1
-lnm464.hpc.itc.rwth-aachen.de: pid 29193's current affinity list: 9
-lnm464.hpc.itc.rwth-aachen.de: pid 29180's current affinity list: 14
-lnm464.hpc.itc.rwth-aachen.de: pid 29195's current affinity list: 10
-lnm464.hpc.itc.rwth-aachen.de: pid 29194's current affinity list: 21
-lnm464.hpc.itc.rwth-aachen.de: pid 29179's current affinity list: 2
-lnm464.hpc.itc.rwth-aachen.de: pid 29186's current affinity list: 17
-lnm464.hpc.itc.rwth-aachen.de: pid 29197's current affinity list: 11
-lnm464.hpc.itc.rwth-aachen.de: pid 29187's current affinity list: 6
-lnm464.hpc.itc.rwth-aachen.de: pid 29183's current affinity list: 4
-lnm464.hpc.itc.rwth-aachen.de: pid 29185's current affinity list: 5
-lnm464.hpc.itc.rwth-aachen.de: pid 29192's current affinity list: 20
-lnm463.hpc.itc.rwth-aachen.de: pid 21256's current affinity list: 23
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+lnm090.hpc.itc.rwth-aachen.de: pid 9176's current affinity list: 16
+lnm090.hpc.itc.rwth-aachen.de: pid 9177's current affinity list: 5
+lnm090.hpc.itc.rwth-aachen.de: pid 9180's current affinity list: 18
+lnm090.hpc.itc.rwth-aachen.de: pid 9186's current affinity list: 21
+lnm090.hpc.itc.rwth-aachen.de: pid 9189's current affinity list: 11
+lnm090.hpc.itc.rwth-aachen.de: pid 9183's current affinity list: 8
+lnm090.hpc.itc.rwth-aachen.de: pid 9182's current affinity list: 19
+lnm090.hpc.itc.rwth-aachen.de: pid 9185's current affinity list: 9
+lnm090.hpc.itc.rwth-aachen.de: pid 9171's current affinity list: 2
+lnm090.hpc.itc.rwth-aachen.de: pid 9181's current affinity list: 7
+lnm090.hpc.itc.rwth-aachen.de: pid 9188's current affinity list: 22
+lnm090.hpc.itc.rwth-aachen.de: pid 9169's current affinity list: 1
+lnm090.hpc.itc.rwth-aachen.de: pid 9175's current affinity list: 4
+lnm090.hpc.itc.rwth-aachen.de: pid 9178's current affinity list: 17
+lnm090.hpc.itc.rwth-aachen.de: pid 9190's current affinity list: 23
+lnm090.hpc.itc.rwth-aachen.de: pid 9168's current affinity list: 12
+lnm090.hpc.itc.rwth-aachen.de: pid 9179's current affinity list: 6
+lnm090.hpc.itc.rwth-aachen.de: pid 9187's current affinity list: 10
+lnm090.hpc.itc.rwth-aachen.de: pid 9170's current affinity list: 13
+lnm090.hpc.itc.rwth-aachen.de: pid 9172's current affinity list: 14
+lnm090.hpc.itc.rwth-aachen.de: pid 9174's current affinity list: 15
+lnm090.hpc.itc.rwth-aachen.de: pid 9184's current affinity list: 20
+lnm090.hpc.itc.rwth-aachen.de: pid 9173's current affinity list: 3
+lnm090.hpc.itc.rwth-aachen.de: pid 9167's current affinity list: 0
+lnm089.hpc.itc.rwth-aachen.de: pid 19709's current affinity list: 11
+lnm089.hpc.itc.rwth-aachen.de: pid 19695's current affinity list: 4
+lnm089.hpc.itc.rwth-aachen.de: pid 19701's current affinity list: 7
+lnm089.hpc.itc.rwth-aachen.de: pid 19692's current affinity list: 14
+lnm089.hpc.itc.rwth-aachen.de: pid 19702's current affinity list: 19
+lnm089.hpc.itc.rwth-aachen.de: pid 19694's current affinity list: 15
+lnm089.hpc.itc.rwth-aachen.de: pid 19687's current affinity list: 0
+lnm089.hpc.itc.rwth-aachen.de: pid 19697's current affinity list: 5
+lnm089.hpc.itc.rwth-aachen.de: pid 19699's current affinity list: 6
+lnm089.hpc.itc.rwth-aachen.de: pid 19689's current affinity list: 1
+lnm089.hpc.itc.rwth-aachen.de: pid 19693's current affinity list: 3
+lnm089.hpc.itc.rwth-aachen.de: pid 19691's current affinity list: 2
+lnm089.hpc.itc.rwth-aachen.de: pid 19704's current affinity list: 20
+lnm089.hpc.itc.rwth-aachen.de: pid 19688's current affinity list: 12
+lnm089.hpc.itc.rwth-aachen.de: pid 19707's current affinity list: 10
+lnm089.hpc.itc.rwth-aachen.de: pid 19696's current affinity list: 16
+lnm089.hpc.itc.rwth-aachen.de: pid 19708's current affinity list: 22
+lnm089.hpc.itc.rwth-aachen.de: pid 19710's current affinity list: 23
+lnm089.hpc.itc.rwth-aachen.de: pid 19690's current affinity list: 13
+lnm089.hpc.itc.rwth-aachen.de: pid 19700's current affinity list: 18
+lnm089.hpc.itc.rwth-aachen.de: pid 19698's current affinity list: 17
+lnm089.hpc.itc.rwth-aachen.de: pid 19706's current affinity list: 21
+lnm089.hpc.itc.rwth-aachen.de: pid 19703's current affinity list: 8
+lnm089.hpc.itc.rwth-aachen.de: pid 19705's current affinity list: 9
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
@@ -90,112 +73,132 @@ lnm463.hpc.itc.rwth-aachen.de: pid 21256's current affinity list: 23
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-lnm463.hpc.itc.rwth-aachen.de: pid 21235's current affinity list: 1
-lnm463.hpc.itc.rwth-aachen.de: pid 21233's current affinity list: 0
-lnm463.hpc.itc.rwth-aachen.de: pid 21240's current affinity list: 15
-lnm463.hpc.itc.rwth-aachen.de: pid 21253's current affinity list: 10
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [0] MPI startup(): Multi-threaded optimized library
-[28] MPI startup(): shm and tmi data transfer modes
-[46] MPI startup(): shm and tmi data transfer modes
-[12] MPI startup(): shm and tmi data transfer modes
-[14] MPI startup(): shm and tmi data transfer modes
-[8] MPI startup(): shm and tmi data transfer modes
-[20] MPI startup(): shm and tmi data transfer modes
+[42] MPI startup(): shm and tmi data transfer modes
 [27] MPI startup(): shm and tmi data transfer modes
-[26] MPI startup(): shm and tmi data transfer modes
-[47] MPI startup(): shm and tmi data transfer modes
 [2] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
-[44] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
 [4] MPI startup(): shm and tmi data transfer modes
+[12] MPI startup(): shm and tmi data transfer modes
 [10] MPI startup(): shm and tmi data transfer modes
 [16] MPI startup(): shm and tmi data transfer modes
-[18] MPI startup(): shm and tmi data transfer modes
+[14] MPI startup(): shm and tmi data transfer modes
+[34] MPI startup(): shm and tmi data transfer modes
+[32] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
+[8] MPI startup(): shm and tmi data transfer modes
+[20] MPI startup(): shm and tmi data transfer modes
 [22] MPI startup(): shm and tmi data transfer modes
 [6] MPI startup(): shm and tmi data transfer modes
-[32] MPI startup(): shm and tmi data transfer modes
-[34] MPI startup(): shm and tmi data transfer modes
-[36] MPI startup(): shm and tmi data transfer modes
-[40] MPI startup(): shm and tmi data transfer modes
-[42] MPI startup(): shm and tmi data transfer modes
-[30] MPI startup(): shm and tmi data transfer modes
-[24] MPI startup(): shm and tmi data transfer modes
-[29] MPI startup(): shm and tmi data transfer modes
-[38] MPI startup(): shm and tmi data transfer modes
-[43] MPI startup(): shm and tmi data transfer modes
-[45] MPI startup(): shm and tmi data transfer modes
-[21] MPI startup(): shm and tmi data transfer modes
-[25] MPI startup(): shm and tmi data transfer modes
-[23] MPI startup(): shm and tmi data transfer modes
-[13] MPI startup(): shm and tmi data transfer modes
-[31] MPI startup(): shm and tmi data transfer modes
-[33] MPI startup(): shm and tmi data transfer modes
-[35] MPI startup(): shm and tmi data transfer modes
-[37] MPI startup(): shm and tmi data transfer modes
-[39] MPI startup(): shm and tmi data transfer modes
-[41] MPI startup(): shm and tmi data transfer modes
+[18] MPI startup(): shm and tmi data transfer modes
+[3] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
 [5] MPI startup(): shm and tmi data transfer modes
 [7] MPI startup(): shm and tmi data transfer modes
 [9] MPI startup(): shm and tmi data transfer modes
 [11] MPI startup(): shm and tmi data transfer modes
+[13] MPI startup(): shm and tmi data transfer modes
 [15] MPI startup(): shm and tmi data transfer modes
 [17] MPI startup(): shm and tmi data transfer modes
 [19] MPI startup(): shm and tmi data transfer modes
+[21] MPI startup(): shm and tmi data transfer modes
+[23] MPI startup(): shm and tmi data transfer modes
+[28] MPI startup(): shm and tmi data transfer modes
+[24] MPI startup(): shm and tmi data transfer modes
+[33] MPI startup(): shm and tmi data transfer modes
+[39] MPI startup(): shm and tmi data transfer modes
+[46] MPI startup(): shm and tmi data transfer modes
+[26] MPI startup(): shm and tmi data transfer modes
+[35] MPI startup(): shm and tmi data transfer modes
+[36] MPI startup(): shm and tmi data transfer modes
+[37] MPI startup(): shm and tmi data transfer modes
+[41] MPI startup(): shm and tmi data transfer modes
+[43] MPI startup(): shm and tmi data transfer modes
+[47] MPI startup(): shm and tmi data transfer modes
+[30] MPI startup(): shm and tmi data transfer modes
+[38] MPI startup(): shm and tmi data transfer modes
+[40] MPI startup(): shm and tmi data transfer modes
+[25] MPI startup(): shm and tmi data transfer modes
+[29] MPI startup(): shm and tmi data transfer modes
+[31] MPI startup(): shm and tmi data transfer modes
+[44] MPI startup(): shm and tmi data transfer modes
+[45] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       21991    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       21832    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       21990    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       21837    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 4       21811    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 5       21795    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 6       21838    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 7       21992    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 8       21839    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 9       21831    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 10      21834    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 11      21794    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 12      21792    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 13      21836    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 14      21791    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 15      21793    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 16      21810    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 17      21830    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 18      21835    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 19      21807    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 20      21993    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 21      21829    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 22      21833    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 23      21843    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 24      29272    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 25      29276    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 26      29294    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 27      29270    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 28      29302    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 29      29298    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 30      29288    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 31      29267    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 32      29316    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 33      29284    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 34      29319    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 35      29310    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 36      29314    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 37      29265    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 38      29268    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 39      29264    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 40      29292    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 41      29320    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 42      29296    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 43      29300    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 44      29299    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 45      29281    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 46      29311    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 47      29291    lnm464.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       20275    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       20283    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       20279    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       20298    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 4       20282    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 5       20271    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 6       20277    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 7       20274    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 8       20267    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 9       20295    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 10      20278    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 11      20310    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 12      20276    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 13      20301    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 14      20268    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 15      20272    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 16      20312    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 17      20281    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 18      20313    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 19      20311    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 20      20294    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 21      20296    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 22      20269    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 23      20297    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 24      9369     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 25      9335     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 26      9328     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 27      9339     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 28      9325     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 29      9338     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 30      9356     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 31      9337     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 32      9330     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 33      9320     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 34      9318     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 35      9332     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 36      9333     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 37      9321     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 38      9326     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 39      9324     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 40      9322     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 41      9336     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 42      9323     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 43      9319     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 44      9334     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 45      9327     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 46      9317     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 47      9331     lnm090.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
 Charm++> Running on MPI version: 3.1
@@ -1432,59 +1435,59 @@ Step, current time:1.424469
 Step, current time:1.431661
 Step, current time:1.438852
 Iterations: 200
-RESULT: 12.710776
+RESULT: 15.068334
 [Partition 0][Node 0] End of program
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm464.hpc.itc.rwth-aachen.de: pid 29534's current affinity list: 13
-lnm464.hpc.itc.rwth-aachen.de: pid 29536's current affinity list: 14
-lnm464.hpc.itc.rwth-aachen.de: pid 29540's current affinity list: 16
-lnm464.hpc.itc.rwth-aachen.de: pid 29542's current affinity list: 17
-lnm464.hpc.itc.rwth-aachen.de: pid 29552's current affinity list: 22
-lnm464.hpc.itc.rwth-aachen.de: pid 29554's current affinity list: 23
-lnm464.hpc.itc.rwth-aachen.de: pid 29543's current affinity list: 6
-lnm464.hpc.itc.rwth-aachen.de: pid 29550's current affinity list: 21
-lnm464.hpc.itc.rwth-aachen.de: pid 29538's current affinity list: 15
-lnm464.hpc.itc.rwth-aachen.de: pid 29535's current affinity list: 2
-lnm464.hpc.itc.rwth-aachen.de: pid 29541's current affinity list: 5
-lnm464.hpc.itc.rwth-aachen.de: pid 29553's current affinity list: 11
-lnm464.hpc.itc.rwth-aachen.de: pid 29532's current affinity list: 12
-lnm464.hpc.itc.rwth-aachen.de: pid 29537's current affinity list: 3
-lnm464.hpc.itc.rwth-aachen.de: pid 29533's current affinity list: 1
-lnm464.hpc.itc.rwth-aachen.de: pid 29551's current affinity list: 10
-lnm464.hpc.itc.rwth-aachen.de: pid 29549's current affinity list: 9
-lnm464.hpc.itc.rwth-aachen.de: pid 29544's current affinity list: 18
-lnm464.hpc.itc.rwth-aachen.de: pid 29539's current affinity list: 4
-lnm464.hpc.itc.rwth-aachen.de: pid 29548's current affinity list: 20
-lnm464.hpc.itc.rwth-aachen.de: pid 29545's current affinity list: 7
-lnm464.hpc.itc.rwth-aachen.de: pid 29531's current affinity list: 0
-lnm464.hpc.itc.rwth-aachen.de: pid 29546's current affinity list: 19
-lnm464.hpc.itc.rwth-aachen.de: pid 29547's current affinity list: 8
-lnm463.hpc.itc.rwth-aachen.de: pid 22109's current affinity list: 20
-lnm463.hpc.itc.rwth-aachen.de: pid 22095's current affinity list: 13
-lnm463.hpc.itc.rwth-aachen.de: pid 22099's current affinity list: 15
-lnm463.hpc.itc.rwth-aachen.de: pid 22101's current affinity list: 16
-lnm463.hpc.itc.rwth-aachen.de: pid 22105's current affinity list: 18
-lnm463.hpc.itc.rwth-aachen.de: pid 22107's current affinity list: 19
-lnm463.hpc.itc.rwth-aachen.de: pid 22111's current affinity list: 21
-lnm463.hpc.itc.rwth-aachen.de: pid 22113's current affinity list: 22
-lnm463.hpc.itc.rwth-aachen.de: pid 22097's current affinity list: 14
-lnm463.hpc.itc.rwth-aachen.de: pid 22098's current affinity list: 3
-lnm463.hpc.itc.rwth-aachen.de: pid 22108's current affinity list: 8
-lnm463.hpc.itc.rwth-aachen.de: pid 22112's current affinity list: 10
-lnm463.hpc.itc.rwth-aachen.de: pid 22103's current affinity list: 17
-lnm463.hpc.itc.rwth-aachen.de: pid 22106's current affinity list: 7
-lnm463.hpc.itc.rwth-aachen.de: pid 22115's current affinity list: 23
-lnm463.hpc.itc.rwth-aachen.de: pid 22096's current affinity list: 2
-lnm463.hpc.itc.rwth-aachen.de: pid 22110's current affinity list: 9
-lnm463.hpc.itc.rwth-aachen.de: pid 22114's current affinity list: 11
-lnm463.hpc.itc.rwth-aachen.de: pid 22100's current affinity list: 4
-lnm463.hpc.itc.rwth-aachen.de: pid 22104's current affinity list: 6
-lnm463.hpc.itc.rwth-aachen.de: pid 22093's current affinity list: 12
-lnm463.hpc.itc.rwth-aachen.de: pid 22102's current affinity list: 5
-lnm463.hpc.itc.rwth-aachen.de: pid 22094's current affinity list: 1
-lnm463.hpc.itc.rwth-aachen.de: pid 22092's current affinity list: 0
+lnm090.hpc.itc.rwth-aachen.de: pid 9942's current affinity list: 12
+lnm090.hpc.itc.rwth-aachen.de: pid 9948's current affinity list: 15
+lnm090.hpc.itc.rwth-aachen.de: pid 9950's current affinity list: 16
+lnm090.hpc.itc.rwth-aachen.de: pid 9952's current affinity list: 17
+lnm090.hpc.itc.rwth-aachen.de: pid 9943's current affinity list: 1
+lnm090.hpc.itc.rwth-aachen.de: pid 9947's current affinity list: 3
+lnm090.hpc.itc.rwth-aachen.de: pid 9951's current affinity list: 5
+lnm090.hpc.itc.rwth-aachen.de: pid 9953's current affinity list: 6
+lnm090.hpc.itc.rwth-aachen.de: pid 9944's current affinity list: 13
+lnm090.hpc.itc.rwth-aachen.de: pid 9946's current affinity list: 14
+lnm090.hpc.itc.rwth-aachen.de: pid 9958's current affinity list: 20
+lnm090.hpc.itc.rwth-aachen.de: pid 9961's current affinity list: 10
+lnm090.hpc.itc.rwth-aachen.de: pid 9949's current affinity list: 4
+lnm090.hpc.itc.rwth-aachen.de: pid 9963's current affinity list: 11
+lnm090.hpc.itc.rwth-aachen.de: pid 9945's current affinity list: 2
+lnm090.hpc.itc.rwth-aachen.de: pid 9941's current affinity list: 0
+lnm090.hpc.itc.rwth-aachen.de: pid 9959's current affinity list: 9
+lnm090.hpc.itc.rwth-aachen.de: pid 9956's current affinity list: 19
+lnm090.hpc.itc.rwth-aachen.de: pid 9962's current affinity list: 22
+lnm090.hpc.itc.rwth-aachen.de: pid 9955's current affinity list: 7
+lnm090.hpc.itc.rwth-aachen.de: pid 9954's current affinity list: 18
+lnm090.hpc.itc.rwth-aachen.de: pid 9957's current affinity list: 8
+lnm090.hpc.itc.rwth-aachen.de: pid 9964's current affinity list: 23
+lnm090.hpc.itc.rwth-aachen.de: pid 9960's current affinity list: 21
+lnm089.hpc.itc.rwth-aachen.de: pid 20911's current affinity list: 15
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+lnm089.hpc.itc.rwth-aachen.de: pid 20918's current affinity list: 7
+lnm089.hpc.itc.rwth-aachen.de: pid 20905's current affinity list: 12
+lnm089.hpc.itc.rwth-aachen.de: pid 20924's current affinity list: 10
+lnm089.hpc.itc.rwth-aachen.de: pid 20926's current affinity list: 11
+lnm089.hpc.itc.rwth-aachen.de: pid 20919's current affinity list: 19
+lnm089.hpc.itc.rwth-aachen.de: pid 20923's current affinity list: 21
+lnm089.hpc.itc.rwth-aachen.de: pid 20910's current affinity list: 3
+lnm089.hpc.itc.rwth-aachen.de: pid 20913's current affinity list: 16
+lnm089.hpc.itc.rwth-aachen.de: pid 20909's current affinity list: 14
+lnm089.hpc.itc.rwth-aachen.de: pid 20912's current affinity list: 4
+lnm089.hpc.itc.rwth-aachen.de: pid 20917's current affinity list: 18
+lnm089.hpc.itc.rwth-aachen.de: pid 20927's current affinity list: 23
+lnm089.hpc.itc.rwth-aachen.de: pid 20921's current affinity list: 20
+lnm089.hpc.itc.rwth-aachen.de: pid 20907's current affinity list: 13
+lnm089.hpc.itc.rwth-aachen.de: pid 20914's current affinity list: 5
+lnm089.hpc.itc.rwth-aachen.de: pid 20920's current affinity list: 8
+lnm089.hpc.itc.rwth-aachen.de: pid 20908's current affinity list: 2
+lnm089.hpc.itc.rwth-aachen.de: pid 20915's current affinity list: 17
+lnm089.hpc.itc.rwth-aachen.de: pid 20925's current affinity list: 22
+lnm089.hpc.itc.rwth-aachen.de: pid 20916's current affinity list: 6
+lnm089.hpc.itc.rwth-aachen.de: pid 20922's current affinity list: 9
+lnm089.hpc.itc.rwth-aachen.de: pid 20906's current affinity list: 1
+lnm089.hpc.itc.rwth-aachen.de: pid 20904's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
@@ -1533,103 +1536,103 @@ lnm463.hpc.itc.rwth-aachen.de: pid 22092's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [0] MPI startup(): Multi-threaded optimized library
-[14] MPI startup(): shm and tmi data transfer modes
-[46] MPI startup(): shm and tmi data transfer modes
-[8] MPI startup(): shm and tmi data transfer modes
-[12] MPI startup(): shm and tmi data transfer modes
-[16] MPI startup(): shm and tmi data transfer modes
-[2] MPI startup(): shm and tmi data transfer modes
-[4] MPI startup(): shm and tmi data transfer modes
-[6] MPI startup(): shm and tmi data transfer modes
+[30] MPI startup(): shm and tmi data transfer modes
+[34] MPI startup(): shm and tmi data transfer modes
 [38] MPI startup(): shm and tmi data transfer modes
 [40] MPI startup(): shm and tmi data transfer modes
-[32] MPI startup(): shm and tmi data transfer modes
-[10] MPI startup(): shm and tmi data transfer modes
-[22] MPI startup(): shm and tmi data transfer modes
-[42] MPI startup(): shm and tmi data transfer modes
-[18] MPI startup(): shm and tmi data transfer modes
-[20] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
-[30] MPI startup(): shm and tmi data transfer modes
-[28] MPI startup(): shm and tmi data transfer modes
-[34] MPI startup(): shm and tmi data transfer modes
-[9] MPI startup(): shm and tmi data transfer modes
-[24] MPI startup(): shm and tmi data transfer modes
-[13] MPI startup(): shm and tmi data transfer modes
-[15] MPI startup(): shm and tmi data transfer modes
+[46] MPI startup(): shm and tmi data transfer modes
 [26] MPI startup(): shm and tmi data transfer modes
 [36] MPI startup(): shm and tmi data transfer modes
-[1] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
+[44] MPI startup(): shm and tmi data transfer modes
+[10] MPI startup(): shm and tmi data transfer modes
+[20] MPI startup(): shm and tmi data transfer modes
+[12] MPI startup(): shm and tmi data transfer modes
+[16] MPI startup(): shm and tmi data transfer modes
+[24] MPI startup(): shm and tmi data transfer modes
+[28] MPI startup(): shm and tmi data transfer modes
+[32] MPI startup(): shm and tmi data transfer modes
+[42] MPI startup(): shm and tmi data transfer modes
+[47] MPI startup(): shm and tmi data transfer modes
 [5] MPI startup(): shm and tmi data transfer modes
-[7] MPI startup(): shm and tmi data transfer modes
-[11] MPI startup(): shm and tmi data transfer modes
-[17] MPI startup(): shm and tmi data transfer modes
-[19] MPI startup(): shm and tmi data transfer modes
-[21] MPI startup(): shm and tmi data transfer modes
-[23] MPI startup(): shm and tmi data transfer modes
 [25] MPI startup(): shm and tmi data transfer modes
 [27] MPI startup(): shm and tmi data transfer modes
 [29] MPI startup(): shm and tmi data transfer modes
 [31] MPI startup(): shm and tmi data transfer modes
 [33] MPI startup(): shm and tmi data transfer modes
+[35] MPI startup(): shm and tmi data transfer modes
 [37] MPI startup(): shm and tmi data transfer modes
 [39] MPI startup(): shm and tmi data transfer modes
 [41] MPI startup(): shm and tmi data transfer modes
-[44] MPI startup(): shm and tmi data transfer modes
-[45] MPI startup(): shm and tmi data transfer modes
-[47] MPI startup(): shm and tmi data transfer modes
-[35] MPI startup(): shm and tmi data transfer modes
 [43] MPI startup(): shm and tmi data transfer modes
+[45] MPI startup(): shm and tmi data transfer modes
+[18] MPI startup(): shm and tmi data transfer modes
+[13] MPI startup(): shm and tmi data transfer modes
+[6] MPI startup(): shm and tmi data transfer modes
+[8] MPI startup(): shm and tmi data transfer modes
+[14] MPI startup(): shm and tmi data transfer modes
+[22] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
+[2] MPI startup(): shm and tmi data transfer modes
+[3] MPI startup(): shm and tmi data transfer modes
+[4] MPI startup(): shm and tmi data transfer modes
+[7] MPI startup(): shm and tmi data transfer modes
+[9] MPI startup(): shm and tmi data transfer modes
+[11] MPI startup(): shm and tmi data transfer modes
+[15] MPI startup(): shm and tmi data transfer modes
+[17] MPI startup(): shm and tmi data transfer modes
+[19] MPI startup(): shm and tmi data transfer modes
+[21] MPI startup(): shm and tmi data transfer modes
+[23] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       22718    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       22713    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       22715    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       22691    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 4       22708    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 5       22699    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 6       22702    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 7       22685    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 8       22712    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 9       22682    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 10      22714    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 11      22704    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 12      22711    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 13      22679    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 14      22706    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 15      22688    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 16      22701    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 17      22677    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 18      22709    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 19      22686    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 20      22703    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 21      22687    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 22      22710    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 23      22705    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 24      29668    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 25      29659    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 26      29662    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 27      29641    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 28      29657    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 29      29640    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 30      29661    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 31      29655    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 32      29666    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 33      29646    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 34      29656    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 35      29643    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 36      29654    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 37      29664    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 38      29667    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 39      29673    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 40      29674    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 41      29665    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 42      29663    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 43      29653    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 44      29660    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 45      29638    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 46      29658    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 47      29651    lnm464.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       21527    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       21472    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       21525    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       21512    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 4       21517    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 5       21501    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 6       21490    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 7       21468    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 8       21503    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 9       21491    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 10      21514    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 11      21518    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 12      21522    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 13      21507    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 14      21471    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 15      21487    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 16      21515    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 17      21511    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 18      21524    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 19      21488    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 20      21481    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 21      21520    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 22      21482    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 23      21508    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 24      10078    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 25      10056    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 26      10058    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 27      10068    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 28      10075    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 29      10066    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 30      10060    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 31      10053    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 32      10073    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 33      10047    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 34      10059    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 35      10050    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 36      10057    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 37      10081    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 38      10080    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 39      10077    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 40      10082    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 41      10069    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 42      10076    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 43      10084    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 44      10072    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 45      10079    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 46      10074    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 47      10083    lnm090.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
 Charm++> Running on MPI version: 3.1
@@ -1639,7 +1642,7 @@ Converse/Charm++ Commit ID: v6.9.0-0-gc3d50ef
 Warning> Randomization of virtual memory (ASLR) is turned on in the kernel, thread migration may not work! Run 'echo 0 > /proc/sys/kernel/randomize_va_space' as root to disable it, or try running with '+isomalloc_sync'.
 CharmLB> Load balancer assumes all CPUs are same.
 Charm++> Running on 2 hosts (2 sockets x 12 cores x 1 PUs = 24-way SMP)
-Charm++> cpu topology info is gathered in 0.005 seconds.
+Charm++> cpu topology info is gathered in 0.015 seconds.
 dryFraction: 0.200000 
 dryFraction: 0.200000 
 dryFraction: 0.200000 
@@ -2866,58 +2869,58 @@ Step, current time:1.424469
 Step, current time:1.431661
 Step, current time:1.438852
 Iterations: 200
-RESULT: 12.746301
+RESULT: 14.643691
 [Partition 0][Node 0] End of program
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm464.hpc.itc.rwth-aachen.de: pid 30204's current affinity list: 1
-lnm464.hpc.itc.rwth-aachen.de: pid 30205's current affinity list: 13
-lnm464.hpc.itc.rwth-aachen.de: pid 30207's current affinity list: 14
-lnm464.hpc.itc.rwth-aachen.de: pid 30208's current affinity list: 3
-lnm464.hpc.itc.rwth-aachen.de: pid 30211's current affinity list: 16
-lnm464.hpc.itc.rwth-aachen.de: pid 30212's current affinity list: 5
-lnm464.hpc.itc.rwth-aachen.de: pid 30217's current affinity list: 19
-lnm464.hpc.itc.rwth-aachen.de: pid 30221's current affinity list: 21
-lnm464.hpc.itc.rwth-aachen.de: pid 30214's current affinity list: 6
-lnm464.hpc.itc.rwth-aachen.de: pid 30219's current affinity list: 20
-lnm464.hpc.itc.rwth-aachen.de: pid 30223's current affinity list: 22
-lnm464.hpc.itc.rwth-aachen.de: pid 30218's current affinity list: 8
-lnm464.hpc.itc.rwth-aachen.de: pid 30224's current affinity list: 11
-lnm464.hpc.itc.rwth-aachen.de: pid 30203's current affinity list: 12
-lnm464.hpc.itc.rwth-aachen.de: pid 30213's current affinity list: 17
-lnm464.hpc.itc.rwth-aachen.de: pid 30216's current affinity list: 7
-lnm464.hpc.itc.rwth-aachen.de: pid 30222's current affinity list: 10
-lnm464.hpc.itc.rwth-aachen.de: pid 30206's current affinity list: 2
-lnm464.hpc.itc.rwth-aachen.de: pid 30215's current affinity list: 18
-lnm464.hpc.itc.rwth-aachen.de: pid 30220's current affinity list: 9
-lnm464.hpc.itc.rwth-aachen.de: pid 30225's current affinity list: 23
-lnm464.hpc.itc.rwth-aachen.de: pid 30210's current affinity list: 4
-lnm464.hpc.itc.rwth-aachen.de: pid 30209's current affinity list: 15
-lnm464.hpc.itc.rwth-aachen.de: pid 30202's current affinity list: 0
-lnm463.hpc.itc.rwth-aachen.de: pid 23279's current affinity list: 1
-lnm463.hpc.itc.rwth-aachen.de: pid 23280's current affinity list: 13
-lnm463.hpc.itc.rwth-aachen.de: pid 23281's current affinity list: 2
-lnm463.hpc.itc.rwth-aachen.de: pid 23282's current affinity list: 14
-lnm463.hpc.itc.rwth-aachen.de: pid 23283's current affinity list: 3
-lnm463.hpc.itc.rwth-aachen.de: pid 23284's current affinity list: 15
-lnm463.hpc.itc.rwth-aachen.de: pid 23285's current affinity list: 4
-lnm463.hpc.itc.rwth-aachen.de: pid 23286's current affinity list: 16
-lnm463.hpc.itc.rwth-aachen.de: pid 23287's current affinity list: 5
-lnm463.hpc.itc.rwth-aachen.de: pid 23288's current affinity list: 17
-lnm463.hpc.itc.rwth-aachen.de: pid 23289's current affinity list: 6
-lnm463.hpc.itc.rwth-aachen.de: pid 23291's current affinity list: 7
-lnm463.hpc.itc.rwth-aachen.de: pid 23292's current affinity list: 19
-lnm463.hpc.itc.rwth-aachen.de: pid 23294's current affinity list: 20
-lnm463.hpc.itc.rwth-aachen.de: pid 23295's current affinity list: 9
-lnm463.hpc.itc.rwth-aachen.de: pid 23296's current affinity list: 21
-lnm463.hpc.itc.rwth-aachen.de: pid 23297's current affinity list: 10
-lnm463.hpc.itc.rwth-aachen.de: pid 23298's current affinity list: 22
-lnm463.hpc.itc.rwth-aachen.de: pid 23299's current affinity list: 11
-lnm463.hpc.itc.rwth-aachen.de: pid 23300's current affinity list: 23
-lnm463.hpc.itc.rwth-aachen.de: pid 23290's current affinity list: 18
-lnm463.hpc.itc.rwth-aachen.de: pid 23293's current affinity list: 8
-lnm463.hpc.itc.rwth-aachen.de: pid 23278's current affinity list: 12
-lnm463.hpc.itc.rwth-aachen.de: pid 23277's current affinity list: 0
+lnm090.hpc.itc.rwth-aachen.de: pid 10148's current affinity list: 15
+lnm090.hpc.itc.rwth-aachen.de: pid 10149's current affinity list: 4
+lnm090.hpc.itc.rwth-aachen.de: pid 10164's current affinity list: 23
+lnm090.hpc.itc.rwth-aachen.de: pid 10143's current affinity list: 1
+lnm090.hpc.itc.rwth-aachen.de: pid 10147's current affinity list: 3
+lnm090.hpc.itc.rwth-aachen.de: pid 10142's current affinity list: 12
+lnm090.hpc.itc.rwth-aachen.de: pid 10163's current affinity list: 11
+lnm090.hpc.itc.rwth-aachen.de: pid 10151's current affinity list: 5
+lnm090.hpc.itc.rwth-aachen.de: pid 10152's current affinity list: 17
+lnm090.hpc.itc.rwth-aachen.de: pid 10146's current affinity list: 14
+lnm090.hpc.itc.rwth-aachen.de: pid 10150's current affinity list: 16
+lnm090.hpc.itc.rwth-aachen.de: pid 10154's current affinity list: 18
+lnm090.hpc.itc.rwth-aachen.de: pid 10162's current affinity list: 22
+lnm090.hpc.itc.rwth-aachen.de: pid 10161's current affinity list: 10
+lnm090.hpc.itc.rwth-aachen.de: pid 10145's current affinity list: 2
+lnm090.hpc.itc.rwth-aachen.de: pid 10144's current affinity list: 13
+lnm090.hpc.itc.rwth-aachen.de: pid 10160's current affinity list: 21
+lnm090.hpc.itc.rwth-aachen.de: pid 10156's current affinity list: 19
+lnm090.hpc.itc.rwth-aachen.de: pid 10155's current affinity list: 7
+lnm090.hpc.itc.rwth-aachen.de: pid 10159's current affinity list: 9
+lnm090.hpc.itc.rwth-aachen.de: pid 10141's current affinity list: 0
+lnm090.hpc.itc.rwth-aachen.de: pid 10153's current affinity list: 6
+lnm090.hpc.itc.rwth-aachen.de: pid 10158's current affinity list: 20
+lnm090.hpc.itc.rwth-aachen.de: pid 10157's current affinity list: 8
+lnm089.hpc.itc.rwth-aachen.de: pid 21604's current affinity list: 4
+lnm089.hpc.itc.rwth-aachen.de: pid 21606's current affinity list: 5
+lnm089.hpc.itc.rwth-aachen.de: pid 21616's current affinity list: 10
+lnm089.hpc.itc.rwth-aachen.de: pid 21601's current affinity list: 14
+lnm089.hpc.itc.rwth-aachen.de: pid 21609's current affinity list: 18
+lnm089.hpc.itc.rwth-aachen.de: pid 21597's current affinity list: 12
+lnm089.hpc.itc.rwth-aachen.de: pid 21619's current affinity list: 23
+lnm089.hpc.itc.rwth-aachen.de: pid 21599's current affinity list: 13
+lnm089.hpc.itc.rwth-aachen.de: pid 21610's current affinity list: 7
+lnm089.hpc.itc.rwth-aachen.de: pid 21602's current affinity list: 3
+lnm089.hpc.itc.rwth-aachen.de: pid 21608's current affinity list: 6
+lnm089.hpc.itc.rwth-aachen.de: pid 21605's current affinity list: 16
+lnm089.hpc.itc.rwth-aachen.de: pid 21607's current affinity list: 17
+lnm089.hpc.itc.rwth-aachen.de: pid 21617's current affinity list: 22
+lnm089.hpc.itc.rwth-aachen.de: pid 21615's current affinity list: 21
+lnm089.hpc.itc.rwth-aachen.de: pid 21600's current affinity list: 2
+lnm089.hpc.itc.rwth-aachen.de: pid 21614's current affinity list: 9
+lnm089.hpc.itc.rwth-aachen.de: pid 21603's current affinity list: 15
+lnm089.hpc.itc.rwth-aachen.de: pid 21611's current affinity list: 19
+lnm089.hpc.itc.rwth-aachen.de: pid 21613's current affinity list: 20
+lnm089.hpc.itc.rwth-aachen.de: pid 21618's current affinity list: 11
+lnm089.hpc.itc.rwth-aachen.de: pid 21598's current affinity list: 1
+lnm089.hpc.itc.rwth-aachen.de: pid 21612's current affinity list: 8
+lnm089.hpc.itc.rwth-aachen.de: pid 21596's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
@@ -2967,103 +2970,103 @@ lnm463.hpc.itc.rwth-aachen.de: pid 23277's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [0] MPI startup(): Multi-threaded optimized library
-[14] MPI startup(): shm and tmi data transfer modes
-[18] MPI startup(): shm and tmi data transfer modes
-[6] MPI startup(): shm and tmi data transfer modes
-[8] MPI startup(): shm and tmi data transfer modes
-[20] MPI startup(): shm and tmi data transfer modes
-[16] MPI startup(): shm and tmi data transfer modes
-[46] MPI startup(): shm and tmi data transfer modes
-[28] MPI startup(): shm and tmi data transfer modes
-[11] MPI startup(): shm and tmi data transfer modes
+[44] MPI startup(): shm and tmi data transfer modes
+[38] MPI startup(): shm and tmi data transfer modes
 [42] MPI startup(): shm and tmi data transfer modes
-[15] MPI startup(): shm and tmi data transfer modes
-[40] MPI startup(): shm and tmi data transfer modes
-[12] MPI startup(): shm and tmi data transfer modes
-[10] MPI startup(): shm and tmi data transfer modes
-[2] MPI startup(): shm and tmi data transfer modes
-[22] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
-[1] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
-[4] MPI startup(): shm and tmi data transfer modes
-[23] MPI startup(): shm and tmi data transfer modes
-[19] MPI startup(): shm and tmi data transfer modes
-[32] MPI startup(): shm and tmi data transfer modes
-[5] MPI startup(): shm and tmi data transfer modes
-[34] MPI startup(): shm and tmi data transfer modes
-[7] MPI startup(): shm and tmi data transfer modes
-[13] MPI startup(): shm and tmi data transfer modes
-[17] MPI startup(): shm and tmi data transfer modes
-[21] MPI startup(): shm and tmi data transfer modes
-[9] MPI startup(): shm and tmi data transfer modes
 [30] MPI startup(): shm and tmi data transfer modes
+[34] MPI startup(): shm and tmi data transfer modes
+[36] MPI startup(): shm and tmi data transfer modes
 [24] MPI startup(): shm and tmi data transfer modes
 [26] MPI startup(): shm and tmi data transfer modes
-[36] MPI startup(): shm and tmi data transfer modes
-[38] MPI startup(): shm and tmi data transfer modes
-[44] MPI startup(): shm and tmi data transfer modes
+[28] MPI startup(): shm and tmi data transfer modes
+[32] MPI startup(): shm and tmi data transfer modes
+[40] MPI startup(): shm and tmi data transfer modes
+[46] MPI startup(): shm and tmi data transfer modes
 [25] MPI startup(): shm and tmi data transfer modes
 [27] MPI startup(): shm and tmi data transfer modes
 [29] MPI startup(): shm and tmi data transfer modes
+[31] MPI startup(): shm and tmi data transfer modes
 [33] MPI startup(): shm and tmi data transfer modes
 [35] MPI startup(): shm and tmi data transfer modes
 [37] MPI startup(): shm and tmi data transfer modes
 [39] MPI startup(): shm and tmi data transfer modes
-[45] MPI startup(): shm and tmi data transfer modes
-[47] MPI startup(): shm and tmi data transfer modes
-[31] MPI startup(): shm and tmi data transfer modes
 [41] MPI startup(): shm and tmi data transfer modes
 [43] MPI startup(): shm and tmi data transfer modes
+[45] MPI startup(): shm and tmi data transfer modes
+[47] MPI startup(): shm and tmi data transfer modes
+[8] MPI startup(): shm and tmi data transfer modes
+[10] MPI startup(): shm and tmi data transfer modes
+[18] MPI startup(): shm and tmi data transfer modes
+[16] MPI startup(): shm and tmi data transfer modes
+[22] MPI startup(): shm and tmi data transfer modes
+[12] MPI startup(): shm and tmi data transfer modes
+[13] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
+[2] MPI startup(): shm and tmi data transfer modes
+[4] MPI startup(): shm and tmi data transfer modes
+[6] MPI startup(): shm and tmi data transfer modes
+[11] MPI startup(): shm and tmi data transfer modes
+[14] MPI startup(): shm and tmi data transfer modes
+[20] MPI startup(): shm and tmi data transfer modes
+[7] MPI startup(): shm and tmi data transfer modes
+[9] MPI startup(): shm and tmi data transfer modes
+[17] MPI startup(): shm and tmi data transfer modes
+[5] MPI startup(): shm and tmi data transfer modes
+[3] MPI startup(): shm and tmi data transfer modes
+[21] MPI startup(): shm and tmi data transfer modes
+[19] MPI startup(): shm and tmi data transfer modes
+[15] MPI startup(): shm and tmi data transfer modes
+[23] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       23910    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       23908    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       23888    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       23892    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 4       23890    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 5       23900    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 6       23889    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 7       23899    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 8       23887    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 9       23896    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 10      23886    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 11      23891    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 12      23897    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 13      23905    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 14      23885    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 15      23894    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 16      23906    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 17      23903    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 18      23901    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 19      23893    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 20      23898    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 21      23904    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 22      23895    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 23      23902    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 24      30354    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 25      30344    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 26      30334    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 27      30338    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 28      30348    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 29      30337    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 30      30335    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 31      30353    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 32      30352    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 33      30330    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 34      30333    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 35      30346    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 36      30340    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 37      30349    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 38      30345    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 39      30331    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 40      30343    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 41      30339    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 42      30350    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 43      30336    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 44      30347    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 45      30341    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 46      30342    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 47      30351    lnm464.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       22222    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       22184    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       22218    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       22186    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 4       22204    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 5       22182    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 6       22190    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 7       22215    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 8       22161    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 9       22196    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 10      22169    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 11      22195    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 12      22191    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 13      22181    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 14      22187    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 15      22214    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 16      22221    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 17      22216    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 18      22213    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 19      22203    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 20      22180    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 21      22194    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 22      22217    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 23      22185    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 24      10281    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 25      10259    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 26      10256    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 27      10274    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 28      10272    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 29      10267    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 30      10257    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 31      10251    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 32      10255    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 33      10268    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 34      10262    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 35      10261    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 36      10282    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 37      10264    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 38      10278    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 39      10275    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 40      10284    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 41      10283    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 42      10279    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 43      10273    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 44      10271    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 45      10269    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 46      10260    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 47      10250    lnm090.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
 Charm++> Running on MPI version: 3.1
@@ -3073,7 +3076,7 @@ Converse/Charm++ Commit ID: v6.9.0-0-gc3d50ef
 Warning> Randomization of virtual memory (ASLR) is turned on in the kernel, thread migration may not work! Run 'echo 0 > /proc/sys/kernel/randomize_va_space' as root to disable it, or try running with '+isomalloc_sync'.
 CharmLB> Load balancer assumes all CPUs are same.
 Charm++> Running on 2 hosts (2 sockets x 12 cores x 1 PUs = 24-way SMP)
-Charm++> cpu topology info is gathered in 0.005 seconds.
+Charm++> cpu topology info is gathered in 0.015 seconds.
 dryFraction: 0.200000 
 dryFraction: 0.200000 
 dryFraction: 0.200000 
@@ -4300,59 +4303,59 @@ Step, current time:1.424469
 Step, current time:1.431661
 Step, current time:1.438852
 Iterations: 200
-RESULT: 12.573887
+RESULT: 14.669667
 [Partition 0][Node 0] End of program
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm464.hpc.itc.rwth-aachen.de: pid 30418's current affinity list: 12
-lnm464.hpc.itc.rwth-aachen.de: pid 30421's current affinity list: 2
-lnm464.hpc.itc.rwth-aachen.de: pid 30422's current affinity list: 14
-lnm464.hpc.itc.rwth-aachen.de: pid 30424's current affinity list: 15
-lnm464.hpc.itc.rwth-aachen.de: pid 30427's current affinity list: 5
-lnm464.hpc.itc.rwth-aachen.de: pid 30428's current affinity list: 17
-lnm464.hpc.itc.rwth-aachen.de: pid 30429's current affinity list: 6
-lnm464.hpc.itc.rwth-aachen.de: pid 30423's current affinity list: 3
-lnm464.hpc.itc.rwth-aachen.de: pid 30433's current affinity list: 8
-lnm464.hpc.itc.rwth-aachen.de: pid 30439's current affinity list: 11
-lnm464.hpc.itc.rwth-aachen.de: pid 30426's current affinity list: 16
-lnm464.hpc.itc.rwth-aachen.de: pid 30420's current affinity list: 13
-lnm464.hpc.itc.rwth-aachen.de: pid 30432's current affinity list: 19
-lnm464.hpc.itc.rwth-aachen.de: pid 30438's current affinity list: 22
-lnm464.hpc.itc.rwth-aachen.de: pid 30434's current affinity list: 20
-lnm464.hpc.itc.rwth-aachen.de: pid 30440's current affinity list: 23
-lnm464.hpc.itc.rwth-aachen.de: pid 30419's current affinity list: 1
-lnm464.hpc.itc.rwth-aachen.de: pid 30425's current affinity list: 4
-lnm464.hpc.itc.rwth-aachen.de: pid 30431's current affinity list: 7
-lnm464.hpc.itc.rwth-aachen.de: pid 30430's current affinity list: 18
-lnm464.hpc.itc.rwth-aachen.de: pid 30435's current affinity list: 9
-lnm464.hpc.itc.rwth-aachen.de: pid 30436's current affinity list: 21
-lnm464.hpc.itc.rwth-aachen.de: pid 30417's current affinity list: 0
-lnm464.hpc.itc.rwth-aachen.de: pid 30437's current affinity list: 10
-lnm463.hpc.itc.rwth-aachen.de: pid 23993's current affinity list: 14
-lnm463.hpc.itc.rwth-aachen.de: pid 23995's current affinity list: 15
-lnm463.hpc.itc.rwth-aachen.de: pid 23997's current affinity list: 16
-lnm463.hpc.itc.rwth-aachen.de: pid 23999's current affinity list: 17
-lnm463.hpc.itc.rwth-aachen.de: pid 24001's current affinity list: 18
-lnm463.hpc.itc.rwth-aachen.de: pid 24005's current affinity list: 20
-lnm463.hpc.itc.rwth-aachen.de: pid 24007's current affinity list: 21
-lnm463.hpc.itc.rwth-aachen.de: pid 24009's current affinity list: 22
-lnm463.hpc.itc.rwth-aachen.de: pid 24011's current affinity list: 23
-lnm463.hpc.itc.rwth-aachen.de: pid 23991's current affinity list: 13
-lnm463.hpc.itc.rwth-aachen.de: pid 24003's current affinity list: 19
-lnm463.hpc.itc.rwth-aachen.de: pid 24000's current affinity list: 6
-lnm463.hpc.itc.rwth-aachen.de: pid 24010's current affinity list: 11
-lnm463.hpc.itc.rwth-aachen.de: pid 23989's current affinity list: 12
-lnm463.hpc.itc.rwth-aachen.de: pid 24004's current affinity list: 8
-lnm463.hpc.itc.rwth-aachen.de: pid 23998's current affinity list: 5
-lnm463.hpc.itc.rwth-aachen.de: pid 23990's current affinity list: 1
-lnm463.hpc.itc.rwth-aachen.de: pid 23992's current affinity list: 2
-lnm463.hpc.itc.rwth-aachen.de: pid 23994's current affinity list: 3
-lnm463.hpc.itc.rwth-aachen.de: pid 23996's current affinity list: 4
-lnm463.hpc.itc.rwth-aachen.de: pid 24002's current affinity list: 7
-lnm463.hpc.itc.rwth-aachen.de: pid 24006's current affinity list: 9
-lnm463.hpc.itc.rwth-aachen.de: pid 24008's current affinity list: 10
-lnm463.hpc.itc.rwth-aachen.de: pid 23988's current affinity list: 0
+lnm090.hpc.itc.rwth-aachen.de: pid 10350's current affinity list: 14
+lnm090.hpc.itc.rwth-aachen.de: pid 10352's current affinity list: 15
+lnm090.hpc.itc.rwth-aachen.de: pid 10354's current affinity list: 16
+lnm090.hpc.itc.rwth-aachen.de: pid 10347's current affinity list: 1
+lnm090.hpc.itc.rwth-aachen.de: pid 10349's current affinity list: 2
+lnm090.hpc.itc.rwth-aachen.de: pid 10353's current affinity list: 4
+lnm090.hpc.itc.rwth-aachen.de: pid 10355's current affinity list: 5
+lnm090.hpc.itc.rwth-aachen.de: pid 10346's current affinity list: 12
+lnm090.hpc.itc.rwth-aachen.de: pid 10356's current affinity list: 17
+lnm090.hpc.itc.rwth-aachen.de: pid 10348's current affinity list: 13
+lnm090.hpc.itc.rwth-aachen.de: pid 10351's current affinity list: 3
+lnm090.hpc.itc.rwth-aachen.de: pid 10367's current affinity list: 11
+lnm090.hpc.itc.rwth-aachen.de: pid 10357's current affinity list: 6
+lnm090.hpc.itc.rwth-aachen.de: pid 10359's current affinity list: 7
+lnm090.hpc.itc.rwth-aachen.de: pid 10360's current affinity list: 19
+lnm090.hpc.itc.rwth-aachen.de: pid 10361's current affinity list: 8
+lnm090.hpc.itc.rwth-aachen.de: pid 10364's current affinity list: 21
+lnm090.hpc.itc.rwth-aachen.de: pid 10365's current affinity list: 10
+lnm090.hpc.itc.rwth-aachen.de: pid 10368's current affinity list: 23
+lnm090.hpc.itc.rwth-aachen.de: pid 10363's current affinity list: 9
+lnm090.hpc.itc.rwth-aachen.de: pid 10366's current affinity list: 22
+lnm090.hpc.itc.rwth-aachen.de: pid 10358's current affinity list: 18
+lnm090.hpc.itc.rwth-aachen.de: pid 10362's current affinity list: 20
+lnm090.hpc.itc.rwth-aachen.de: pid 10345's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+lnm089.hpc.itc.rwth-aachen.de: pid 22308's current affinity list: 14
+lnm089.hpc.itc.rwth-aachen.de: pid 22313's current affinity list: 5
+lnm089.hpc.itc.rwth-aachen.de: pid 22314's current affinity list: 17
+lnm089.hpc.itc.rwth-aachen.de: pid 22309's current affinity list: 3
+lnm089.hpc.itc.rwth-aachen.de: pid 22305's current affinity list: 1
+lnm089.hpc.itc.rwth-aachen.de: pid 22310's current affinity list: 15
+lnm089.hpc.itc.rwth-aachen.de: pid 22311's current affinity list: 4
+lnm089.hpc.itc.rwth-aachen.de: pid 22318's current affinity list: 19
+lnm089.hpc.itc.rwth-aachen.de: pid 22322's current affinity list: 21
+lnm089.hpc.itc.rwth-aachen.de: pid 22323's current affinity list: 10
+lnm089.hpc.itc.rwth-aachen.de: pid 22317's current affinity list: 7
+lnm089.hpc.itc.rwth-aachen.de: pid 22325's current affinity list: 11
+lnm089.hpc.itc.rwth-aachen.de: pid 22306's current affinity list: 13
+lnm089.hpc.itc.rwth-aachen.de: pid 22315's current affinity list: 6
+lnm089.hpc.itc.rwth-aachen.de: pid 22319's current affinity list: 8
+lnm089.hpc.itc.rwth-aachen.de: pid 22320's current affinity list: 20
+lnm089.hpc.itc.rwth-aachen.de: pid 22324's current affinity list: 22
+lnm089.hpc.itc.rwth-aachen.de: pid 22316's current affinity list: 18
+lnm089.hpc.itc.rwth-aachen.de: pid 22312's current affinity list: 16
+lnm089.hpc.itc.rwth-aachen.de: pid 22321's current affinity list: 9
+lnm089.hpc.itc.rwth-aachen.de: pid 22326's current affinity list: 23
+lnm089.hpc.itc.rwth-aachen.de: pid 22307's current affinity list: 2
+lnm089.hpc.itc.rwth-aachen.de: pid 22304's current affinity list: 12
+lnm089.hpc.itc.rwth-aachen.de: pid 22303's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
@@ -4401,103 +4404,103 @@ lnm463.hpc.itc.rwth-aachen.de: pid 23988's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [0] MPI startup(): Multi-threaded optimized library
-[26] MPI startup(): shm and tmi data transfer modes
 [40] MPI startup(): shm and tmi data transfer modes
-[34] MPI startup(): shm and tmi data transfer modes
-[2] MPI startup(): shm and tmi data transfer modes
 [6] MPI startup(): shm and tmi data transfer modes
-[10] MPI startup(): shm and tmi data transfer modes
-[18] MPI startup(): shm and tmi data transfer modes
-[28] MPI startup(): shm and tmi data transfer modes
-[16] MPI startup(): shm and tmi data transfer modes
-[32] MPI startup(): shm and tmi data transfer modes
-[14] MPI startup(): shm and tmi data transfer modes
-[30] MPI startup(): shm and tmi data transfer modes
-[46] MPI startup(): shm and tmi data transfer modes
-[36] MPI startup(): shm and tmi data transfer modes
-[38] MPI startup(): shm and tmi data transfer modes
-[44] MPI startup(): shm and tmi data transfer modes
-[8] MPI startup(): shm and tmi data transfer modes
-[12] MPI startup(): shm and tmi data transfer modes
-[24] MPI startup(): shm and tmi data transfer modes
-[42] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
-[4] MPI startup(): shm and tmi data transfer modes
 [20] MPI startup(): shm and tmi data transfer modes
-[22] MPI startup(): shm and tmi data transfer modes
-[25] MPI startup(): shm and tmi data transfer modes
+[34] MPI startup(): shm and tmi data transfer modes
+[42] MPI startup(): shm and tmi data transfer modes
+[8] MPI startup(): shm and tmi data transfer modes
+[16] MPI startup(): shm and tmi data transfer modes
+[30] MPI startup(): shm and tmi data transfer modes
+[10] MPI startup(): shm and tmi data transfer modes
+[38] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
+[26] MPI startup(): shm and tmi data transfer modes
+[36] MPI startup(): shm and tmi data transfer modes
+[12] MPI startup(): shm and tmi data transfer modes
+[32] MPI startup(): shm and tmi data transfer modes
+[4] MPI startup(): shm and tmi data transfer modes
+[18] MPI startup(): shm and tmi data transfer modes
+[46] MPI startup(): shm and tmi data transfer modes
+[24] MPI startup(): shm and tmi data transfer modes
 [27] MPI startup(): shm and tmi data transfer modes
-[29] MPI startup(): shm and tmi data transfer modes
-[31] MPI startup(): shm and tmi data transfer modes
-[33] MPI startup(): shm and tmi data transfer modes
-[37] MPI startup(): shm and tmi data transfer modes
-[39] MPI startup(): shm and tmi data transfer modes
-[41] MPI startup(): shm and tmi data transfer modes
-[43] MPI startup(): shm and tmi data transfer modes
-[45] MPI startup(): shm and tmi data transfer modes
-[35] MPI startup(): shm and tmi data transfer modes
-[47] MPI startup(): shm and tmi data transfer modes
-[1] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
-[5] MPI startup(): shm and tmi data transfer modes
+[28] MPI startup(): shm and tmi data transfer modes
+[44] MPI startup(): shm and tmi data transfer modes
+[2] MPI startup(): shm and tmi data transfer modes
 [7] MPI startup(): shm and tmi data transfer modes
 [9] MPI startup(): shm and tmi data transfer modes
 [11] MPI startup(): shm and tmi data transfer modes
 [13] MPI startup(): shm and tmi data transfer modes
-[15] MPI startup(): shm and tmi data transfer modes
-[17] MPI startup(): shm and tmi data transfer modes
+[14] MPI startup(): shm and tmi data transfer modes
 [19] MPI startup(): shm and tmi data transfer modes
 [21] MPI startup(): shm and tmi data transfer modes
+[22] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
+[17] MPI startup(): shm and tmi data transfer modes
 [23] MPI startup(): shm and tmi data transfer modes
+[15] MPI startup(): shm and tmi data transfer modes
+[33] MPI startup(): shm and tmi data transfer modes
+[39] MPI startup(): shm and tmi data transfer modes
+[47] MPI startup(): shm and tmi data transfer modes
+[31] MPI startup(): shm and tmi data transfer modes
+[29] MPI startup(): shm and tmi data transfer modes
+[3] MPI startup(): shm and tmi data transfer modes
+[5] MPI startup(): shm and tmi data transfer modes
+[25] MPI startup(): shm and tmi data transfer modes
+[35] MPI startup(): shm and tmi data transfer modes
+[37] MPI startup(): shm and tmi data transfer modes
+[41] MPI startup(): shm and tmi data transfer modes
+[43] MPI startup(): shm and tmi data transfer modes
+[45] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       24615    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       24603    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       24611    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       24599    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 4       24606    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 5       24598    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 6       24607    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 7       24593    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 8       24610    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 9       24596    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 10      24605    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 11      24591    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 12      24601    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 13      24592    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 14      24608    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 15      24600    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 16      24604    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 17      24594    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 18      24609    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 19      24597    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 20      24612    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 21      24595    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 22      24602    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 23      24590    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 24      30561    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 25      30541    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 26      30554    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 27      30549    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 28      30539    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 29      30537    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 30      30544    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 31      30538    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 32      30553    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 33      30547    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 34      30542    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 35      30536    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 36      30543    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 37      30559    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 38      30555    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 39      30548    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 40      30545    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 41      30551    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 42      30556    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 43      30558    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 44      30560    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 45      30550    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 46      30546    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 47      30552    lnm464.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       22929    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       22927    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       22902    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       22917    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 4       22926    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 5       22886    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 6       22895    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 7       22898    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 8       22910    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 9       22923    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 10      22894    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 11      22888    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 12      22918    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 13      22922    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 14      22913    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 15      22899    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 16      22919    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 17      22920    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 18      22924    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 19      22900    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 20      22906    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 21      22921    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 22      22916    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 23      22925    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 24      10488    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 25      10470    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 26      10466    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 27      10474    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 28      10468    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 29      10458    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 30      10475    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 31      10454    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 32      10465    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 33      10456    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 34      10469    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 35      10473    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 36      10479    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 37      10486    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 38      10481    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 39      10482    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 40      10480    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 41      10487    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 42      10484    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 43      10477    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 44      10478    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 45      10485    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 46      10476    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 47      10483    lnm090.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
 Charm++> Running on MPI version: 3.1
@@ -5734,58 +5737,60 @@ Step, current time:1.424469
 Step, current time:1.431661
 Step, current time:1.438852
 Iterations: 200
-RESULT: 12.366181
+RESULT: 14.520125
 [Partition 0][Node 0] End of program
 %
+srun: Job 8523115 step creation temporarily disabled, retrying
+srun: Step created for job 8523115
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm464.hpc.itc.rwth-aachen.de: pid 30628's current affinity list: 2
-lnm464.hpc.itc.rwth-aachen.de: pid 30633's current affinity list: 16
-lnm464.hpc.itc.rwth-aachen.de: pid 30637's current affinity list: 18
-lnm464.hpc.itc.rwth-aachen.de: pid 30638's current affinity list: 7
-lnm464.hpc.itc.rwth-aachen.de: pid 30625's current affinity list: 12
-lnm464.hpc.itc.rwth-aachen.de: pid 30627's current affinity list: 13
-lnm464.hpc.itc.rwth-aachen.de: pid 30629's current affinity list: 14
-lnm464.hpc.itc.rwth-aachen.de: pid 30636's current affinity list: 6
-lnm464.hpc.itc.rwth-aachen.de: pid 30626's current affinity list: 1
-lnm464.hpc.itc.rwth-aachen.de: pid 30631's current affinity list: 15
-lnm464.hpc.itc.rwth-aachen.de: pid 30646's current affinity list: 11
-lnm464.hpc.itc.rwth-aachen.de: pid 30639's current affinity list: 19
-lnm464.hpc.itc.rwth-aachen.de: pid 30630's current affinity list: 3
-lnm464.hpc.itc.rwth-aachen.de: pid 30634's current affinity list: 5
-lnm464.hpc.itc.rwth-aachen.de: pid 30640's current affinity list: 8
-lnm464.hpc.itc.rwth-aachen.de: pid 30635's current affinity list: 17
-lnm464.hpc.itc.rwth-aachen.de: pid 30632's current affinity list: 4
-lnm464.hpc.itc.rwth-aachen.de: pid 30624's current affinity list: 0
-lnm464.hpc.itc.rwth-aachen.de: pid 30645's current affinity list: 22
-lnm464.hpc.itc.rwth-aachen.de: pid 30647's current affinity list: 23
-lnm464.hpc.itc.rwth-aachen.de: pid 30641's current affinity list: 20
-lnm464.hpc.itc.rwth-aachen.de: pid 30644's current affinity list: 10
-lnm464.hpc.itc.rwth-aachen.de: pid 30642's current affinity list: 9
-lnm464.hpc.itc.rwth-aachen.de: pid 30643's current affinity list: 21
-lnm463.hpc.itc.rwth-aachen.de: pid 24686's current affinity list: 1
-lnm463.hpc.itc.rwth-aachen.de: pid 24690's current affinity list: 3
-lnm463.hpc.itc.rwth-aachen.de: pid 24692's current affinity list: 4
-lnm463.hpc.itc.rwth-aachen.de: pid 24694's current affinity list: 5
-lnm463.hpc.itc.rwth-aachen.de: pid 24696's current affinity list: 6
-lnm463.hpc.itc.rwth-aachen.de: pid 24698's current affinity list: 7
-lnm463.hpc.itc.rwth-aachen.de: pid 24700's current affinity list: 8
-lnm463.hpc.itc.rwth-aachen.de: pid 24702's current affinity list: 9
-lnm463.hpc.itc.rwth-aachen.de: pid 24706's current affinity list: 11
-lnm463.hpc.itc.rwth-aachen.de: pid 24704's current affinity list: 10
-lnm463.hpc.itc.rwth-aachen.de: pid 24688's current affinity list: 2
-lnm463.hpc.itc.rwth-aachen.de: pid 24689's current affinity list: 14
-lnm463.hpc.itc.rwth-aachen.de: pid 24691's current affinity list: 15
-lnm463.hpc.itc.rwth-aachen.de: pid 24693's current affinity list: 16
-lnm463.hpc.itc.rwth-aachen.de: pid 24695's current affinity list: 17
-lnm463.hpc.itc.rwth-aachen.de: pid 24697's current affinity list: 18
-lnm463.hpc.itc.rwth-aachen.de: pid 24701's current affinity list: 20
-lnm463.hpc.itc.rwth-aachen.de: pid 24703's current affinity list: 21
-lnm463.hpc.itc.rwth-aachen.de: pid 24705's current affinity list: 22
-lnm463.hpc.itc.rwth-aachen.de: pid 24685's current affinity list: 12
-lnm463.hpc.itc.rwth-aachen.de: pid 24707's current affinity list: 23
-lnm463.hpc.itc.rwth-aachen.de: pid 24699's current affinity list: 19
-lnm463.hpc.itc.rwth-aachen.de: pid 24687's current affinity list: 13
-lnm463.hpc.itc.rwth-aachen.de: pid 24684's current affinity list: 0
+lnm090.hpc.itc.rwth-aachen.de: pid 11113's current affinity list: 12
+lnm090.hpc.itc.rwth-aachen.de: pid 11115's current affinity list: 13
+lnm090.hpc.itc.rwth-aachen.de: pid 11116's current affinity list: 2
+lnm090.hpc.itc.rwth-aachen.de: pid 11119's current affinity list: 15
+lnm090.hpc.itc.rwth-aachen.de: pid 11121's current affinity list: 16
+lnm090.hpc.itc.rwth-aachen.de: pid 11123's current affinity list: 17
+lnm090.hpc.itc.rwth-aachen.de: pid 11125's current affinity list: 18
+lnm090.hpc.itc.rwth-aachen.de: pid 11129's current affinity list: 20
+lnm090.hpc.itc.rwth-aachen.de: pid 11131's current affinity list: 21
+lnm090.hpc.itc.rwth-aachen.de: pid 11127's current affinity list: 19
+lnm090.hpc.itc.rwth-aachen.de: pid 11117's current affinity list: 14
+lnm090.hpc.itc.rwth-aachen.de: pid 11126's current affinity list: 7
+lnm090.hpc.itc.rwth-aachen.de: pid 11122's current affinity list: 5
+lnm090.hpc.itc.rwth-aachen.de: pid 11130's current affinity list: 9
+lnm090.hpc.itc.rwth-aachen.de: pid 11128's current affinity list: 8
+lnm090.hpc.itc.rwth-aachen.de: pid 11133's current affinity list: 22
+lnm090.hpc.itc.rwth-aachen.de: pid 11132's current affinity list: 10
+lnm090.hpc.itc.rwth-aachen.de: pid 11120's current affinity list: 4
+lnm090.hpc.itc.rwth-aachen.de: pid 11135's current affinity list: 23
+lnm090.hpc.itc.rwth-aachen.de: pid 11134's current affinity list: 11
+lnm090.hpc.itc.rwth-aachen.de: pid 11118's current affinity list: 3
+lnm090.hpc.itc.rwth-aachen.de: pid 11124's current affinity list: 6
+lnm090.hpc.itc.rwth-aachen.de: pid 11114's current affinity list: 1
+lnm090.hpc.itc.rwth-aachen.de: pid 11112's current affinity list: 0
+lnm089.hpc.itc.rwth-aachen.de: pid 23589's current affinity list: 23
+lnm089.hpc.itc.rwth-aachen.de: pid 23568's current affinity list: 1
+lnm089.hpc.itc.rwth-aachen.de: pid 23575's current affinity list: 16
+lnm089.hpc.itc.rwth-aachen.de: pid 23573's current affinity list: 15
+lnm089.hpc.itc.rwth-aachen.de: pid 23571's current affinity list: 14
+lnm089.hpc.itc.rwth-aachen.de: pid 23572's current affinity list: 3
+lnm089.hpc.itc.rwth-aachen.de: pid 23574's current affinity list: 4
+lnm089.hpc.itc.rwth-aachen.de: pid 23576's current affinity list: 5
+lnm089.hpc.itc.rwth-aachen.de: pid 23579's current affinity list: 18
+lnm089.hpc.itc.rwth-aachen.de: pid 23567's current affinity list: 12
+lnm089.hpc.itc.rwth-aachen.de: pid 23570's current affinity list: 2
+lnm089.hpc.itc.rwth-aachen.de: pid 23569's current affinity list: 13
+lnm089.hpc.itc.rwth-aachen.de: pid 23580's current affinity list: 7
+lnm089.hpc.itc.rwth-aachen.de: pid 23581's current affinity list: 19
+lnm089.hpc.itc.rwth-aachen.de: pid 23578's current affinity list: 6
+lnm089.hpc.itc.rwth-aachen.de: pid 23583's current affinity list: 20
+lnm089.hpc.itc.rwth-aachen.de: pid 23577's current affinity list: 17
+lnm089.hpc.itc.rwth-aachen.de: pid 23588's current affinity list: 11
+lnm089.hpc.itc.rwth-aachen.de: pid 23584's current affinity list: 9
+lnm089.hpc.itc.rwth-aachen.de: pid 23566's current affinity list: 0
+lnm089.hpc.itc.rwth-aachen.de: pid 23585's current affinity list: 21
+lnm089.hpc.itc.rwth-aachen.de: pid 23587's current affinity list: 22
+lnm089.hpc.itc.rwth-aachen.de: pid 23586's current affinity list: 10
+lnm089.hpc.itc.rwth-aachen.de: pid 23582's current affinity list: 8
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
@@ -5835,103 +5840,103 @@ lnm463.hpc.itc.rwth-aachen.de: pid 24684's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [0] MPI startup(): Multi-threaded optimized library
-[2] MPI startup(): shm and tmi data transfer modes
-[18] MPI startup(): shm and tmi data transfer modes
-[20] MPI startup(): shm and tmi data transfer modes
-[16] MPI startup(): shm and tmi data transfer modes
-[30] MPI startup(): shm and tmi data transfer modes
 [38] MPI startup(): shm and tmi data transfer modes
-[26] MPI startup(): shm and tmi data transfer modes
-[4] MPI startup(): shm and tmi data transfer modes
-[44] MPI startup(): shm and tmi data transfer modes
-[14] MPI startup(): shm and tmi data transfer modes
-[8] MPI startup(): shm and tmi data transfer modes
-[34] MPI startup(): shm and tmi data transfer modes
-[42] MPI startup(): shm and tmi data transfer modes
-[6] MPI startup(): shm and tmi data transfer modes
-[10] MPI startup(): shm and tmi data transfer modes
-[28] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
-[32] MPI startup(): shm and tmi data transfer modes
-[12] MPI startup(): shm and tmi data transfer modes
-[36] MPI startup(): shm and tmi data transfer modes
-[22] MPI startup(): shm and tmi data transfer modes
+[24] MPI startup(): shm and tmi data transfer modes
 [40] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
-[46] MPI startup(): shm and tmi data transfer modes
-[23] MPI startup(): shm and tmi data transfer modes
+[41] MPI startup(): shm and tmi data transfer modes
+[34] MPI startup(): shm and tmi data transfer modes
+[44] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
 [5] MPI startup(): shm and tmi data transfer modes
+[14] MPI startup(): shm and tmi data transfer modes
+[16] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
+[27] MPI startup(): shm and tmi data transfer modes
+[36] MPI startup(): shm and tmi data transfer modes
+[26] MPI startup(): shm and tmi data transfer modes
+[28] MPI startup(): shm and tmi data transfer modes
+[30] MPI startup(): shm and tmi data transfer modes
+[42] MPI startup(): shm and tmi data transfer modes
+[46] MPI startup(): shm and tmi data transfer modes
+[32] MPI startup(): shm and tmi data transfer modes
+[43] MPI startup(): shm and tmi data transfer modes
+[25] MPI startup(): shm and tmi data transfer modes
+[31] MPI startup(): shm and tmi data transfer modes
+[33] MPI startup(): shm and tmi data transfer modes
+[35] MPI startup(): shm and tmi data transfer modes
+[37] MPI startup(): shm and tmi data transfer modes
+[45] MPI startup(): shm and tmi data transfer modes
+[47] MPI startup(): shm and tmi data transfer modes
+[29] MPI startup(): shm and tmi data transfer modes
+[39] MPI startup(): shm and tmi data transfer modes
+[4] MPI startup(): shm and tmi data transfer modes
+[10] MPI startup(): shm and tmi data transfer modes
+[6] MPI startup(): shm and tmi data transfer modes
+[8] MPI startup(): shm and tmi data transfer modes
+[18] MPI startup(): shm and tmi data transfer modes
+[20] MPI startup(): shm and tmi data transfer modes
+[22] MPI startup(): shm and tmi data transfer modes
+[2] MPI startup(): shm and tmi data transfer modes
+[12] MPI startup(): shm and tmi data transfer modes
+[19] MPI startup(): shm and tmi data transfer modes
 [7] MPI startup(): shm and tmi data transfer modes
 [9] MPI startup(): shm and tmi data transfer modes
 [11] MPI startup(): shm and tmi data transfer modes
 [13] MPI startup(): shm and tmi data transfer modes
 [15] MPI startup(): shm and tmi data transfer modes
 [17] MPI startup(): shm and tmi data transfer modes
-[19] MPI startup(): shm and tmi data transfer modes
 [21] MPI startup(): shm and tmi data transfer modes
-[24] MPI startup(): shm and tmi data transfer modes
-[25] MPI startup(): shm and tmi data transfer modes
-[33] MPI startup(): shm and tmi data transfer modes
-[41] MPI startup(): shm and tmi data transfer modes
-[39] MPI startup(): shm and tmi data transfer modes
-[47] MPI startup(): shm and tmi data transfer modes
-[27] MPI startup(): shm and tmi data transfer modes
-[29] MPI startup(): shm and tmi data transfer modes
-[31] MPI startup(): shm and tmi data transfer modes
-[35] MPI startup(): shm and tmi data transfer modes
-[37] MPI startup(): shm and tmi data transfer modes
-[43] MPI startup(): shm and tmi data transfer modes
-[45] MPI startup(): shm and tmi data transfer modes
+[3] MPI startup(): shm and tmi data transfer modes
+[23] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       25310    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       25305    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       25276    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       25308    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 4       25296    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 5       25303    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 6       25279    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 7       25301    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 8       25274    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 9       25298    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 10      25275    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 11      25300    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 12      25271    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 13      25297    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 14      25281    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 15      25307    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 16      25280    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 17      25299    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 18      25278    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 19      25304    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 20      25290    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 21      25302    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 22      25277    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 23      25306    lnm463.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 24      30757    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 25      30740    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 26      30746    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 27      30741    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 28      30734    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 29      30739    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 30      30751    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 31      30747    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 32      30755    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 33      30730    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 34      30752    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 35      30754    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 36      30745    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 37      30735    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 38      30736    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 39      30749    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 40      30750    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 41      30759    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 42      30766    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 43      30767    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 44      30765    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 45      30756    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 46      30748    lnm464.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 47      30758    lnm464.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       24186    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       24155    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       24134    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       24157    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 4       24156    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 5       24148    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 6       24150    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 7       24142    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 8       24146    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 9       24141    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 10      24149    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 11      24178    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 12      24169    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 13      24147    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 14      24166    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 15      24167    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 16      24189    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 17      24168    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 18      24181    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 19      24185    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 20      24188    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 21      24187    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 22      24180    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 23      24133    lnm089.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 24      11256    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 25      11231    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 26      11255    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 27      11232    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 28      11229    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 29      11243    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 30      11253    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 31      11233    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 32      11250    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 33      11238    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 34      11246    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 35      11240    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 36      11254    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 37      11237    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 38      11244    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 39      11241    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 40      11248    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 41      11239    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 42      11245    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 43      11230    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 44      11249    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 45      11247    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 46      11252    lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 47      11251    lnm090.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
 Charm++> Running on MPI version: 3.1
@@ -7104,10 +7109,1636 @@ Step, current time:1.000206
 Step, current time:1.007442
 Step, current time:1.014676
 Step, current time:1.021910
-Step, current time:1.029142
+one core, time_fraction=0.100000
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+steStep, current time:1.029142
 Step, current time:1.031836
 Step, current time:1.034472
-Step, current time:1.037067
+one core, time_fraction=0.100000
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+steStep, current time:1.037067
 Step, current time:1.039631
 Step, current time:1.042170
 Step, current time:1.044701
@@ -7168,7 +8799,8 @@ Step, current time:1.424469
 Step, current time:1.431661
 Step, current time:1.438852
 Iterations: 200
-RESULT: 12.541649
+RESULT: 14.576646
 [Partition 0][Node 0] End of program
 %
-ssh: no process found
+Killed by signal 15.
+Killed by signal 15.

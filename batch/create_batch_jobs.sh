@@ -128,4 +128,5 @@ create_granularity_jobs() {
 #create_scaling_jobs
 #create_imbalance_jobs
 create_interference_jobs
+create_single_interference_jobs
 #create_granularity_jobs

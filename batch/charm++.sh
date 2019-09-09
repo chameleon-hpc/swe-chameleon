@@ -26,15 +26,20 @@ COMMAND+="-x $GRID_DIMENSION -y $GRID_DIMENSION "
 COMMAND+="-i $BLOCK_COUNT -j $BLOCK_COUNT "
 COMMAND+="-o ./output/charm_batch -i 200"
 
-echo $COMMAND
-
 if [ "$EXTRA" != "none" ] 
 then
-	INTERFERENCE_COMMAND="mpiexec $FLAGS_MPI_BATCH ./batch/cpu_set_wrapper.sh ./batch/interference/main $EXTRA"
-	echo $INTERFERENCE_COMMAND
-	$INTERFERENCE_COMMAND &
-	PID=$!
+	NODES=`scontrol show hostnames $SLURM_JOB_NODELIST`
+	echo $NODES
+	for NODE in `echo $NODES`
+	do
+		echo $NODE
+		INTERFERENCE_COMMAND="ssh -f $NODE export OMP_NUM_THREADS=24 OMP_PLACES=cores OMP_PROC_BIND=close; ~/master/swe-benchmark/batch/interference/main $EXTRA"
+		echo $INTERFERENCE_COMMAND
+		$INTERFERENCE_COMMAND
+	done
 fi
+
+echo $COMMAND
 
 ### Execute your application
 
@@ -46,5 +51,5 @@ done
 
 if [ "$EXTRA" != "none" ] 
 then
-	killall main
+	killall ssh
 fi
