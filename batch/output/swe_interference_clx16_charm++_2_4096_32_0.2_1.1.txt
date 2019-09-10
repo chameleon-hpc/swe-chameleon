@@ -1,58 +1,1489 @@
-lnm089 lnm090
-lnm089
-ssh -f lnm089 export OMP_NUM_THREADS=24 OMP_PLACES=cores OMP_PROC_BIND=close; ~/master/swe-benchmark/batch/interference/main 1.1
-lnm090
-ssh -f lnm090 export OMP_NUM_THREADS=24 OMP_PLACES=cores OMP_PROC_BIND=close; ~/master/swe-benchmark/batch/interference/main 1.1
+lnm429
+ssh -f lnm429 export OMP_NUM_THREADS=24 OMP_PLACES=cores OMP_PROC_BIND=close; ~/master/swe-benchmark/batch/interference/main 1.1
 srun -n 48 ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_charm_omp_augrie -t 1 -n 1 -x 4096 -y 4096 -i 32 -j 32 -o ./output/charm_batch -i 200
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm090.hpc.itc.rwth-aachen.de: pid 3386's current affinity list: 0
-lnm090.hpc.itc.rwth-aachen.de: pid 3388's current affinity list: 1
-lnm090.hpc.itc.rwth-aachen.de: pid 3389's current affinity list: 13
-lnm090.hpc.itc.rwth-aachen.de: pid 3394's current affinity list: 15
-lnm090.hpc.itc.rwth-aachen.de: pid 3396's current affinity list: 16
-lnm090.hpc.itc.rwth-aachen.de: pid 3400's current affinity list: 17
-lnm090.hpc.itc.rwth-aachen.de: pid 3411's current affinity list: 22
-lnm090.hpc.itc.rwth-aachen.de: pid 3412's current affinity list: 11
-lnm090.hpc.itc.rwth-aachen.de: pid 3401's current affinity list: 6
-lnm090.hpc.itc.rwth-aachen.de: pid 3392's current affinity list: 14
-lnm090.hpc.itc.rwth-aachen.de: pid 3393's current affinity list: 3
-lnm090.hpc.itc.rwth-aachen.de: pid 3404's current affinity list: 19
-lnm090.hpc.itc.rwth-aachen.de: pid 3402's current affinity list: 18
-lnm090.hpc.itc.rwth-aachen.de: pid 3398's current affinity list: 5
-lnm090.hpc.itc.rwth-aachen.de: pid 3387's current affinity list: 12
-lnm090.hpc.itc.rwth-aachen.de: pid 3390's current affinity list: 2
-lnm090.hpc.itc.rwth-aachen.de: pid 3406's current affinity list: 20
-lnm090.hpc.itc.rwth-aachen.de: pid 3405's current affinity list: 8
-lnm090.hpc.itc.rwth-aachen.de: pid 3395's current affinity list: 4
-lnm090.hpc.itc.rwth-aachen.de: pid 3407's current affinity list: 9
-lnm090.hpc.itc.rwth-aachen.de: pid 3403's current affinity list: 7
-lnm090.hpc.itc.rwth-aachen.de: pid 3409's current affinity list: 21
-lnm090.hpc.itc.rwth-aachen.de: pid 3413's current affinity list: 23
-lnm090.hpc.itc.rwth-aachen.de: pid 3410's current affinity list: 10
-lnm089.hpc.itc.rwth-aachen.de: pid 16511's current affinity list: 10
-lnm089.hpc.itc.rwth-aachen.de: pid 16497's current affinity list: 5
-lnm089.hpc.itc.rwth-aachen.de: pid 16492's current affinity list: 14
-lnm089.hpc.itc.rwth-aachen.de: pid 16496's current affinity list: 16
-lnm089.hpc.itc.rwth-aachen.de: pid 16488's current affinity list: 12
-lnm089.hpc.itc.rwth-aachen.de: pid 16489's current affinity list: 1
-lnm089.hpc.itc.rwth-aachen.de: pid 16491's current affinity list: 2
-lnm089.hpc.itc.rwth-aachen.de: pid 16494's current affinity list: 15
-lnm089.hpc.itc.rwth-aachen.de: pid 16495's current affinity list: 4
-lnm089.hpc.itc.rwth-aachen.de: pid 16515's current affinity list: 23
-lnm089.hpc.itc.rwth-aachen.de: pid 16513's current affinity list: 11
-lnm089.hpc.itc.rwth-aachen.de: pid 16512's current affinity list: 22
-lnm089.hpc.itc.rwth-aachen.de: pid 16490's current affinity list: 13
-lnm089.hpc.itc.rwth-aachen.de: pid 16509's current affinity list: 21
-lnm089.hpc.itc.rwth-aachen.de: pid 16508's current affinity list: 9
-lnm089.hpc.itc.rwth-aachen.de: pid 16493's current affinity list: 3
-lnm089.hpc.itc.rwth-aachen.de: pid 16499's current affinity list: 6
-lnm089.hpc.itc.rwth-aachen.de: pid 16498's current affinity list: 17
-lnm089.hpc.itc.rwth-aachen.de: pid 16507's current affinity list: 20
-lnm089.hpc.itc.rwth-aachen.de: pid 16487's current affinity list: 0
-lnm089.hpc.itc.rwth-aachen.de: pid 16500's current affinity list: 18
-lnm089.hpc.itc.rwth-aachen.de: pid 16502's current affinity list: 7
-lnm089.hpc.itc.rwth-aachen.de: pid 16503's current affinity list: 19
-lnm089.hpc.itc.rwth-aachen.de: pid 16506's current affinity list: 8
+lnm430.hpc.itc.rwth-aachen.de: pid 26659's current affinity list: 2
+lnm430.hpc.itc.rwth-aachen.de: pid 26661's current affinity list: 3
+lnm430.hpc.itc.rwth-aachen.de: pid 26669's current affinity list: 7
+lnm430.hpc.itc.rwth-aachen.de: pid 26677's current affinity list: 11
+lnm430.hpc.itc.rwth-aachen.de: pid 26675's current affinity list: 10
+lnm430.hpc.itc.rwth-aachen.de: pid 26657's current affinity list: 1
+lnm430.hpc.itc.rwth-aachen.de: pid 26671's current affinity list: 8
+lnm430.hpc.itc.rwth-aachen.de: pid 26663's current affinity list: 4
+lnm430.hpc.itc.rwth-aachen.de: pid 26667's current affinity list: 6
+lnm430.hpc.itc.rwth-aachen.de: pid 26670's current affinity list: 19
+lnm430.hpc.itc.rwth-aachen.de: pid 26676's current affinity list: 22
+lnm430.hpc.itc.rwth-aachen.de: pid 26674's current affinity list: 21
+lnm430.hpc.itc.rwth-aachen.de: pid 26655's current affinity list: 0
+lnm430.hpc.itc.rwth-aachen.de: pid 26672's current affinity list: 20
+lnm430.hpc.itc.rwth-aachen.de: pid 26660's current affinity list: 14
+lnm430.hpc.itc.rwth-aachen.de: pid 26673's current affinity list: 9
+lnm430.hpc.itc.rwth-aachen.de: pid 26664's current affinity list: 16
+lnm430.hpc.itc.rwth-aachen.de: pid 26665's current affinity list: 5
+lnm430.hpc.itc.rwth-aachen.de: pid 26666's current affinity list: 17
+lnm430.hpc.itc.rwth-aachen.de: pid 26656's current affinity list: 12
+lnm430.hpc.itc.rwth-aachen.de: pid 26668's current affinity list: 18
+lnm430.hpc.itc.rwth-aachen.de: pid 26662's current affinity list: 15
+lnm430.hpc.itc.rwth-aachen.de: pid 26658's current affinity list: 13
+lnm430.hpc.itc.rwth-aachen.de: pid 26678's current affinity list: 23
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+lnm429.hpc.itc.rwth-aachen.de: pid 14771's current affinity list: 16
+lnm429.hpc.itc.rwth-aachen.de: pid 14785's current affinity list: 23
+lnm429.hpc.itc.rwth-aachen.de: pid 14763's current affinity list: 12
+lnm429.hpc.itc.rwth-aachen.de: pid 14767's current affinity list: 14
+lnm429.hpc.itc.rwth-aachen.de: pid 14773's current affinity list: 17
+lnm429.hpc.itc.rwth-aachen.de: pid 14774's current affinity list: 6
+lnm429.hpc.itc.rwth-aachen.de: pid 14770's current affinity list: 4
+lnm429.hpc.itc.rwth-aachen.de: pid 14772's current affinity list: 5
+lnm429.hpc.itc.rwth-aachen.de: pid 14775's current affinity list: 18
+lnm429.hpc.itc.rwth-aachen.de: pid 14782's current affinity list: 10
+lnm429.hpc.itc.rwth-aachen.de: pid 14783's current affinity list: 22
+lnm429.hpc.itc.rwth-aachen.de: pid 14779's current affinity list: 20
+lnm429.hpc.itc.rwth-aachen.de: pid 14764's current affinity list: 1
+lnm429.hpc.itc.rwth-aachen.de: pid 14768's current affinity list: 3
+lnm429.hpc.itc.rwth-aachen.de: pid 14762's current affinity list: 0
+lnm429.hpc.itc.rwth-aachen.de: pid 14784's current affinity list: 11
+lnm429.hpc.itc.rwth-aachen.de: pid 14776's current affinity list: 7
+lnm429.hpc.itc.rwth-aachen.de: pid 14777's current affinity list: 19
+lnm429.hpc.itc.rwth-aachen.de: pid 14765's current affinity list: 13
+lnm429.hpc.itc.rwth-aachen.de: pid 14769's current affinity list: 15
+lnm429.hpc.itc.rwth-aachen.de: pid 14778's current affinity list: 8
+lnm429.hpc.itc.rwth-aachen.de: pid 14781's current affinity list: 21
+lnm429.hpc.itc.rwth-aachen.de: pid 14780's current affinity list: 9
+lnm429.hpc.itc.rwth-aachen.de: pid 14766's current affinity list: 2
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+[0] MPI startup(): Multi-threaded optimized library
+[14] MPI startup(): shm and tmi data transfer modes
+[15] MPI startup(): shm and tmi data transfer modes
+[24] MPI startup(): shm and tmi data transfer modes
+[36] MPI startup(): shm and tmi data transfer modes
+[42] MPI startup(): shm and tmi data transfer modes
+[38] MPI startup(): shm and tmi data transfer modes
+[5] MPI startup(): shm and tmi data transfer modes
+[26] MPI startup(): shm and tmi data transfer modes
+[17] MPI startup(): shm and tmi data transfer modes
+[29] MPI startup(): shm and tmi data transfer modes
+[2] MPI startup(): shm and tmi data transfer modes
+[12] MPI startup(): shm and tmi data transfer modes
+[4] MPI startup(): shm and tmi data transfer modes
+[6] MPI startup(): shm and tmi data transfer modes
+[16] MPI startup(): shm and tmi data transfer modes
+[18] MPI startup(): shm and tmi data transfer modes
+[22] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
+[7] MPI startup(): shm and tmi data transfer modes
+[8] MPI startup(): shm and tmi data transfer modes
+[9] MPI startup(): shm and tmi data transfer modes
+[11] MPI startup(): shm and tmi data transfer modes
+[13] MPI startup(): shm and tmi data transfer modes
+[20] MPI startup(): shm and tmi data transfer modes
+[3] MPI startup(): shm and tmi data transfer modes
+[21] MPI startup(): shm and tmi data transfer modes
+[23] MPI startup(): shm and tmi data transfer modes
+[10] MPI startup(): shm and tmi data transfer modes
+[19] MPI startup(): shm and tmi data transfer modes
+[41] MPI startup(): shm and tmi data transfer modes
+[28] MPI startup(): shm and tmi data transfer modes
+[34] MPI startup(): shm and tmi data transfer modes
+[30] MPI startup(): shm and tmi data transfer modes
+[46] MPI startup(): shm and tmi data transfer modes
+[40] MPI startup(): shm and tmi data transfer modes
+[44] MPI startup(): shm and tmi data transfer modes
+[32] MPI startup(): shm and tmi data transfer modes
+[35] MPI startup(): shm and tmi data transfer modes
+[45] MPI startup(): shm and tmi data transfer modes
+[33] MPI startup(): shm and tmi data transfer modes
+[39] MPI startup(): shm and tmi data transfer modes
+[43] MPI startup(): shm and tmi data transfer modes
+[27] MPI startup(): shm and tmi data transfer modes
+[25] MPI startup(): shm and tmi data transfer modes
+[37] MPI startup(): shm and tmi data transfer modes
+[47] MPI startup(): shm and tmi data transfer modes
+[31] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): Rank    Pid      Node name                      Pin cpu
+[0] MPI startup(): 0       15403    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       15385    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       15400    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       15425    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 4       15430    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 5       15387    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 6       15401    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 7       15426    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 8       15394    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 9       15362    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 10      15395    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 11      15391    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 12      15393    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 13      15396    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 14      15423    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 15      15424    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 16      15428    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 17      15399    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 18      15429    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 19      15427    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 20      15397    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 21      15398    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 22      15422    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 23      15363    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 24      26788    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 25      26798    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 26      26779    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 27      26801    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 28      26789    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 29      26790    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 30      26777    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 31      26800    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 32      26782    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 33      26795    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 34      26794    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 35      26796    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 36      26780    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 37      26799    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 38      26776    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 39      26786    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 40      26781    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 41      26791    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 42      26792    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 43      26787    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 44      26778    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 45      26785    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 46      26775    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 47      26802    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): I_MPI_DEBUG=5
+[0] MPI startup(): I_MPI_FABRICS=shm:tmi
+Charm++> Running on MPI version: 3.1
+Charm++> level of thread support used: MPI_THREAD_SINGLE (desired: MPI_THREAD_SINGLE)
+Charm++> Running in non-SMP mode: 48 processes (PEs)
+Converse/Charm++ Commit ID: v6.9.0-0-gc3d50ef
+Warning> Randomization of virtual memory (ASLR) is turned on in the kernel, thread migration may not work! Run 'echo 0 > /proc/sys/kernel/randomize_va_space' as root to disable it, or try running with '+isomalloc_sync'.
+CharmLB> Load balancer assumes all CPUs are same.
+Charm++> Running on 2 hosts (2 sockets x 12 cores x 1 PUs = 24-way SMP)
+Charm++> cpu topology info is gathered in 0.006 seconds.
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+dryFraction: 0.200000 
+Step, current time:0.008050
+Step, current time:0.016101
+Step, current time:0.024151
+Step, current time:0.032202
+Step, current time:0.040252
+Step, current time:0.048300
+Step, current time:0.056338
+Step, current time:0.064359
+Step, current time:0.072359
+Step, current time:0.080333
+Step, current time:0.088283
+Step, current time:0.096205
+Step, current time:0.104107
+Step, current time:0.111981
+Step, current time:0.119841
+Step, current time:0.127673
+Step, current time:0.135493
+Step, current time:0.143276
+Step, current time:0.151050
+Step, current time:0.158791
+Step, current time:0.166526
+Step, current time:0.174230
+Step, current time:0.181931
+Step, current time:0.189606
+Step, current time:0.197279
+Step, current time:0.204929
+Step, current time:0.212577
+Step, current time:0.220206
+Step, current time:0.227834
+Step, current time:0.235445
+Step, current time:0.243055
+Step, current time:0.250651
+Step, current time:0.258246
+Step, current time:0.265828
+Step, current time:0.273408
+Step, current time:0.280979
+Step, current time:0.288547
+Step, current time:0.296105
+Step, current time:0.303661
+Step, current time:0.311210
+Step, current time:0.318755
+Step, current time:0.326293
+Step, current time:0.333823
+Step, current time:0.341341
+Step, current time:0.348848
+Step, current time:0.356343
+Step, current time:0.363828
+Step, current time:0.371303
+Step, current time:0.378768
+Step, current time:0.386224
+Step, current time:0.393672
+Step, current time:0.401111
+Step, current time:0.408544
+Step, current time:0.415968
+Step, current time:0.423386
+Step, current time:0.430798
+Step, current time:0.438204
+Step, current time:0.445603
+Step, current time:0.452997
+Step, current time:0.460386
+Step, current time:0.467770
+Step, current time:0.475149
+Step, current time:0.482524
+Step, current time:0.489894
+Step, current time:0.497261
+Step, current time:0.504623
+Step, current time:0.511982
+Step, current time:0.519337
+Step, current time:0.526689
+Step, current time:0.534038
+Step, current time:0.541383
+Step, current time:0.548726
+Step, current time:0.556066
+Step, current time:0.563403
+Step, current time:0.570737
+Step, current time:0.578069
+Step, current time:0.585398
+Step, current time:0.592725
+Step, current time:0.600049
+Step, current time:0.607372
+Step, current time:0.614692
+Step, current time:0.622010
+Step, current time:0.629326
+Step, current time:0.636640
+Step, current time:0.643952
+Step, current time:0.651262
+Step, current time:0.658570
+Step, current time:0.665876
+Step, current time:0.673181
+Step, current time:0.680483
+Step, current time:0.687784
+Step, current time:0.695082
+Step, current time:0.702379
+Step, current time:0.709675
+Step, current time:0.716968
+Step, current time:0.724260
+Step, current time:0.731550
+Step, current time:0.738839
+Step, current time:0.746125
+Step, current time:0.753410
+Step, current time:0.760693
+Step, current time:0.767975
+Step, current time:0.775255
+Step, current time:0.782533
+Step, current time:0.789810
+Step, current time:0.797085
+Step, current time:0.804359
+Step, current time:0.811631
+Step, current time:0.818901
+Step, current time:0.826170
+Step, current time:0.833437
+Step, current time:0.840703
+Step, current time:0.847968
+Step, current time:0.855231
+Step, current time:0.862492
+Step, current time:0.869752
+Step, current time:0.877011
+Step, current time:0.884268
+Step, current time:0.891524
+Step, current time:0.898778
+Step, current time:0.906032
+Step, current time:0.913284
+Step, current time:0.920534
+Step, current time:0.927783
+Step, current time:0.935031
+Step, current time:0.942278
+Step, current time:0.949523
+Step, current time:0.956767
+Step, current time:0.964010
+Step, current time:0.971252
+Step, current time:0.978493
+Step, current time:0.985732
+Step, current time:0.992970
+Step, current time:1.000206
+Step, current time:1.007442
+Step, current time:1.014676
+Step, current time:1.021910
+Step, current time:1.029142
+Step, current time:1.031836
+Step, current time:1.034472
+Step, current time:1.037067
+Step, current time:1.039631
+Step, current time:1.042170
+Step, current time:1.044701
+Step, current time:1.047229
+Step, current time:1.049757
+Step, current time:1.056984
+Step, current time:1.064209
+Step, current time:1.071433
+Step, current time:1.078655
+Step, current time:1.085876
+Step, current time:1.093097
+Step, current time:1.100316
+Step, current time:1.107534
+Step, current time:1.114752
+Step, current time:1.121968
+Step, current time:1.129184
+Step, current time:1.136399
+Step, current time:1.143613
+Step, current time:1.150827
+Step, current time:1.158040
+Step, current time:1.165252
+Step, current time:1.172463
+Step, current time:1.179674
+Step, current time:1.186884
+Step, current time:1.194093
+Step, current time:1.201302
+Step, current time:1.208510
+Step, current time:1.215717
+Step, current time:1.222924
+Step, current time:1.230130
+Step, current time:1.237335
+Step, current time:1.244539
+Step, current time:1.251743
+Step, current time:1.258946
+Step, current time:1.266148
+Step, current time:1.273349
+Step, current time:1.280550
+Step, current time:1.287750
+Step, current time:1.294949
+Step, current time:1.302148
+Step, current time:1.309347
+Step, current time:1.316545
+Step, current time:1.323743
+Step, current time:1.330940
+Step, current time:1.338137
+Step, current time:1.345333
+Step, current time:1.352529
+Step, current time:1.359725
+Step, current time:1.366920
+Step, current time:1.374115
+Step, current time:1.381310
+Step, current time:1.388504
+Step, current time:1.395698
+Step, current time:1.402892
+Step, current time:1.410084
+Step, current time:1.417277
+Step, current time:1.424469
+Step, current time:1.431661
+Step, current time:1.438852
+Iterations: 200
+RESULT: 14.147675
+[Partition 0][Node 0] End of program
+%
+srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
+lnm430.hpc.itc.rwth-aachen.de: pid 26860's current affinity list: 15
+lnm430.hpc.itc.rwth-aachen.de: pid 26856's current affinity list: 13
+lnm430.hpc.itc.rwth-aachen.de: pid 26862's current affinity list: 16
+lnm430.hpc.itc.rwth-aachen.de: pid 26858's current affinity list: 14
+lnm430.hpc.itc.rwth-aachen.de: pid 26864's current affinity list: 17
+lnm430.hpc.itc.rwth-aachen.de: pid 26854's current affinity list: 12
+lnm430.hpc.itc.rwth-aachen.de: pid 26865's current affinity list: 6
+lnm430.hpc.itc.rwth-aachen.de: pid 26866's current affinity list: 18
+lnm430.hpc.itc.rwth-aachen.de: pid 26870's current affinity list: 20
+lnm430.hpc.itc.rwth-aachen.de: pid 26874's current affinity list: 22
+lnm430.hpc.itc.rwth-aachen.de: pid 26872's current affinity list: 21
+lnm430.hpc.itc.rwth-aachen.de: pid 26869's current affinity list: 8
+lnm430.hpc.itc.rwth-aachen.de: pid 26857's current affinity list: 2
+lnm430.hpc.itc.rwth-aachen.de: pid 26863's current affinity list: 5
+lnm430.hpc.itc.rwth-aachen.de: pid 26867's current affinity list: 7
+lnm430.hpc.itc.rwth-aachen.de: pid 26855's current affinity list: 1
+lnm430.hpc.itc.rwth-aachen.de: pid 26871's current affinity list: 9
+lnm430.hpc.itc.rwth-aachen.de: pid 26875's current affinity list: 11
+lnm430.hpc.itc.rwth-aachen.de: pid 26868's current affinity list: 19
+lnm430.hpc.itc.rwth-aachen.de: pid 26876's current affinity list: 23
+lnm430.hpc.itc.rwth-aachen.de: pid 26873's current affinity list: 10
+lnm430.hpc.itc.rwth-aachen.de: pid 26859's current affinity list: 3
+lnm430.hpc.itc.rwth-aachen.de: pid 26861's current affinity list: 4
+lnm430.hpc.itc.rwth-aachen.de: pid 26853's current affinity list: 0
+lnm429.hpc.itc.rwth-aachen.de: pid 15507's current affinity list: 7
+lnm429.hpc.itc.rwth-aachen.de: pid 15495's current affinity list: 1
+lnm429.hpc.itc.rwth-aachen.de: pid 15497's current affinity list: 2
+lnm429.hpc.itc.rwth-aachen.de: pid 15503's current affinity list: 5
+lnm429.hpc.itc.rwth-aachen.de: pid 15505's current affinity list: 6
+lnm429.hpc.itc.rwth-aachen.de: pid 15511's current affinity list: 9
+lnm429.hpc.itc.rwth-aachen.de: pid 15515's current affinity list: 11
+lnm429.hpc.itc.rwth-aachen.de: pid 15499's current affinity list: 3
+lnm429.hpc.itc.rwth-aachen.de: pid 15500's current affinity list: 15
+lnm429.hpc.itc.rwth-aachen.de: pid 15494's current affinity list: 12
+lnm429.hpc.itc.rwth-aachen.de: pid 15506's current affinity list: 18
+lnm429.hpc.itc.rwth-aachen.de: pid 15498's current affinity list: 14
+lnm429.hpc.itc.rwth-aachen.de: pid 15502's current affinity list: 16
+lnm429.hpc.itc.rwth-aachen.de: pid 15496's current affinity list: 13
+lnm429.hpc.itc.rwth-aachen.de: pid 15516's current affinity list: 23
+lnm429.hpc.itc.rwth-aachen.de: pid 15504's current affinity list: 17
+lnm429.hpc.itc.rwth-aachen.de: pid 15501's current affinity list: 4
+lnm429.hpc.itc.rwth-aachen.de: pid 15509's current affinity list: 8
+lnm429.hpc.itc.rwth-aachen.de: pid 15513's current affinity list: 10
+lnm429.hpc.itc.rwth-aachen.de: pid 15512's current affinity list: 21
+lnm429.hpc.itc.rwth-aachen.de: pid 15514's current affinity list: 22
+lnm429.hpc.itc.rwth-aachen.de: pid 15508's current affinity list: 19
+lnm429.hpc.itc.rwth-aachen.de: pid 15510's current affinity list: 20
+lnm429.hpc.itc.rwth-aachen.de: pid 15493's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
@@ -102,103 +1533,103 @@ lnm089.hpc.itc.rwth-aachen.de: pid 16506's current affinity list: 8
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [0] MPI startup(): Multi-threaded optimized library
-[4] MPI startup(): shm and tmi data transfer modes
-[28] MPI startup(): shm and tmi data transfer modes
-[32] MPI startup(): shm and tmi data transfer modes
-[34] MPI startup(): shm and tmi data transfer modes
-[40] MPI startup(): shm and tmi data transfer modes
-[42] MPI startup(): shm and tmi data transfer modes
-[6] MPI startup(): shm and tmi data transfer modes
-[18] MPI startup(): shm and tmi data transfer modes
-[44] MPI startup(): shm and tmi data transfer modes
-[20] MPI startup(): shm and tmi data transfer modes
-[46] MPI startup(): shm and tmi data transfer modes
-[24] MPI startup(): shm and tmi data transfer modes
-[26] MPI startup(): shm and tmi data transfer modes
-[30] MPI startup(): shm and tmi data transfer modes
-[36] MPI startup(): shm and tmi data transfer modes
-[38] MPI startup(): shm and tmi data transfer modes
-[16] MPI startup(): shm and tmi data transfer modes
-[1] MPI startup(): shm and tmi data transfer modes
-[14] MPI startup(): shm and tmi data transfer modes
-[29] MPI startup(): shm and tmi data transfer modes
-[2] MPI startup(): shm and tmi data transfer modes
-[31] MPI startup(): shm and tmi data transfer modes
-[8] MPI startup(): shm and tmi data transfer modes
-[10] MPI startup(): shm and tmi data transfer modes
-[22] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): shm and tmi data transfer modes
-[12] MPI startup(): shm and tmi data transfer modes
-[25] MPI startup(): shm and tmi data transfer modes
-[27] MPI startup(): shm and tmi data transfer modes
-[33] MPI startup(): shm and tmi data transfer modes
-[35] MPI startup(): shm and tmi data transfer modes
-[39] MPI startup(): shm and tmi data transfer modes
-[41] MPI startup(): shm and tmi data transfer modes
-[43] MPI startup(): shm and tmi data transfer modes
-[45] MPI startup(): shm and tmi data transfer modes
-[47] MPI startup(): shm and tmi data transfer modes
+[14] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
 [3] MPI startup(): shm and tmi data transfer modes
+[13] MPI startup(): shm and tmi data transfer modes
+[19] MPI startup(): shm and tmi data transfer modes
+[16] MPI startup(): shm and tmi data transfer modes
+[30] MPI startup(): shm and tmi data transfer modes
+[26] MPI startup(): shm and tmi data transfer modes
+[4] MPI startup(): shm and tmi data transfer modes
+[8] MPI startup(): shm and tmi data transfer modes
+[15] MPI startup(): shm and tmi data transfer modes
+[23] MPI startup(): shm and tmi data transfer modes
+[18] MPI startup(): shm and tmi data transfer modes
+[34] MPI startup(): shm and tmi data transfer modes
+[12] MPI startup(): shm and tmi data transfer modes
+[11] MPI startup(): shm and tmi data transfer modes
+[2] MPI startup(): shm and tmi data transfer modes
+[6] MPI startup(): shm and tmi data transfer modes
+[7] MPI startup(): shm and tmi data transfer modes
+[20] MPI startup(): shm and tmi data transfer modes
+[21] MPI startup(): shm and tmi data transfer modes
+[22] MPI startup(): shm and tmi data transfer modes
+[17] MPI startup(): shm and tmi data transfer modes
 [5] MPI startup(): shm and tmi data transfer modes
 [9] MPI startup(): shm and tmi data transfer modes
-[13] MPI startup(): shm and tmi data transfer modes
-[15] MPI startup(): shm and tmi data transfer modes
-[17] MPI startup(): shm and tmi data transfer modes
-[19] MPI startup(): shm and tmi data transfer modes
-[21] MPI startup(): shm and tmi data transfer modes
-[23] MPI startup(): shm and tmi data transfer modes
-[7] MPI startup(): shm and tmi data transfer modes
-[11] MPI startup(): shm and tmi data transfer modes
+[10] MPI startup(): shm and tmi data transfer modes
 [37] MPI startup(): shm and tmi data transfer modes
+[24] MPI startup(): shm and tmi data transfer modes
+[32] MPI startup(): shm and tmi data transfer modes
+[42] MPI startup(): shm and tmi data transfer modes
+[46] MPI startup(): shm and tmi data transfer modes
+[28] MPI startup(): shm and tmi data transfer modes
+[36] MPI startup(): shm and tmi data transfer modes
+[38] MPI startup(): shm and tmi data transfer modes
+[40] MPI startup(): shm and tmi data transfer modes
+[44] MPI startup(): shm and tmi data transfer modes
+[41] MPI startup(): shm and tmi data transfer modes
+[27] MPI startup(): shm and tmi data transfer modes
+[33] MPI startup(): shm and tmi data transfer modes
+[29] MPI startup(): shm and tmi data transfer modes
+[39] MPI startup(): shm and tmi data transfer modes
+[35] MPI startup(): shm and tmi data transfer modes
+[31] MPI startup(): shm and tmi data transfer modes
+[25] MPI startup(): shm and tmi data transfer modes
+[43] MPI startup(): shm and tmi data transfer modes
+[47] MPI startup(): shm and tmi data transfer modes
+[45] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       17194    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       17171    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       17178    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       17185    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 4       17168    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 5       17157    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 6       17188    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 7       17170    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 8       17177    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 9       17166    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 10      17148    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 11      17191    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 12      17189    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 13      17203    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 14      17204    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 15      17205    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 16      17206    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 17      17193    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 18      17187    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 19      17186    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 20      17147    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 21      17184    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 22      17183    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 23      17172    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 24      3562     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 25      3574     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 26      3561     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 27      3560     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 28      3575     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 29      3567     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 30      3568     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 31      3556     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 32      3582     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 33      3557     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 34      3573     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 35      3555     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 36      3565     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 37      3572     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 38      3585     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 39      3571     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 40      3579     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 41      3578     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 42      3583     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 43      3592     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 44      3594     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 45      3559     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 46      3563     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 47      3593     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       16141    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       16113    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       16107    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       16118    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 4       16106    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 5       16117    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 6       16112    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 7       16110    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 8       16122    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 9       16116    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 10      16105    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 11      16120    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 12      16108    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 13      16115    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 14      16101    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 15      16137    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 16      16123    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 17      16139    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 18      16109    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 19      16130    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 20      16125    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 21      16136    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 22      16103    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 23      16119    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 24      26996    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 25      26957    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 26      26985    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 27      26947    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 28      26987    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 29      26950    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 30      26994    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 31      26942    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 32      26993    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 33      26949    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 34      26986    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 35      26952    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 36      26973    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 37      26976    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 38      26984    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 39      26991    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 40      26983    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 41      26977    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 42      26989    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 43      26982    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 44      26992    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 45      26981    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 46      26988    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 47      26990    lnm430.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
 Charm++> Running on MPI version: 3.1
@@ -1435,59 +2866,59 @@ Step, current time:1.424469
 Step, current time:1.431661
 Step, current time:1.438852
 Iterations: 200
-RESULT: 14.363191
+RESULT: 14.085994
 [Partition 0][Node 0] End of program
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm090.hpc.itc.rwth-aachen.de: pid 3653's current affinity list: 16
-lnm090.hpc.itc.rwth-aachen.de: pid 3645's current affinity list: 12
-lnm090.hpc.itc.rwth-aachen.de: pid 3646's current affinity list: 1
-lnm090.hpc.itc.rwth-aachen.de: pid 3648's current affinity list: 2
-lnm090.hpc.itc.rwth-aachen.de: pid 3649's current affinity list: 14
-lnm090.hpc.itc.rwth-aachen.de: pid 3651's current affinity list: 15
-lnm090.hpc.itc.rwth-aachen.de: pid 3654's current affinity list: 5
-lnm090.hpc.itc.rwth-aachen.de: pid 3657's current affinity list: 18
-lnm090.hpc.itc.rwth-aachen.de: pid 3655's current affinity list: 17
-lnm090.hpc.itc.rwth-aachen.de: pid 3666's current affinity list: 11
-lnm090.hpc.itc.rwth-aachen.de: pid 3656's current affinity list: 6
-lnm090.hpc.itc.rwth-aachen.de: pid 3667's current affinity list: 23
-lnm090.hpc.itc.rwth-aachen.de: pid 3652's current affinity list: 4
-lnm090.hpc.itc.rwth-aachen.de: pid 3650's current affinity list: 3
-lnm090.hpc.itc.rwth-aachen.de: pid 3644's current affinity list: 0
-lnm090.hpc.itc.rwth-aachen.de: pid 3647's current affinity list: 13
-lnm090.hpc.itc.rwth-aachen.de: pid 3658's current affinity list: 7
-lnm090.hpc.itc.rwth-aachen.de: pid 3659's current affinity list: 19
-lnm090.hpc.itc.rwth-aachen.de: pid 3665's current affinity list: 22
-lnm090.hpc.itc.rwth-aachen.de: pid 3664's current affinity list: 10
-lnm090.hpc.itc.rwth-aachen.de: pid 3660's current affinity list: 8
-lnm090.hpc.itc.rwth-aachen.de: pid 3663's current affinity list: 21
-lnm090.hpc.itc.rwth-aachen.de: pid 3661's current affinity list: 20
-lnm090.hpc.itc.rwth-aachen.de: pid 3662's current affinity list: 9
+lnm430.hpc.itc.rwth-aachen.de: pid 27053's current affinity list: 12
+lnm430.hpc.itc.rwth-aachen.de: pid 27075's current affinity list: 23
+lnm430.hpc.itc.rwth-aachen.de: pid 27057's current affinity list: 14
+lnm430.hpc.itc.rwth-aachen.de: pid 27063's current affinity list: 17
+lnm430.hpc.itc.rwth-aachen.de: pid 27061's current affinity list: 16
+lnm430.hpc.itc.rwth-aachen.de: pid 27056's current affinity list: 2
+lnm430.hpc.itc.rwth-aachen.de: pid 27055's current affinity list: 13
+lnm430.hpc.itc.rwth-aachen.de: pid 27073's current affinity list: 22
+lnm430.hpc.itc.rwth-aachen.de: pid 27058's current affinity list: 3
+lnm430.hpc.itc.rwth-aachen.de: pid 27059's current affinity list: 15
+lnm430.hpc.itc.rwth-aachen.de: pid 27060's current affinity list: 4
+lnm430.hpc.itc.rwth-aachen.de: pid 27062's current affinity list: 5
+lnm430.hpc.itc.rwth-aachen.de: pid 27054's current affinity list: 1
+lnm430.hpc.itc.rwth-aachen.de: pid 27064's current affinity list: 6
+lnm430.hpc.itc.rwth-aachen.de: pid 27071's current affinity list: 21
+lnm430.hpc.itc.rwth-aachen.de: pid 27074's current affinity list: 11
+lnm430.hpc.itc.rwth-aachen.de: pid 27069's current affinity list: 20
+lnm430.hpc.itc.rwth-aachen.de: pid 27072's current affinity list: 10
+lnm430.hpc.itc.rwth-aachen.de: pid 27065's current affinity list: 18
+lnm430.hpc.itc.rwth-aachen.de: pid 27067's current affinity list: 19
+lnm430.hpc.itc.rwth-aachen.de: pid 27052's current affinity list: 0
+lnm430.hpc.itc.rwth-aachen.de: pid 27066's current affinity list: 7
+lnm430.hpc.itc.rwth-aachen.de: pid 27068's current affinity list: 8
+lnm430.hpc.itc.rwth-aachen.de: pid 27070's current affinity list: 9
+lnm429.hpc.itc.rwth-aachen.de: pid 16256's current affinity list: 10
+lnm429.hpc.itc.rwth-aachen.de: pid 16254's current affinity list: 9
+lnm429.hpc.itc.rwth-aachen.de: pid 16258's current affinity list: 11
+lnm429.hpc.itc.rwth-aachen.de: pid 16252's current affinity list: 8
+lnm429.hpc.itc.rwth-aachen.de: pid 16240's current affinity list: 2
+lnm429.hpc.itc.rwth-aachen.de: pid 16241's current affinity list: 14
+lnm429.hpc.itc.rwth-aachen.de: pid 16243's current affinity list: 15
+lnm429.hpc.itc.rwth-aachen.de: pid 16246's current affinity list: 5
+lnm429.hpc.itc.rwth-aachen.de: pid 16247's current affinity list: 17
+lnm429.hpc.itc.rwth-aachen.de: pid 16251's current affinity list: 19
+lnm429.hpc.itc.rwth-aachen.de: pid 16257's current affinity list: 22
+lnm429.hpc.itc.rwth-aachen.de: pid 16238's current affinity list: 1
+lnm429.hpc.itc.rwth-aachen.de: pid 16239's current affinity list: 13
+lnm429.hpc.itc.rwth-aachen.de: pid 16245's current affinity list: 16
+lnm429.hpc.itc.rwth-aachen.de: pid 16255's current affinity list: 21
+lnm429.hpc.itc.rwth-aachen.de: pid 16237's current affinity list: 12
+lnm429.hpc.itc.rwth-aachen.de: pid 16253's current affinity list: 20
+lnm429.hpc.itc.rwth-aachen.de: pid 16259's current affinity list: 23
+lnm429.hpc.itc.rwth-aachen.de: pid 16249's current affinity list: 18
+lnm429.hpc.itc.rwth-aachen.de: pid 16248's current affinity list: 6
+lnm429.hpc.itc.rwth-aachen.de: pid 16250's current affinity list: 7
+lnm429.hpc.itc.rwth-aachen.de: pid 16244's current affinity list: 4
+lnm429.hpc.itc.rwth-aachen.de: pid 16242's current affinity list: 3
+lnm429.hpc.itc.rwth-aachen.de: pid 16236's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-lnm089.hpc.itc.rwth-aachen.de: pid 17279's current affinity list: 1
-lnm089.hpc.itc.rwth-aachen.de: pid 17277's current affinity list: 0
-lnm089.hpc.itc.rwth-aachen.de: pid 17283's current affinity list: 3
-lnm089.hpc.itc.rwth-aachen.de: pid 17281's current affinity list: 2
-lnm089.hpc.itc.rwth-aachen.de: pid 17280's current affinity list: 13
-lnm089.hpc.itc.rwth-aachen.de: pid 17284's current affinity list: 15
-lnm089.hpc.itc.rwth-aachen.de: pid 17278's current affinity list: 12
-lnm089.hpc.itc.rwth-aachen.de: pid 17282's current affinity list: 14
-lnm089.hpc.itc.rwth-aachen.de: pid 17285's current affinity list: 4
-lnm089.hpc.itc.rwth-aachen.de: pid 17286's current affinity list: 16
-lnm089.hpc.itc.rwth-aachen.de: pid 17288's current affinity list: 17
-lnm089.hpc.itc.rwth-aachen.de: pid 17301's current affinity list: 23
-lnm089.hpc.itc.rwth-aachen.de: pid 17287's current affinity list: 5
-lnm089.hpc.itc.rwth-aachen.de: pid 17297's current affinity list: 21
-lnm089.hpc.itc.rwth-aachen.de: pid 17289's current affinity list: 6
-lnm089.hpc.itc.rwth-aachen.de: pid 17292's current affinity list: 7
-lnm089.hpc.itc.rwth-aachen.de: pid 17291's current affinity list: 18
-lnm089.hpc.itc.rwth-aachen.de: pid 17294's current affinity list: 8
-lnm089.hpc.itc.rwth-aachen.de: pid 17295's current affinity list: 20
-lnm089.hpc.itc.rwth-aachen.de: pid 17296's current affinity list: 9
-lnm089.hpc.itc.rwth-aachen.de: pid 17299's current affinity list: 22
-lnm089.hpc.itc.rwth-aachen.de: pid 17300's current affinity list: 11
-lnm089.hpc.itc.rwth-aachen.de: pid 17298's current affinity list: 10
-lnm089.hpc.itc.rwth-aachen.de: pid 17293's current affinity list: 19
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
@@ -1536,103 +2967,103 @@ lnm089.hpc.itc.rwth-aachen.de: pid 17293's current affinity list: 19
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [0] MPI startup(): Multi-threaded optimized library
-[36] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
 [18] MPI startup(): shm and tmi data transfer modes
-[32] MPI startup(): shm and tmi data transfer modes
-[21] MPI startup(): shm and tmi data transfer modes
-[15] MPI startup(): shm and tmi data transfer modes
-[22] MPI startup(): shm and tmi data transfer modes
-[19] MPI startup(): shm and tmi data transfer modes
-[38] MPI startup(): shm and tmi data transfer modes
-[40] MPI startup(): shm and tmi data transfer modes
-[2] MPI startup(): shm and tmi data transfer modes
-[28] MPI startup(): shm and tmi data transfer modes
-[26] MPI startup(): shm and tmi data transfer modes
-[24] MPI startup(): shm and tmi data transfer modes
-[27] MPI startup(): shm and tmi data transfer modes
-[29] MPI startup(): shm and tmi data transfer modes
-[30] MPI startup(): shm and tmi data transfer modes
-[31] MPI startup(): shm and tmi data transfer modes
-[33] MPI startup(): shm and tmi data transfer modes
-[34] MPI startup(): shm and tmi data transfer modes
-[35] MPI startup(): shm and tmi data transfer modes
-[39] MPI startup(): shm and tmi data transfer modes
-[44] MPI startup(): shm and tmi data transfer modes
-[45] MPI startup(): shm and tmi data transfer modes
-[25] MPI startup(): shm and tmi data transfer modes
-[37] MPI startup(): shm and tmi data transfer modes
-[41] MPI startup(): shm and tmi data transfer modes
-[42] MPI startup(): shm and tmi data transfer modes
-[43] MPI startup(): shm and tmi data transfer modes
-[46] MPI startup(): shm and tmi data transfer modes
-[47] MPI startup(): shm and tmi data transfer modes
-[5] MPI startup(): shm and tmi data transfer modes
-[12] MPI startup(): shm and tmi data transfer modes
-[14] MPI startup(): shm and tmi data transfer modes
-[4] MPI startup(): shm and tmi data transfer modes
-[8] MPI startup(): shm and tmi data transfer modes
-[6] MPI startup(): shm and tmi data transfer modes
-[16] MPI startup(): shm and tmi data transfer modes
 [20] MPI startup(): shm and tmi data transfer modes
+[32] MPI startup(): shm and tmi data transfer modes
+[30] MPI startup(): shm and tmi data transfer modes
+[46] MPI startup(): shm and tmi data transfer modes
+[22] MPI startup(): shm and tmi data transfer modes
+[8] MPI startup(): shm and tmi data transfer modes
+[16] MPI startup(): shm and tmi data transfer modes
+[4] MPI startup(): shm and tmi data transfer modes
 [10] MPI startup(): shm and tmi data transfer modes
+[12] MPI startup(): shm and tmi data transfer modes
+[2] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
+[6] MPI startup(): shm and tmi data transfer modes
+[14] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
-[7] MPI startup(): shm and tmi data transfer modes
 [9] MPI startup(): shm and tmi data transfer modes
 [11] MPI startup(): shm and tmi data transfer modes
-[17] MPI startup(): shm and tmi data transfer modes
+[15] MPI startup(): shm and tmi data transfer modes
+[21] MPI startup(): shm and tmi data transfer modes
 [23] MPI startup(): shm and tmi data transfer modes
+[19] MPI startup(): shm and tmi data transfer modes
+[3] MPI startup(): shm and tmi data transfer modes
+[5] MPI startup(): shm and tmi data transfer modes
+[7] MPI startup(): shm and tmi data transfer modes
 [13] MPI startup(): shm and tmi data transfer modes
+[17] MPI startup(): shm and tmi data transfer modes
+[34] MPI startup(): shm and tmi data transfer modes
+[39] MPI startup(): shm and tmi data transfer modes
+[24] MPI startup(): shm and tmi data transfer modes
+[40] MPI startup(): shm and tmi data transfer modes
+[36] MPI startup(): shm and tmi data transfer modes
+[28] MPI startup(): shm and tmi data transfer modes
+[38] MPI startup(): shm and tmi data transfer modes
+[26] MPI startup(): shm and tmi data transfer modes
+[44] MPI startup(): shm and tmi data transfer modes
+[35] MPI startup(): shm and tmi data transfer modes
+[42] MPI startup(): shm and tmi data transfer modes
+[27] MPI startup(): shm and tmi data transfer modes
+[41] MPI startup(): shm and tmi data transfer modes
+[33] MPI startup(): shm and tmi data transfer modes
+[37] MPI startup(): shm and tmi data transfer modes
+[45] MPI startup(): shm and tmi data transfer modes
+[25] MPI startup(): shm and tmi data transfer modes
+[29] MPI startup(): shm and tmi data transfer modes
+[43] MPI startup(): shm and tmi data transfer modes
+[47] MPI startup(): shm and tmi data transfer modes
+[31] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       17818    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       17846    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       17816    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       17842    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 4       17840    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 5       17847    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 6       17836    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 7       17844    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 8       17855    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 9       17857    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 10      17869    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 11      17861    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 12      17884    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 13      17893    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 14      17885    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 15      17905    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 16      17894    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 17      17892    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 18      17896    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 19      17876    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 20      17904    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 21      17895    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 22      17903    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 23      17865    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 24      3770     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 25      3745     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 26      3752     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 27      3771     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 28      3754     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 29      3753     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 30      3768     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 31      3758     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 32      3767     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 33      3743     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 34      3756     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 35      3759     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 36      3766     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 37      3757     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 38      3776     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 39      3774     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 40      3783     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 41      3786     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 42      3787     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 43      3784     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 44      3778     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 45      3772     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 46      3761     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 47      3764     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       16936    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       16924    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       16917    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       16923    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 4       16899    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 5       16901    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 6       16933    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 7       16902    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 8       16932    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 9       16918    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 10      16906    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 11      16903    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 12      16930    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 13      16928    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 14      16931    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 15      16913    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 16      16882    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 17      16927    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 18      16873    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 19      16919    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 20      16872    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 21      16915    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 22      16880    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 23      16926    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 24      27194    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 25      27156    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 26      27182    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 27      27177    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 28      27175    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 29      27163    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 30      27179    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 31      27180    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 32      27181    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 33      27169    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 34      27185    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 35      27167    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 36      27183    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 37      27192    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 38      27195    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 39      27193    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 40      27196    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 41      27189    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 42      27198    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 43      27187    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 44      27191    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 45      27178    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 46      27188    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 47      27162    lnm430.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
 Charm++> Running on MPI version: 3.1
@@ -2869,68 +4300,68 @@ Step, current time:1.424469
 Step, current time:1.431661
 Step, current time:1.438852
 Iterations: 200
-RESULT: 15.076360
+RESULT: 14.151229
 [Partition 0][Node 0] End of program
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm090.hpc.itc.rwth-aachen.de: pid 4449's current affinity list: 13
-lnm090.hpc.itc.rwth-aachen.de: pid 4451's current affinity list: 14
-lnm090.hpc.itc.rwth-aachen.de: pid 4453's current affinity list: 15
-lnm090.hpc.itc.rwth-aachen.de: pid 4455's current affinity list: 16
-lnm090.hpc.itc.rwth-aachen.de: pid 4447's current affinity list: 12
-lnm090.hpc.itc.rwth-aachen.de: pid 4452's current affinity list: 3
-lnm090.hpc.itc.rwth-aachen.de: pid 4456's current affinity list: 5
-lnm090.hpc.itc.rwth-aachen.de: pid 4461's current affinity list: 19
-lnm090.hpc.itc.rwth-aachen.de: pid 4467's current affinity list: 22
-lnm090.hpc.itc.rwth-aachen.de: pid 4468's current affinity list: 11
-lnm090.hpc.itc.rwth-aachen.de: pid 4463's current affinity list: 20
-lnm090.hpc.itc.rwth-aachen.de: pid 4462's current affinity list: 8
-lnm090.hpc.itc.rwth-aachen.de: pid 4457's current affinity list: 17
-lnm090.hpc.itc.rwth-aachen.de: pid 4450's current affinity list: 2
-lnm090.hpc.itc.rwth-aachen.de: pid 4469's current affinity list: 23
-lnm090.hpc.itc.rwth-aachen.de: pid 4448's current affinity list: 1
-lnm090.hpc.itc.rwth-aachen.de: pid 4465's current affinity list: 21
-lnm090.hpc.itc.rwth-aachen.de: pid 4460's current affinity list: 7
-lnm090.hpc.itc.rwth-aachen.de: pid 4464's current affinity list: 9
-lnm090.hpc.itc.rwth-aachen.de: pid 4454's current affinity list: 4
-lnm090.hpc.itc.rwth-aachen.de: pid 4459's current affinity list: 18
-lnm090.hpc.itc.rwth-aachen.de: pid 4458's current affinity list: 6
-lnm090.hpc.itc.rwth-aachen.de: pid 4466's current affinity list: 10
-lnm090.hpc.itc.rwth-aachen.de: pid 4446's current affinity list: 0
-lnm089.hpc.itc.rwth-aachen.de: pid 18541's current affinity list: 12
-lnm089.hpc.itc.rwth-aachen.de: pid 18543's current affinity list: 13
-lnm089.hpc.itc.rwth-aachen.de: pid 18545's current affinity list: 14
-lnm089.hpc.itc.rwth-aachen.de: pid 18547's current affinity list: 15
-lnm089.hpc.itc.rwth-aachen.de: pid 18548's current affinity list: 4
-lnm089.hpc.itc.rwth-aachen.de: pid 18551's current affinity list: 17
-lnm089.hpc.itc.rwth-aachen.de: pid 18542's current affinity list: 1
-lnm089.hpc.itc.rwth-aachen.de: pid 18549's current affinity list: 16
-lnm089.hpc.itc.rwth-aachen.de: pid 18553's current affinity list: 18
-lnm089.hpc.itc.rwth-aachen.de: pid 18544's current affinity list: 2
-lnm089.hpc.itc.rwth-aachen.de: pid 18546's current affinity list: 3
-lnm089.hpc.itc.rwth-aachen.de: pid 18550's current affinity list: 5
-lnm089.hpc.itc.rwth-aachen.de: pid 18562's current affinity list: 11
-lnm089.hpc.itc.rwth-aachen.de: pid 18560's current affinity list: 10
-lnm089.hpc.itc.rwth-aachen.de: pid 18561's current affinity list: 22
-lnm089.hpc.itc.rwth-aachen.de: pid 18563's current affinity list: 23
-lnm089.hpc.itc.rwth-aachen.de: pid 18552's current affinity list: 6
-lnm089.hpc.itc.rwth-aachen.de: pid 18555's current affinity list: 19
-lnm089.hpc.itc.rwth-aachen.de: pid 18556's current affinity list: 8
-lnm089.hpc.itc.rwth-aachen.de: pid 18554's current affinity list: 7
-lnm089.hpc.itc.rwth-aachen.de: pid 18540's current affinity list: 0
-lnm089.hpc.itc.rwth-aachen.de: pid 18559's current affinity list: 21
-lnm089.hpc.itc.rwth-aachen.de: pid 18557's current affinity list: 20
-lnm089.hpc.itc.rwth-aachen.de: pid 18558's current affinity list: 9
+lnm430.hpc.itc.rwth-aachen.de: pid 27596's current affinity list: 2
+lnm430.hpc.itc.rwth-aachen.de: pid 27602's current affinity list: 3
+lnm430.hpc.itc.rwth-aachen.de: pid 27607's current affinity list: 15
+lnm430.hpc.itc.rwth-aachen.de: pid 27598's current affinity list: 14
+lnm430.hpc.itc.rwth-aachen.de: pid 27593's current affinity list: 1
+lnm430.hpc.itc.rwth-aachen.de: pid 27586's current affinity list: 0
+lnm430.hpc.itc.rwth-aachen.de: pid 27655's current affinity list: 22
+lnm430.hpc.itc.rwth-aachen.de: pid 27594's current affinity list: 13
+lnm430.hpc.itc.rwth-aachen.de: pid 27653's current affinity list: 10
+lnm430.hpc.itc.rwth-aachen.de: pid 27610's current affinity list: 4
+lnm430.hpc.itc.rwth-aachen.de: pid 27639's current affinity list: 8
+lnm430.hpc.itc.rwth-aachen.de: pid 27634's current affinity list: 7
+lnm430.hpc.itc.rwth-aachen.de: pid 27590's current affinity list: 12
+lnm430.hpc.itc.rwth-aachen.de: pid 27657's current affinity list: 11
+lnm430.hpc.itc.rwth-aachen.de: pid 27624's current affinity list: 6
+lnm430.hpc.itc.rwth-aachen.de: pid 27637's current affinity list: 19
+lnm430.hpc.itc.rwth-aachen.de: pid 27644's current affinity list: 20
+lnm430.hpc.itc.rwth-aachen.de: pid 27649's current affinity list: 9
+lnm430.hpc.itc.rwth-aachen.de: pid 27619's current affinity list: 17
+lnm430.hpc.itc.rwth-aachen.de: pid 27652's current affinity list: 21
+lnm430.hpc.itc.rwth-aachen.de: pid 27611's current affinity list: 16
+lnm430.hpc.itc.rwth-aachen.de: pid 27659's current affinity list: 23
+lnm430.hpc.itc.rwth-aachen.de: pid 27613's current affinity list: 5
+lnm430.hpc.itc.rwth-aachen.de: pid 27629's current affinity list: 18
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+lnm429.hpc.itc.rwth-aachen.de: pid 17309's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+lnm429.hpc.itc.rwth-aachen.de: pid 17321's current affinity list: 6
+lnm429.hpc.itc.rwth-aachen.de: pid 17314's current affinity list: 14
+lnm429.hpc.itc.rwth-aachen.de: pid 17311's current affinity list: 1
+lnm429.hpc.itc.rwth-aachen.de: pid 17317's current affinity list: 4
+lnm429.hpc.itc.rwth-aachen.de: pid 17313's current affinity list: 2
+lnm429.hpc.itc.rwth-aachen.de: pid 17323's current affinity list: 7
+lnm429.hpc.itc.rwth-aachen.de: pid 17316's current affinity list: 15
+lnm429.hpc.itc.rwth-aachen.de: pid 17318's current affinity list: 16
+lnm429.hpc.itc.rwth-aachen.de: pid 17324's current affinity list: 19
+lnm429.hpc.itc.rwth-aachen.de: pid 17319's current affinity list: 5
+lnm429.hpc.itc.rwth-aachen.de: pid 17312's current affinity list: 13
+lnm429.hpc.itc.rwth-aachen.de: pid 17320's current affinity list: 17
+lnm429.hpc.itc.rwth-aachen.de: pid 17331's current affinity list: 11
+lnm429.hpc.itc.rwth-aachen.de: pid 17330's current affinity list: 22
+lnm429.hpc.itc.rwth-aachen.de: pid 17325's current affinity list: 8
+lnm429.hpc.itc.rwth-aachen.de: pid 17327's current affinity list: 9
+lnm429.hpc.itc.rwth-aachen.de: pid 17329's current affinity list: 10
+lnm429.hpc.itc.rwth-aachen.de: pid 17328's current affinity list: 21
+[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+lnm429.hpc.itc.rwth-aachen.de: pid 17326's current affinity list: 20
+lnm429.hpc.itc.rwth-aachen.de: pid 17310's current affinity list: 12
+lnm429.hpc.itc.rwth-aachen.de: pid 17332's current affinity list: 23
+lnm429.hpc.itc.rwth-aachen.de: pid 17322's current affinity list: 18
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
+lnm429.hpc.itc.rwth-aachen.de: pid 17315's current affinity list: 3
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
@@ -2970,103 +4401,103 @@ lnm089.hpc.itc.rwth-aachen.de: pid 18558's current affinity list: 9
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [0] MPI startup(): Multi-threaded optimized library
-[18] MPI startup(): shm and tmi data transfer modes
-[21] MPI startup(): shm and tmi data transfer modes
-[43] MPI startup(): shm and tmi data transfer modes
-[16] MPI startup(): shm and tmi data transfer modes
-[10] MPI startup(): shm and tmi data transfer modes
-[14] MPI startup(): shm and tmi data transfer modes
-[8] MPI startup(): shm and tmi data transfer modes
-[6] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
-[20] MPI startup(): shm and tmi data transfer modes
 [12] MPI startup(): shm and tmi data transfer modes
 [22] MPI startup(): shm and tmi data transfer modes
-[1] MPI startup(): shm and tmi data transfer modes
 [2] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
-[4] MPI startup(): shm and tmi data transfer modes
-[5] MPI startup(): shm and tmi data transfer modes
-[7] MPI startup(): shm and tmi data transfer modes
-[9] MPI startup(): shm and tmi data transfer modes
-[11] MPI startup(): shm and tmi data transfer modes
+[6] MPI startup(): shm and tmi data transfer modes
 [13] MPI startup(): shm and tmi data transfer modes
 [15] MPI startup(): shm and tmi data transfer modes
-[17] MPI startup(): shm and tmi data transfer modes
-[19] MPI startup(): shm and tmi data transfer modes
-[28] MPI startup(): shm and tmi data transfer modes
-[34] MPI startup(): shm and tmi data transfer modes
-[36] MPI startup(): shm and tmi data transfer modes
-[23] MPI startup(): shm and tmi data transfer modes
-[42] MPI startup(): shm and tmi data transfer modes
-[44] MPI startup(): shm and tmi data transfer modes
-[32] MPI startup(): shm and tmi data transfer modes
-[40] MPI startup(): shm and tmi data transfer modes
-[46] MPI startup(): shm and tmi data transfer modes
-[24] MPI startup(): shm and tmi data transfer modes
-[26] MPI startup(): shm and tmi data transfer modes
 [30] MPI startup(): shm and tmi data transfer modes
-[37] MPI startup(): shm and tmi data transfer modes
+[18] MPI startup(): shm and tmi data transfer modes
+[26] MPI startup(): shm and tmi data transfer modes
+[4] MPI startup(): shm and tmi data transfer modes
+[42] MPI startup(): shm and tmi data transfer modes
+[14] MPI startup(): shm and tmi data transfer modes
+[32] MPI startup(): shm and tmi data transfer modes
+[19] MPI startup(): shm and tmi data transfer modes
+[8] MPI startup(): shm and tmi data transfer modes
+[7] MPI startup(): shm and tmi data transfer modes
+[9] MPI startup(): shm and tmi data transfer modes
+[10] MPI startup(): shm and tmi data transfer modes
+[17] MPI startup(): shm and tmi data transfer modes
+[23] MPI startup(): shm and tmi data transfer modes
+[20] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
+[11] MPI startup(): shm and tmi data transfer modes
+[21] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
+[3] MPI startup(): shm and tmi data transfer modes
+[5] MPI startup(): shm and tmi data transfer modes
+[16] MPI startup(): shm and tmi data transfer modes
+[40] MPI startup(): shm and tmi data transfer modes
 [38] MPI startup(): shm and tmi data transfer modes
-[27] MPI startup(): shm and tmi data transfer modes
-[35] MPI startup(): shm and tmi data transfer modes
-[25] MPI startup(): shm and tmi data transfer modes
+[28] MPI startup(): shm and tmi data transfer modes
+[24] MPI startup(): shm and tmi data transfer modes
+[46] MPI startup(): shm and tmi data transfer modes
+[36] MPI startup(): shm and tmi data transfer modes
+[34] MPI startup(): shm and tmi data transfer modes
+[44] MPI startup(): shm and tmi data transfer modes
 [39] MPI startup(): shm and tmi data transfer modes
-[31] MPI startup(): shm and tmi data transfer modes
-[47] MPI startup(): shm and tmi data transfer modes
-[29] MPI startup(): shm and tmi data transfer modes
+[35] MPI startup(): shm and tmi data transfer modes
+[43] MPI startup(): shm and tmi data transfer modes
 [33] MPI startup(): shm and tmi data transfer modes
+[31] MPI startup(): shm and tmi data transfer modes
+[37] MPI startup(): shm and tmi data transfer modes
+[29] MPI startup(): shm and tmi data transfer modes
+[27] MPI startup(): shm and tmi data transfer modes
 [41] MPI startup(): shm and tmi data transfer modes
 [45] MPI startup(): shm and tmi data transfer modes
+[25] MPI startup(): shm and tmi data transfer modes
+[47] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       19165    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       19113    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       19130    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       19112    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 4       19143    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 5       19111    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 6       19147    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 7       19110    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 8       19114    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 9       19132    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 10      19148    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 11      19120    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 12      19153    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 13      19131    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 14      19163    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 15      19155    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 16      19162    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 17      19167    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 18      19168    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 19      19166    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 20      19149    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 21      19151    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 22      19146    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 23      19152    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 24      4591     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 25      4565     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 26      4583     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 27      4562     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 28      4581     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 29      4561     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 30      4572     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 31      4558     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 32      4587     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 33      4557     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 34      4573     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 35      4580     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 36      4589     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 37      4588     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 38      4585     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 39      4577     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 40      4579     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 41      4578     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 42      4586     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 43      4584     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 44      4590     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 45      4576     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 46      4571     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 47      4582     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       17928    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       18091    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       17961    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       18016    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 4       17969    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 5       17950    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 6       18120    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 7       17980    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 8       17962    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 9       17983    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 10      18015    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 11      18020    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 12      17939    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 13      18096    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 14      17978    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 15      17998    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 16      18047    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 17      18082    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 18      18048    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 19      18077    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 20      18057    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 21      18042    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 22      18032    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 23      18093    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 24      27913    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 25      27953    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 26      27908    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 27      27920    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 28      27903    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 29      27907    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 30      27904    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 31      27906    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 32      27937    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 33      27963    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 34      27965    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 35      27960    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 36      27954    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 37      27966    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 38      27952    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 39      27957    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 40      27951    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 41      27958    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 42      27959    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 43      27962    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 44      27934    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 45      27915    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 46      27955    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 47      27964    lnm430.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
 Charm++> Running on MPI version: 3.1
@@ -3076,7 +4507,7 @@ Converse/Charm++ Commit ID: v6.9.0-0-gc3d50ef
 Warning> Randomization of virtual memory (ASLR) is turned on in the kernel, thread migration may not work! Run 'echo 0 > /proc/sys/kernel/randomize_va_space' as root to disable it, or try running with '+isomalloc_sync'.
 CharmLB> Load balancer assumes all CPUs are same.
 Charm++> Running on 2 hosts (2 sockets x 12 cores x 1 PUs = 24-way SMP)
-Charm++> cpu topology info is gathered in 0.005 seconds.
+Charm++> cpu topology info is gathered in 0.007 seconds.
 dryFraction: 0.200000 
 dryFraction: 0.200000 
 dryFraction: 0.200000 
@@ -4303,58 +5734,58 @@ Step, current time:1.424469
 Step, current time:1.431661
 Step, current time:1.438852
 Iterations: 200
-RESULT: 14.496780
+RESULT: 14.350534
 [Partition 0][Node 0] End of program
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm090.hpc.itc.rwth-aachen.de: pid 4662's current affinity list: 12
-lnm090.hpc.itc.rwth-aachen.de: pid 4665's current affinity list: 2
-lnm090.hpc.itc.rwth-aachen.de: pid 4666's current affinity list: 14
-lnm090.hpc.itc.rwth-aachen.de: pid 4667's current affinity list: 3
-lnm090.hpc.itc.rwth-aachen.de: pid 4663's current affinity list: 1
-lnm090.hpc.itc.rwth-aachen.de: pid 4664's current affinity list: 13
-lnm090.hpc.itc.rwth-aachen.de: pid 4669's current affinity list: 4
-lnm090.hpc.itc.rwth-aachen.de: pid 4670's current affinity list: 16
-lnm090.hpc.itc.rwth-aachen.de: pid 4671's current affinity list: 5
-lnm090.hpc.itc.rwth-aachen.de: pid 4672's current affinity list: 17
-lnm090.hpc.itc.rwth-aachen.de: pid 4676's current affinity list: 19
-lnm090.hpc.itc.rwth-aachen.de: pid 4677's current affinity list: 8
-lnm090.hpc.itc.rwth-aachen.de: pid 4679's current affinity list: 9
-lnm090.hpc.itc.rwth-aachen.de: pid 4683's current affinity list: 11
-lnm090.hpc.itc.rwth-aachen.de: pid 4684's current affinity list: 23
-lnm090.hpc.itc.rwth-aachen.de: pid 4678's current affinity list: 20
-lnm090.hpc.itc.rwth-aachen.de: pid 4661's current affinity list: 0
-lnm090.hpc.itc.rwth-aachen.de: pid 4668's current affinity list: 15
-lnm090.hpc.itc.rwth-aachen.de: pid 4675's current affinity list: 7
-lnm090.hpc.itc.rwth-aachen.de: pid 4680's current affinity list: 21
-lnm090.hpc.itc.rwth-aachen.de: pid 4673's current affinity list: 6
-lnm090.hpc.itc.rwth-aachen.de: pid 4682's current affinity list: 22
-lnm090.hpc.itc.rwth-aachen.de: pid 4674's current affinity list: 18
-lnm090.hpc.itc.rwth-aachen.de: pid 4681's current affinity list: 10
-lnm089.hpc.itc.rwth-aachen.de: pid 19292's current affinity list: 14
-lnm089.hpc.itc.rwth-aachen.de: pid 19294's current affinity list: 15
-lnm089.hpc.itc.rwth-aachen.de: pid 19296's current affinity list: 16
-lnm089.hpc.itc.rwth-aachen.de: pid 19302's current affinity list: 19
-lnm089.hpc.itc.rwth-aachen.de: pid 19308's current affinity list: 22
-lnm089.hpc.itc.rwth-aachen.de: pid 19309's current affinity list: 11
-lnm089.hpc.itc.rwth-aachen.de: pid 19295's current affinity list: 4
-lnm089.hpc.itc.rwth-aachen.de: pid 19289's current affinity list: 1
-lnm089.hpc.itc.rwth-aachen.de: pid 19307's current affinity list: 10
-lnm089.hpc.itc.rwth-aachen.de: pid 19290's current affinity list: 13
-lnm089.hpc.itc.rwth-aachen.de: pid 19303's current affinity list: 8
-lnm089.hpc.itc.rwth-aachen.de: pid 19299's current affinity list: 6
-lnm089.hpc.itc.rwth-aachen.de: pid 19297's current affinity list: 5
-lnm089.hpc.itc.rwth-aachen.de: pid 19306's current affinity list: 21
-lnm089.hpc.itc.rwth-aachen.de: pid 19301's current affinity list: 7
-lnm089.hpc.itc.rwth-aachen.de: pid 19293's current affinity list: 3
-lnm089.hpc.itc.rwth-aachen.de: pid 19291's current affinity list: 2
-lnm089.hpc.itc.rwth-aachen.de: pid 19298's current affinity list: 17
-lnm089.hpc.itc.rwth-aachen.de: pid 19288's current affinity list: 12
-lnm089.hpc.itc.rwth-aachen.de: pid 19305's current affinity list: 9
-lnm089.hpc.itc.rwth-aachen.de: pid 19300's current affinity list: 18
-lnm089.hpc.itc.rwth-aachen.de: pid 19304's current affinity list: 20
-lnm089.hpc.itc.rwth-aachen.de: pid 19310's current affinity list: 23
-lnm089.hpc.itc.rwth-aachen.de: pid 19287's current affinity list: 0
+lnm430.hpc.itc.rwth-aachen.de: pid 28089's current affinity list: 23
+lnm430.hpc.itc.rwth-aachen.de: pid 28073's current affinity list: 15
+lnm430.hpc.itc.rwth-aachen.de: pid 28077's current affinity list: 17
+lnm430.hpc.itc.rwth-aachen.de: pid 28071's current affinity list: 14
+lnm430.hpc.itc.rwth-aachen.de: pid 28067's current affinity list: 12
+lnm430.hpc.itc.rwth-aachen.de: pid 28076's current affinity list: 5
+lnm430.hpc.itc.rwth-aachen.de: pid 28070's current affinity list: 2
+lnm430.hpc.itc.rwth-aachen.de: pid 28072's current affinity list: 3
+lnm430.hpc.itc.rwth-aachen.de: pid 28068's current affinity list: 1
+lnm430.hpc.itc.rwth-aachen.de: pid 28074's current affinity list: 4
+lnm430.hpc.itc.rwth-aachen.de: pid 28075's current affinity list: 16
+lnm430.hpc.itc.rwth-aachen.de: pid 28069's current affinity list: 13
+lnm430.hpc.itc.rwth-aachen.de: pid 28087's current affinity list: 22
+lnm430.hpc.itc.rwth-aachen.de: pid 28085's current affinity list: 21
+lnm430.hpc.itc.rwth-aachen.de: pid 28078's current affinity list: 6
+lnm430.hpc.itc.rwth-aachen.de: pid 28081's current affinity list: 19
+lnm430.hpc.itc.rwth-aachen.de: pid 28080's current affinity list: 7
+lnm430.hpc.itc.rwth-aachen.de: pid 28088's current affinity list: 11
+lnm430.hpc.itc.rwth-aachen.de: pid 28086's current affinity list: 10
+lnm430.hpc.itc.rwth-aachen.de: pid 28079's current affinity list: 18
+lnm430.hpc.itc.rwth-aachen.de: pid 28083's current affinity list: 20
+lnm430.hpc.itc.rwth-aachen.de: pid 28084's current affinity list: 9
+lnm430.hpc.itc.rwth-aachen.de: pid 28066's current affinity list: 0
+lnm430.hpc.itc.rwth-aachen.de: pid 28082's current affinity list: 8
+lnm429.hpc.itc.rwth-aachen.de: pid 18341's current affinity list: 13
+lnm429.hpc.itc.rwth-aachen.de: pid 18343's current affinity list: 14
+lnm429.hpc.itc.rwth-aachen.de: pid 18345's current affinity list: 15
+lnm429.hpc.itc.rwth-aachen.de: pid 18339's current affinity list: 12
+lnm429.hpc.itc.rwth-aachen.de: pid 18346's current affinity list: 4
+lnm429.hpc.itc.rwth-aachen.de: pid 18342's current affinity list: 2
+lnm429.hpc.itc.rwth-aachen.de: pid 18340's current affinity list: 1
+lnm429.hpc.itc.rwth-aachen.de: pid 18361's current affinity list: 11
+lnm429.hpc.itc.rwth-aachen.de: pid 18354's current affinity list: 8
+lnm429.hpc.itc.rwth-aachen.de: pid 18350's current affinity list: 6
+lnm429.hpc.itc.rwth-aachen.de: pid 18352's current affinity list: 7
+lnm429.hpc.itc.rwth-aachen.de: pid 18356's current affinity list: 9
+lnm429.hpc.itc.rwth-aachen.de: pid 18360's current affinity list: 22
+lnm429.hpc.itc.rwth-aachen.de: pid 18351's current affinity list: 18
+lnm429.hpc.itc.rwth-aachen.de: pid 18359's current affinity list: 10
+lnm429.hpc.itc.rwth-aachen.de: pid 18348's current affinity list: 5
+lnm429.hpc.itc.rwth-aachen.de: pid 18347's current affinity list: 16
+lnm429.hpc.itc.rwth-aachen.de: pid 18349's current affinity list: 17
+lnm429.hpc.itc.rwth-aachen.de: pid 18362's current affinity list: 23
+lnm429.hpc.itc.rwth-aachen.de: pid 18353's current affinity list: 19
+lnm429.hpc.itc.rwth-aachen.de: pid 18358's current affinity list: 21
+lnm429.hpc.itc.rwth-aachen.de: pid 18344's current affinity list: 3
+lnm429.hpc.itc.rwth-aachen.de: pid 18338's current affinity list: 0
+lnm429.hpc.itc.rwth-aachen.de: pid 18355's current affinity list: 20
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
@@ -4404,103 +5835,103 @@ lnm089.hpc.itc.rwth-aachen.de: pid 19287's current affinity list: 0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
 [0] MPI startup(): Multi-threaded optimized library
-[6] MPI startup(): shm and tmi data transfer modes
-[10] MPI startup(): shm and tmi data transfer modes
-[20] MPI startup(): shm and tmi data transfer modes
-[12] MPI startup(): shm and tmi data transfer modes
 [22] MPI startup(): shm and tmi data transfer modes
-[14] MPI startup(): shm and tmi data transfer modes
-[16] MPI startup(): shm and tmi data transfer modes
-[8] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
-[2] MPI startup(): shm and tmi data transfer modes
 [4] MPI startup(): shm and tmi data transfer modes
-[18] MPI startup(): shm and tmi data transfer modes
-[1] MPI startup(): shm and tmi data transfer modes
-[11] MPI startup(): shm and tmi data transfer modes
-[23] MPI startup(): shm and tmi data transfer modes
+[38] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
+[36] MPI startup(): shm and tmi data transfer modes
+[40] MPI startup(): shm and tmi data transfer modes
+[26] MPI startup(): shm and tmi data transfer modes
+[12] MPI startup(): shm and tmi data transfer modes
+[10] MPI startup(): shm and tmi data transfer modes
 [9] MPI startup(): shm and tmi data transfer modes
+[15] MPI startup(): shm and tmi data transfer modes
+[2] MPI startup(): shm and tmi data transfer modes
+[8] MPI startup(): shm and tmi data transfer modes
+[13] MPI startup(): shm and tmi data transfer modes
+[6] MPI startup(): shm and tmi data transfer modes
+[23] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
 [3] MPI startup(): shm and tmi data transfer modes
 [5] MPI startup(): shm and tmi data transfer modes
 [7] MPI startup(): shm and tmi data transfer modes
-[13] MPI startup(): shm and tmi data transfer modes
-[15] MPI startup(): shm and tmi data transfer modes
-[17] MPI startup(): shm and tmi data transfer modes
+[18] MPI startup(): shm and tmi data transfer modes
 [19] MPI startup(): shm and tmi data transfer modes
-[21] MPI startup(): shm and tmi data transfer modes
-[43] MPI startup(): shm and tmi data transfer modes
-[42] MPI startup(): shm and tmi data transfer modes
-[36] MPI startup(): shm and tmi data transfer modes
-[39] MPI startup(): shm and tmi data transfer modes
-[34] MPI startup(): shm and tmi data transfer modes
-[38] MPI startup(): shm and tmi data transfer modes
-[40] MPI startup(): shm and tmi data transfer modes
-[47] MPI startup(): shm and tmi data transfer modes
-[25] MPI startup(): shm and tmi data transfer modes
-[37] MPI startup(): shm and tmi data transfer modes
-[44] MPI startup(): shm and tmi data transfer modes
-[29] MPI startup(): shm and tmi data transfer modes
-[33] MPI startup(): shm and tmi data transfer modes
 [46] MPI startup(): shm and tmi data transfer modes
+[11] MPI startup(): shm and tmi data transfer modes
+[32] MPI startup(): shm and tmi data transfer modes
+[17] MPI startup(): shm and tmi data transfer modes
+[20] MPI startup(): shm and tmi data transfer modes
+[24] MPI startup(): shm and tmi data transfer modes
+[14] MPI startup(): shm and tmi data transfer modes
+[16] MPI startup(): shm and tmi data transfer modes
+[28] MPI startup(): shm and tmi data transfer modes
+[21] MPI startup(): shm and tmi data transfer modes
+[34] MPI startup(): shm and tmi data transfer modes
+[30] MPI startup(): shm and tmi data transfer modes
+[42] MPI startup(): shm and tmi data transfer modes
+[44] MPI startup(): shm and tmi data transfer modes
+[37] MPI startup(): shm and tmi data transfer modes
+[47] MPI startup(): shm and tmi data transfer modes
+[31] MPI startup(): shm and tmi data transfer modes
+[33] MPI startup(): shm and tmi data transfer modes
+[39] MPI startup(): shm and tmi data transfer modes
+[25] MPI startup(): shm and tmi data transfer modes
+[43] MPI startup(): shm and tmi data transfer modes
+[35] MPI startup(): shm and tmi data transfer modes
+[29] MPI startup(): shm and tmi data transfer modes
+[41] MPI startup(): shm and tmi data transfer modes
 [27] MPI startup(): shm and tmi data transfer modes
 [45] MPI startup(): shm and tmi data transfer modes
-[24] MPI startup(): shm and tmi data transfer modes
-[26] MPI startup(): shm and tmi data transfer modes
-[30] MPI startup(): shm and tmi data transfer modes
-[32] MPI startup(): shm and tmi data transfer modes
-[35] MPI startup(): shm and tmi data transfer modes
-[28] MPI startup(): shm and tmi data transfer modes
-[31] MPI startup(): shm and tmi data transfer modes
-[41] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       19918    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       19911    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       19895    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       19897    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 4       19908    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 5       19865    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 6       19909    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 7       19867    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 8       19891    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 9       19869    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 10      19905    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 11      19910    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 12      19900    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 13      19913    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 14      19907    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 15      19866    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 16      19898    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 17      19914    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 18      19912    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 19      19906    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 20      19896    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 21      19868    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 22      19874    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 23      19915    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 24      4806     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 25      4772     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 26      4799     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 27      4788     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 28      4780     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 29      4783     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 30      4785     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 31      4809     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 32      4798     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 33      4793     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 34      4787     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 35      4796     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 36      4812     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 37      4814     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 38      4810     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 39      4792     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 40      4786     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 41      4801     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 42      4797     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 43      4811     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 44      4815     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 45      4813     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 46      4790     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 47      4789     lnm090.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       18972    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       18926    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       18930    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       18920    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 4       18929    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 5       18922    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 6       18971    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 7       18921    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 8       18927    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 9       18964    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 10      18963    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 11      18966    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 12      18937    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 13      18956    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 14      18945    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 15      18969    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 16      18936    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 17      18973    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 18      18948    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 19      18970    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 20      18959    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 21      18954    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 22      18931    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 23      18967    lnm429.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 24      28210    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 25      28182    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 26      28188    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 27      28196    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 28      28186    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 29      28174    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 30      28185    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 31      28168    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 32      28189    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 33      28194    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 34      28183    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 35      28171    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 36      28201    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 37      28206    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 38      28203    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 39      28202    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 40      28209    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 41      28207    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 42      28208    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 43      28200    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 44      28205    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 45      28199    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 46      28204    lnm430.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 47      28166    lnm430.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
 Charm++> Running on MPI version: 3.1
@@ -4510,7 +5941,7 @@ Converse/Charm++ Commit ID: v6.9.0-0-gc3d50ef
 Warning> Randomization of virtual memory (ASLR) is turned on in the kernel, thread migration may not work! Run 'echo 0 > /proc/sys/kernel/randomize_va_space' as root to disable it, or try running with '+isomalloc_sync'.
 CharmLB> Load balancer assumes all CPUs are same.
 Charm++> Running on 2 hosts (2 sockets x 12 cores x 1 PUs = 24-way SMP)
-Charm++> cpu topology info is gathered in 0.004 seconds.
+Charm++> cpu topology info is gathered in 0.006 seconds.
 dryFraction: 0.200000 
 dryFraction: 0.200000 
 dryFraction: 0.200000 
@@ -5737,1442 +7168,7 @@ Step, current time:1.424469
 Step, current time:1.431661
 Step, current time:1.438852
 Iterations: 200
-RESULT: 14.977102
+RESULT: 14.140145
 [Partition 0][Node 0] End of program
 %
-srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm090.hpc.itc.rwth-aachen.de: pid 4890's current affinity list: 2
-lnm090.hpc.itc.rwth-aachen.de: pid 4893's current affinity list: 15
-lnm090.hpc.itc.rwth-aachen.de: pid 4895's current affinity list: 16
-lnm090.hpc.itc.rwth-aachen.de: pid 4897's current affinity list: 17
-lnm090.hpc.itc.rwth-aachen.de: pid 4898's current affinity list: 6
-lnm090.hpc.itc.rwth-aachen.de: pid 4899's current affinity list: 18
-lnm090.hpc.itc.rwth-aachen.de: pid 4901's current affinity list: 19
-lnm090.hpc.itc.rwth-aachen.de: pid 4902's current affinity list: 8
-lnm090.hpc.itc.rwth-aachen.de: pid 4903's current affinity list: 20
-lnm090.hpc.itc.rwth-aachen.de: pid 4904's current affinity list: 9
-lnm090.hpc.itc.rwth-aachen.de: pid 4887's current affinity list: 12
-lnm090.hpc.itc.rwth-aachen.de: pid 4891's current affinity list: 14
-lnm090.hpc.itc.rwth-aachen.de: pid 4906's current affinity list: 10
-lnm090.hpc.itc.rwth-aachen.de: pid 4908's current affinity list: 11
-lnm090.hpc.itc.rwth-aachen.de: pid 4905's current affinity list: 21
-lnm090.hpc.itc.rwth-aachen.de: pid 4909's current affinity list: 23
-lnm090.hpc.itc.rwth-aachen.de: pid 4894's current affinity list: 4
-lnm090.hpc.itc.rwth-aachen.de: pid 4888's current affinity list: 1
-lnm090.hpc.itc.rwth-aachen.de: pid 4889's current affinity list: 13
-lnm090.hpc.itc.rwth-aachen.de: pid 4900's current affinity list: 7
-lnm090.hpc.itc.rwth-aachen.de: pid 4896's current affinity list: 5
-lnm090.hpc.itc.rwth-aachen.de: pid 4892's current affinity list: 3
-lnm090.hpc.itc.rwth-aachen.de: pid 4907's current affinity list: 22
-lnm090.hpc.itc.rwth-aachen.de: pid 4886's current affinity list: 0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-lnm089.hpc.itc.rwth-aachen.de: pid 20045's current affinity list: 6
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-lnm089.hpc.itc.rwth-aachen.de: pid 20035's current affinity list: 1
-lnm089.hpc.itc.rwth-aachen.de: pid 20041's current affinity list: 4
-lnm089.hpc.itc.rwth-aachen.de: pid 20039's current affinity list: 3
-lnm089.hpc.itc.rwth-aachen.de: pid 20043's current affinity list: 5
-lnm089.hpc.itc.rwth-aachen.de: pid 20049's current affinity list: 8
-lnm089.hpc.itc.rwth-aachen.de: pid 20055's current affinity list: 11
-lnm089.hpc.itc.rwth-aachen.de: pid 20036's current affinity list: 13
-lnm089.hpc.itc.rwth-aachen.de: pid 20038's current affinity list: 14
-lnm089.hpc.itc.rwth-aachen.de: pid 20044's current affinity list: 17
-lnm089.hpc.itc.rwth-aachen.de: pid 20053's current affinity list: 10
-lnm089.hpc.itc.rwth-aachen.de: pid 20056's current affinity list: 23
-lnm089.hpc.itc.rwth-aachen.de: pid 20042's current affinity list: 16
-lnm089.hpc.itc.rwth-aachen.de: pid 20040's current affinity list: 15
-lnm089.hpc.itc.rwth-aachen.de: pid 20034's current affinity list: 12
-lnm089.hpc.itc.rwth-aachen.de: pid 20050's current affinity list: 20
-lnm089.hpc.itc.rwth-aachen.de: pid 20047's current affinity list: 7
-lnm089.hpc.itc.rwth-aachen.de: pid 20046's current affinity list: 18
-lnm089.hpc.itc.rwth-aachen.de: pid 20048's current affinity list: 19
-lnm089.hpc.itc.rwth-aachen.de: pid 20037's current affinity list: 2
-lnm089.hpc.itc.rwth-aachen.de: pid 20054's current affinity list: 22
-lnm089.hpc.itc.rwth-aachen.de: pid 20051's current affinity list: 9
-lnm089.hpc.itc.rwth-aachen.de: pid 20052's current affinity list: 21
-lnm089.hpc.itc.rwth-aachen.de: pid 20033's current affinity list: 0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=9a2df0
-[0] MPI startup(): Multi-threaded optimized library
-[2] MPI startup(): shm and tmi data transfer modes
-[16] MPI startup(): shm and tmi data transfer modes
-[26] MPI startup(): shm and tmi data transfer modes
-[22] MPI startup(): shm and tmi data transfer modes
-[40] MPI startup(): shm and tmi data transfer modes
-[36] MPI startup(): shm and tmi data transfer modes
-[32] MPI startup(): shm and tmi data transfer modes
-[38] MPI startup(): shm and tmi data transfer modes
-[8] MPI startup(): shm and tmi data transfer modes
-[7] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
-[21] MPI startup(): shm and tmi data transfer modes
-[17] MPI startup(): shm and tmi data transfer modes
-[14] MPI startup(): shm and tmi data transfer modes
-[6] MPI startup(): shm and tmi data transfer modes
-[30] MPI startup(): shm and tmi data transfer modes
-[46] MPI startup(): shm and tmi data transfer modes
-[10] MPI startup(): shm and tmi data transfer modes
-[11] MPI startup(): shm and tmi data transfer modes
-[15] MPI startup(): shm and tmi data transfer modes
-[18] MPI startup(): shm and tmi data transfer modes
-[20] MPI startup(): shm and tmi data transfer modes
-[24] MPI startup(): shm and tmi data transfer modes
-[28] MPI startup(): shm and tmi data transfer modes
-[39] MPI startup(): shm and tmi data transfer modes
-[44] MPI startup(): shm and tmi data transfer modes
-[29] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
-[1] MPI startup(): shm and tmi data transfer modes
-[4] MPI startup(): shm and tmi data transfer modes
-[27] MPI startup(): shm and tmi data transfer modes
-[31] MPI startup(): shm and tmi data transfer modes
-[33] MPI startup(): shm and tmi data transfer modes
-[37] MPI startup(): shm and tmi data transfer modes
-[41] MPI startup(): shm and tmi data transfer modes
-[42] MPI startup(): shm and tmi data transfer modes
-[45] MPI startup(): shm and tmi data transfer modes
-[47] MPI startup(): shm and tmi data transfer modes
-[25] MPI startup(): shm and tmi data transfer modes
-[9] MPI startup(): shm and tmi data transfer modes
-[34] MPI startup(): shm and tmi data transfer modes
-[5] MPI startup(): shm and tmi data transfer modes
-[12] MPI startup(): shm and tmi data transfer modes
-[13] MPI startup(): shm and tmi data transfer modes
-[19] MPI startup(): shm and tmi data transfer modes
-[23] MPI startup(): shm and tmi data transfer modes
-[35] MPI startup(): shm and tmi data transfer modes
-[43] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       20656    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       20645    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       20606    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       20638    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 4       20652    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 5       20639    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 6       20613    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 7       20643    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 8       20607    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 9       20641    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 10      20623    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 11      20636    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 12      20605    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 13      20650    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 14      20649    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 15      20651    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 16      20625    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 17      20648    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 18      20654    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 19      20655    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 20      20640    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 21      20653    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 22      20628    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 23      20637    lnm089.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 24      5029     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 25      5018     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 26      5023     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 27      5024     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 28      5007     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 29      5017     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 30      5027     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 31      5013     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 32      5022     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 33      5012     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 34      5026     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 35      5010     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 36      5008     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 37      5011     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 38      5025     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 39      5015     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 40      5009     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 41      5014     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 42      5006     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 43      5020     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 44      5016     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 45      5028     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 46      5019     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 47      5021     lnm090.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): I_MPI_DEBUG=5
-[0] MPI startup(): I_MPI_FABRICS=shm:tmi
-Charm++> Running on MPI version: 3.1
-Charm++> level of thread support used: MPI_THREAD_SINGLE (desired: MPI_THREAD_SINGLE)
-Charm++> Running in non-SMP mode: 48 processes (PEs)
-Converse/Charm++ Commit ID: v6.9.0-0-gc3d50ef
-Warning> Randomization of virtual memory (ASLR) is turned on in the kernel, thread migration may not work! Run 'echo 0 > /proc/sys/kernel/randomize_va_space' as root to disable it, or try running with '+isomalloc_sync'.
-CharmLB> Load balancer assumes all CPUs are same.
-Charm++> Running on 2 hosts (2 sockets x 12 cores x 1 PUs = 24-way SMP)
-Charm++> cpu topology info is gathered in 0.004 seconds.
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-dryFraction: 0.200000 
-Step, current time:0.008050
-Step, current time:0.016101
-Step, current time:0.024151
-Step, current time:0.032202
-Step, current time:0.040252
-Step, current time:0.048300
-Step, current time:0.056338
-Step, current time:0.064359
-Step, current time:0.072359
-Step, current time:0.080333
-Step, current time:0.088283
-Step, current time:0.096205
-Step, current time:0.104107
-Step, current time:0.111981
-Step, current time:0.119841
-Step, current time:0.127673
-Step, current time:0.135493
-Step, current time:0.143276
-Step, current time:0.151050
-Step, current time:0.158791
-Step, current time:0.166526
-Step, current time:0.174230
-Step, current time:0.181931
-Step, current time:0.189606
-Step, current time:0.197279
-Step, current time:0.204929
-Step, current time:0.212577
-Step, current time:0.220206
-Step, current time:0.227834
-Step, current time:0.235445
-Step, current time:0.243055
-Step, current time:0.250651
-Step, current time:0.258246
-Step, current time:0.265828
-Step, current time:0.273408
-Step, current time:0.280979
-Step, current time:0.288547
-Step, current time:0.296105
-Step, current time:0.303661
-Step, current time:0.311210
-Step, current time:0.318755
-Step, current time:0.326293
-Step, current time:0.333823
-Step, current time:0.341341
-Step, current time:0.348848
-Step, current time:0.356343
-Step, current time:0.363828
-Step, current time:0.371303
-Step, current time:0.378768
-Step, current time:0.386224
-Step, current time:0.393672
-Step, current time:0.401111
-Step, current time:0.408544
-Step, current time:0.415968
-Step, current time:0.423386
-Step, current time:0.430798
-Step, current time:0.438204
-Step, current time:0.445603
-Step, current time:0.452997
-Step, current time:0.460386
-Step, current time:0.467770
-Step, current time:0.475149
-Step, current time:0.482524
-Step, current time:0.489894
-Step, current time:0.497261
-Step, current time:0.504623
-Step, current time:0.511982
-Step, current time:0.519337
-Step, current time:0.526689
-Step, current time:0.534038
-Step, current time:0.541383
-Step, current time:0.548726
-Step, current time:0.556066
-Step, current time:0.563403
-Step, current time:0.570737
-Step, current time:0.578069
-Step, current time:0.585398
-Step, current time:0.592725
-Step, current time:0.600049
-Step, current time:0.607372
-Step, current time:0.614692
-Step, current time:0.622010
-Step, current time:0.629326
-Step, current time:0.636640
-Step, current time:0.643952
-Step, current time:0.651262
-Step, current time:0.658570
-Step, current time:0.665876
-Step, current time:0.673181
-Step, current time:0.680483
-Step, current time:0.687784
-Step, current time:0.695082
-Step, current time:0.702379
-Step, current time:0.709675
-Step, current time:0.716968
-Step, current time:0.724260
-Step, current time:0.731550
-Step, current time:0.738839
-Step, current time:0.746125
-Step, current time:0.753410
-Step, current time:0.760693
-Step, current time:0.767975
-Step, current time:0.775255
-Step, current time:0.782533
-Step, current time:0.789810
-Step, current time:0.797085
-Step, current time:0.804359
-Step, current time:0.811631
-Step, current time:0.818901
-Step, current time:0.826170
-Step, current time:0.833437
-Step, current time:0.840703
-Step, current time:0.847968
-Step, current time:0.855231
-Step, current time:0.862492
-Step, current time:0.869752
-Step, current time:0.877011
-Step, current time:0.884268
-Step, current time:0.891524
-Step, current time:0.898778
-Step, current time:0.906032
-Step, current time:0.913284
-Step, current time:0.920534
-Step, current time:0.927783
-Step, current time:0.935031
-Step, current time:0.942278
-Step, current time:0.949523
-Step, current time:0.956767
-Step, current time:0.964010
-Step, current time:0.971252
-Step, current time:0.978493
-Step, current time:0.985732
-Step, current time:0.992970
-Step, current time:1.000206
-Step, current time:1.007442
-Step, current time:1.014676
-Step, current time:1.021910
-Step, current time:1.029142
-Step, current time:1.031836
-Step, current time:1.034472
-Step, current time:1.037067
-Step, current time:1.039631
-Step, current time:1.042170
-Step, current time:1.044701
-Step, current time:1.047229
-Step, current time:1.049757
-Step, current time:1.056984
-Step, current time:1.064209
-Step, current time:1.071433
-Step, current time:1.078655
-Step, current time:1.085876
-Step, current time:1.093097
-Step, current time:1.100316
-Step, current time:1.107534
-Step, current time:1.114752
-Step, current time:1.121968
-Step, current time:1.129184
-Step, current time:1.136399
-Step, current time:1.143613
-Step, current time:1.150827
-Step, current time:1.158040
-Step, current time:1.165252
-Step, current time:1.172463
-Step, current time:1.179674
-Step, current time:1.186884
-Step, current time:1.194093
-Step, current time:1.201302
-Step, current time:1.208510
-Step, current time:1.215717
-Step, current time:1.222924
-Step, current time:1.230130
-Step, current time:1.237335
-Step, current time:1.244539
-Step, current time:1.251743
-Step, current time:1.258946
-Step, current time:1.266148
-Step, current time:1.273349
-Step, current time:1.280550
-Step, current time:1.287750
-Step, current time:1.294949
-Step, current time:1.302148
-Step, current time:1.309347
-Step, current time:1.316545
-Step, current time:1.323743
-Step, current time:1.330940
-Step, current time:1.338137
-Step, current time:1.345333
-Step, current time:1.352529
-Step, current time:1.359725
-Step, current time:1.366920
-Step, current time:1.374115
-Step, current time:1.381310
-Step, current time:1.388504
-Step, current time:1.395698
-Step, current time:1.402892
-Step, current time:1.410084
-Step, current time:1.417277
-Step, current time:1.424469
-Step, current time:1.431661
-Step, current time:1.438852
-Iterations: 200
-RESULT: 14.606700
-[Partition 0][Node 0] End of program
-%
-Killed by signal 15.
 Killed by signal 15.
