@@ -49,7 +49,7 @@ NODE_COUNTS=(2)
 GRID_DIMENSIONS=(4096)
 BLOCK_COUNTS=(32)
 DRY_FRACTIONS=(0.2)
-EXTRAS=(0 1 2 4 8 16 32)
+EXTRAS=(0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5)
 
 echo -n "Frameworks/Interference" > ${JOB_CATEGORY}.csv
 for EXTRA in ${EXTRAS[@]}
@@ -66,7 +66,7 @@ do
 	for EXTRA in ${EXTRAS[@]}
 	do
 		FILE="output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_2_4096_32_0.2_${EXTRA}.txt"
-		INPUT=$(head -n -2 $FILE)
+		INPUT=$(cat $FILE | grep -v Killed | head -n -1 )
 		# delimiter between experiments
 		IFS='%'
 				read -d '' -ra RUNS <<< "$INPUT"
