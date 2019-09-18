@@ -1,11 +1,11 @@
-lnm398
-ssh -f lnm398 export OMP_NUM_THREADS=24 OMP_PLACES=cores OMP_PROC_BIND=close; ~/master/swe-benchmark/batch/interference/main 0.05
+lnm364
+ssh -f lnm364 export OMP_NUM_THREADS=24 OMP_PLACES=cores OMP_PROC_BIND=close; ~/master/swe-benchmark/batch/interference/main 0.05
 srun -n 4 ./batch/cpu_set_wrapper.sh ./build/SWE_intel_release_mpi_omp_augrie -t 1 -n 1 -x 4096 -y 4096 -o ./output/mpi_batch -i 200
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm414.hpc.itc.rwth-aachen.de: pid 16896's current affinity list: 12-23
-lnm414.hpc.itc.rwth-aachen.de: pid 16895's current affinity list: 0-11
-lnm398.hpc.itc.rwth-aachen.de: pid 27717's current affinity list: 0-11
-lnm398.hpc.itc.rwth-aachen.de: pid 27718's current affinity list: 12-23
+lnm365.hpc.itc.rwth-aachen.de: pid 23022's current affinity list: 0-11
+lnm365.hpc.itc.rwth-aachen.de: pid 23023's current affinity list: 12-23
+lnm364.hpc.itc.rwth-aachen.de: pid 10520's current affinity list: 12-23
+lnm364.hpc.itc.rwth-aachen.de: pid 10519's current affinity list: 0-11
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
@@ -17,19 +17,19 @@ dryFraction: 0.200000
 [0] MPI startup(): Multi-threaded optimized library
 [2] MPI startup(): shm and tmi data transfer modes
 [3] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       27821    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       27824    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       16906    lnm414.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       16905    lnm414.hpc.itc.rwth-aachen.de  +1
-1 Spawned at lnm398.hpc.itc.rwth-aachen.de
-2 Spawned at lnm414.hpc.itc.rwth-aachen.de
+[0] MPI startup(): 0       10570    lnm364.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       10568    lnm364.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       23033    lnm365.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       23034    lnm365.hpc.itc.rwth-aachen.de  +1
+1 Spawned at lnm364.hpc.itc.rwth-aachen.de
+2 Spawned at lnm365.hpc.itc.rwth-aachen.de
+3 Spawned at lnm365.hpc.itc.rwth-aachen.de
 [0] MPI startup(): I_MPI_DEBUG=5
-3 Spawned at lnm414.hpc.itc.rwth-aachen.de
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
-0 Spawned at lnm398.hpc.itc.rwth-aachen.de
+0 Spawned at lnm364.hpc.itc.rwth-aachen.de
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -231,40 +231,40 @@ Step, current time:1.585436
 Step, current time:1.593128
 Step, current time:1.600813
 Iterations: 200
-RESULT: 13.783520
-RESULT: 13.786405
-RESULT: 13.779769
-RESULT: 13.780025
+RESULT: 14.013756
+RESULT: 14.013499
+RESULT: 14.024387
+RESULT: 14.018164
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm414.hpc.itc.rwth-aachen.de: pid 16952's current affinity list: 0-11
-lnm414.hpc.itc.rwth-aachen.de: pid 16953's current affinity list: 12-23
+lnm365.hpc.itc.rwth-aachen.de: pid 23085's current affinity list: 12-23
+lnm365.hpc.itc.rwth-aachen.de: pid 23084's current affinity list: 0-11
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
-lnm398.hpc.itc.rwth-aachen.de: pid 28018's current affinity list: 0-11
-lnm398.hpc.itc.rwth-aachen.de: pid 28019's current affinity list: 12-23
+lnm364.hpc.itc.rwth-aachen.de: pid 10634's current affinity list: 0-11
+lnm364.hpc.itc.rwth-aachen.de: pid 10635's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 [0] MPI startup(): Multi-threaded optimized library
-[1] MPI startup(): shm and tmi data transfer modes
-[0] MPI startup(): shm and tmi data transfer modes
 [2] MPI startup(): shm and tmi data transfer modes
 [3] MPI startup(): shm and tmi data transfer modes
+[0] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       28068    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       28069    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       16962    lnm414.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       16963    lnm414.hpc.itc.rwth-aachen.de  +1
-1 Spawned at lnm398.hpc.itc.rwth-aachen.de
-2 Spawned at lnm414.hpc.itc.rwth-aachen.de
-3 Spawned at lnm414.hpc.itc.rwth-aachen.de
+[0] MPI startup(): 0       10685    lnm364.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       10686    lnm364.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       23095    lnm365.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       23094    lnm365.hpc.itc.rwth-aachen.de  +1
+1 Spawned at lnm364.hpc.itc.rwth-aachen.de
+2 Spawned at lnm365.hpc.itc.rwth-aachen.de
+3 Spawned at lnm365.hpc.itc.rwth-aachen.de
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
-0 Spawned at lnm398.hpc.itc.rwth-aachen.de
+0 Spawned at lnm364.hpc.itc.rwth-aachen.de
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -464,42 +464,42 @@ Step, current time:1.570029
 Step, current time:1.577736
 Step, current time:1.585436
 Step, current time:1.593128
-RESULT: 13.783761
 Step, current time:1.600813
 Iterations: 200
-RESULT: 13.779988
-RESULT: 13.786323
-RESULT: 13.779969
+RESULT: 13.756980
+RESULT: 13.756966
+RESULT: 13.761203
+RESULT: 13.764226
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm414.hpc.itc.rwth-aachen.de: pid 17007's current affinity list: 0-11
-lnm414.hpc.itc.rwth-aachen.de: pid 17008's current affinity list: 12-23
+lnm365.hpc.itc.rwth-aachen.de: pid 23137's current affinity list: 0-11
+lnm365.hpc.itc.rwth-aachen.de: pid 23138's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
-lnm398.hpc.itc.rwth-aachen.de: pid 28130's current affinity list: 0-11
-lnm398.hpc.itc.rwth-aachen.de: pid 28131's current affinity list: 12-23
+lnm364.hpc.itc.rwth-aachen.de: pid 10748's current affinity list: 12-23
+lnm364.hpc.itc.rwth-aachen.de: pid 10747's current affinity list: 0-11
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 [0] MPI startup(): Multi-threaded optimized library
-[2] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
-[1] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): shm and tmi data transfer modes
-1 Spawned at lnm398.hpc.itc.rwth-aachen.de
-2 Spawned at lnm414.hpc.itc.rwth-aachen.de
-3 Spawned at lnm414.hpc.itc.rwth-aachen.de
+[2] MPI startup(): shm and tmi data transfer modes
+[1] MPI startup(): shm and tmi data transfer modes
+[3] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       28181    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       28182    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       17018    lnm414.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       17019    lnm414.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       10798    lnm364.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       10796    lnm364.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       23147    lnm365.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       23148    lnm365.hpc.itc.rwth-aachen.de  +1
+1 Spawned at lnm364.hpc.itc.rwth-aachen.de
+2 Spawned at lnm365.hpc.itc.rwth-aachen.de
+3 Spawned at lnm365.hpc.itc.rwth-aachen.de
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
-0 Spawned at lnm398.hpc.itc.rwth-aachen.de
+0 Spawned at lnm364.hpc.itc.rwth-aachen.de
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -701,20 +701,20 @@ Step, current time:1.585436
 Step, current time:1.593128
 Step, current time:1.600813
 Iterations: 200
-RESULT: 13.730450
-RESULT: 13.730846
-RESULT: 13.740382
-RESULT: 13.744130
+RESULT: 14.169319
+RESULT: 14.173224
+RESULT: 14.169302
+RESULT: 14.173249
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm414.hpc.itc.rwth-aachen.de: pid 17061's current affinity list: 0-11
-lnm414.hpc.itc.rwth-aachen.de: pid 17062's current affinity list: 12-23
+lnm365.hpc.itc.rwth-aachen.de: pid 23319's current affinity list: 0-11
+lnm365.hpc.itc.rwth-aachen.de: pid 23320's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
-lnm398.hpc.itc.rwth-aachen.de: pid 28242's current affinity list: 12-23
-lnm398.hpc.itc.rwth-aachen.de: pid 28241's current affinity list: 0-11
+lnm364.hpc.itc.rwth-aachen.de: pid 10864's current affinity list: 0-11
+lnm364.hpc.itc.rwth-aachen.de: pid 10865's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
@@ -724,17 +724,17 @@ dryFraction: 0.200000
 [2] MPI startup(): shm and tmi data transfer modes
 [3] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
-2 Spawned at lnm414.hpc.itc.rwth-aachen.de
+1 Spawned at lnm364.hpc.itc.rwth-aachen.de
+2 Spawned at lnm365.hpc.itc.rwth-aachen.de
+3 Spawned at lnm365.hpc.itc.rwth-aachen.de
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       28292    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       28291    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       17071    lnm414.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       17072    lnm414.hpc.itc.rwth-aachen.de  +1
-1 Spawned at lnm398.hpc.itc.rwth-aachen.de
-3 Spawned at lnm414.hpc.itc.rwth-aachen.de
+[0] MPI startup(): 0       10915    lnm364.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       10916    lnm364.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       23330    lnm365.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       23331    lnm365.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
-0 Spawned at lnm398.hpc.itc.rwth-aachen.de
+0 Spawned at lnm364.hpc.itc.rwth-aachen.de
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -936,40 +936,40 @@ Step, current time:1.585436
 Step, current time:1.593128
 Step, current time:1.600813
 Iterations: 200
-RESULT: 14.514731
-RESULT: 14.514710
-RESULT: 14.518875
-RESULT: 14.521648
+RESULT: 14.526805
+RESULT: 14.526798
+RESULT: 14.530387
+RESULT: 14.531996
 %
 srun: TOPOLOGY: warning -- no switch can reach all nodes through its descendants.Do not use route/topology
-lnm414.hpc.itc.rwth-aachen.de: pid 17741's current affinity list: 0-11
-lnm414.hpc.itc.rwth-aachen.de: pid 17742's current affinity list: 12-23
+lnm365.hpc.itc.rwth-aachen.de: pid 23699's current affinity list: 0-11
+lnm365.hpc.itc.rwth-aachen.de: pid 23700's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
-lnm398.hpc.itc.rwth-aachen.de: pid 28770's current affinity list: 0-11
-lnm398.hpc.itc.rwth-aachen.de: pid 28771's current affinity list: 12-23
+lnm364.hpc.itc.rwth-aachen.de: pid 11437's current affinity list: 0-11
+lnm364.hpc.itc.rwth-aachen.de: pid 11438's current affinity list: 12-23
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 dryFraction: 0.200000 
 [-1] MPI startup(): Imported environment partly inaccesible. Map=0 Info=627450
 [0] MPI startup(): Multi-threaded optimized library
-[2] MPI startup(): shm and tmi data transfer modes
 [0] MPI startup(): shm and tmi data transfer modes
-[3] MPI startup(): shm and tmi data transfer modes
 [1] MPI startup(): shm and tmi data transfer modes
-1 Spawned at lnm398.hpc.itc.rwth-aachen.de
-2 Spawned at lnm414.hpc.itc.rwth-aachen.de
-3 Spawned at lnm414.hpc.itc.rwth-aachen.de
+[2] MPI startup(): shm and tmi data transfer modes
+[3] MPI startup(): shm and tmi data transfer modes
+1 Spawned at lnm364.hpc.itc.rwth-aachen.de
+2 Spawned at lnm365.hpc.itc.rwth-aachen.de
+3 Spawned at lnm365.hpc.itc.rwth-aachen.de
 [0] MPI startup(): Rank    Pid      Node name                      Pin cpu
-[0] MPI startup(): 0       28821    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 1       28822    lnm398.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 2       17751    lnm414.hpc.itc.rwth-aachen.de  +1
-[0] MPI startup(): 3       17752    lnm414.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 0       11487    lnm364.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 1       11488    lnm364.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 2       23709    lnm365.hpc.itc.rwth-aachen.de  +1
+[0] MPI startup(): 3       23710    lnm365.hpc.itc.rwth-aachen.de  +1
 [0] MPI startup(): I_MPI_DEBUG=5
 [0] MPI startup(): I_MPI_FABRICS=shm:tmi
-0 Spawned at lnm398.hpc.itc.rwth-aachen.de
+0 Spawned at lnm364.hpc.itc.rwth-aachen.de
 Step, current time:0.008050
 Step, current time:0.016101
 Step, current time:0.024151
@@ -1171,9 +1171,9 @@ Step, current time:1.585436
 Step, current time:1.593128
 Step, current time:1.600813
 Iterations: 200
-RESULT: 13.742215
-RESULT: 13.742443
-RESULT: 13.745611
-RESULT: 13.746461
+RESULT: 14.066670
+RESULT: 14.066652
+RESULT: 14.070599
+RESULT: 14.072867
 %
 Killed by signal 15.
