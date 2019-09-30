@@ -69,7 +69,7 @@ def plotData(target_file_path, x_values, y_names, y_valuess, text_x_axis, text_y
     for i in range(len(y_valuess_medians)):
         #ax.plot(xtick, np.array(y_valuess[i]), 'x-', linewidth=2, color=tmp_colors[i])
         #plt.errorbar(xtick, np.array(y_valuess_medians[i]), [y_valuess_mins[i], y_valuess_maxs[i]], elinewidth=1, capsize=2, marker=".")
-        plt.bar(xtick+(i*0.2), np.array(y_valuess_medians[i]), 0.2, zorder=3)
+        plt.bar(xtick+(i*0.2), np.array(y_valuess_medians[i]), 0.2, yerr=[y_valuess_mins[i], y_valuess_maxs[i]], capsize=3, zorder=3)
         labels.append(y_names[i])
     plt.xticks(xtick+0.2, x_values)
     plt.minorticks_on()
@@ -101,8 +101,8 @@ def plotData(target_file_path, x_values, y_names, y_valuess, text_x_axis, text_y
     plt.grid(b=True, which='minor', axis="both", linestyle='-', linewidth=0.4)
     ax.set_xlabel(text_x_axis)
     ax.set_ylabel("Speedup compared\nto MPI+OpenMP")
-    _,current_top_ylim=ax.get_ylim()
-    ax.set_ylim([0, current_top_ylim*1.1])
+    current_bottom_ylim,current_top_ylim=ax.get_ylim()
+    ax.set_ylim([current_bottom_ylim*0.9, current_top_ylim*1.1])
     
     plt.subplots_adjust(hspace=0.75)
 
@@ -140,7 +140,7 @@ def plotDataBarsOnly(target_file_path, x_values, y_names, y_valuess, text_x_axis
     for i in range(len(y_valuess_medians)):
         #ax.plot(xtick, np.array(y_valuess[i]), 'x-', linewidth=2, color=tmp_colors[i])
         #plt.errorbar(xtick, np.array(y_valuess_medians[i]), [y_valuess_mins[i], y_valuess_maxs[i]], elinewidth=1, capsize=2, marker=".")
-        plt.bar(xtick+(i*0.2), np.array(y_valuess_medians[i]), 0.2, zorder=3)
+        plt.bar(xtick+(i*0.2), np.array(y_valuess_medians[i]), 0.2, yerr=[y_valuess_mins[i], y_valuess_maxs[i]], capsize=4 , zorder=3)
         labels.append(y_names[i])
     plt.xticks(xtick+0.2, x_values)
     plt.minorticks_on()

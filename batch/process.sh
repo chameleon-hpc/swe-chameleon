@@ -159,43 +159,43 @@ do
 done
 
 #granularity
-JOB_CATEGORY=granularity
-CLUSTER=clx16
-FRAMEWORKS=(chameleon charm++)
-NODE_COUNTS=(2)
-GRID_DIMENSIONS=(4096)
-BLOCK_COUNTS=(128 64 32 16 8)
-DRY_FRACTIONS=(0.2)
-EXTRAS=(none)
-
-echo -n "Frameworks/#Blocks" > ${JOB_CATEGORY}.csv
-for BLOCK_COUNT in ${BLOCK_COUNTS[@]}
-do
-	for i in $( eval echo {1..$NUM_EXECUTIONS} )
-	do
-		echo -n ",${BLOCK_COUNT}x${BLOCK_COUNT}" >> ${JOB_CATEGORY}.csv
-	done
-done
-echo "" >> ${JOB_CATEGORY}.csv
-for FRAMEWORK in ${FRAMEWORKS[@]}
-do
-	echo -n "$FRAMEWORK" >> ${JOB_CATEGORY}.csv
-	for BLOCK_COUNT in ${BLOCK_COUNTS[@]}
-	do
-		FILE="output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_2_4096_${BLOCK_COUNT}_0.2_none.txt"
-		INPUT=$(head -n -1 $FILE)
-		# delimiter between experiments
-		IFS='%'
-				read -d '' -ra RUNS <<< "$INPUT"
-		IFS=' '
-		for RUN in "${RUNS[@]}"
-		do
-			OUTPUT=$(echo $RUN | grep RESULT | sort | tail -n 1 | sed 's/[a-zA-Z:, ]//g')
-			echo -n ",$OUTPUT" >> ${JOB_CATEGORY}.csv
-		done
-	done
-	echo "" >> ${JOB_CATEGORY}.csv
-done
+#JOB_CATEGORY=granularity
+#CLUSTER=clx16
+#FRAMEWORKS=(chameleon charm++)
+#NODE_COUNTS=(2)
+#GRID_DIMENSIONS=(4096)
+#BLOCK_COUNTS=(128 64 32 16 8)
+#DRY_FRACTIONS=(0.3)
+#EXTRAS=(none)
+#
+#echo -n "Frameworks/#Blocks" > ${JOB_CATEGORY}.csv
+#for BLOCK_COUNT in ${BLOCK_COUNTS[@]}
+#do
+#	for i in $( eval echo {1..$NUM_EXECUTIONS} )
+#	do
+#		echo -n ",${BLOCK_COUNT}x${BLOCK_COUNT}" >> ${JOB_CATEGORY}.csv
+#	done
+#done
+#echo "" >> ${JOB_CATEGORY}.csv
+#for FRAMEWORK in ${FRAMEWORKS[@]}
+#do
+#	echo -n "$FRAMEWORK" >> ${JOB_CATEGORY}.csv
+#	for BLOCK_COUNT in ${BLOCK_COUNTS[@]}
+#	do
+#		FILE="output/swe_${JOB_CATEGORY}_${CLUSTER}_${FRAMEWORK}_2_4096_${BLOCK_COUNT}_0.3_none.txt"
+#		INPUT=$(head -n -1 $FILE)
+#		# delimiter between experiments
+#		IFS='%'
+#				read -d '' -ra RUNS <<< "$INPUT"
+#		IFS=' '
+#		for RUN in "${RUNS[@]}"
+#		do
+#			OUTPUT=$(echo $RUN | grep RESULT | sort | tail -n 1 | sed 's/[a-zA-Z:, ]//g')
+#			echo -n ",$OUTPUT" >> ${JOB_CATEGORY}.csv
+#		done
+#	done
+#	echo "" >> ${JOB_CATEGORY}.csv
+#done
 
 # replace names
 sed -i 's/mpi/MPI+OpenMP (24 Threads per Node)/g' *.csv
