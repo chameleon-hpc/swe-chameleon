@@ -18,7 +18,7 @@
 //#include "writer/NetCdfWriter.hh"
 #include "writer/VtkWriter.hh"
 #include "tools/Float2DNative.hh"
-#include "solvers/Hybrid.hpp"
+#include "solvers/AugRie.hpp"
 
 extern CProxy_swe_charm mainProxy;
 extern int blockCountX;
@@ -35,7 +35,7 @@ class SWE_DimensionalSplittingCharm : public CBase_SWE_DimensionalSplittingCharm
 		SWE_DimensionalSplittingCharm(CkMigrateMessage *msg);
 		SWE_DimensionalSplittingCharm(int cellCountHorizontal, int cellCountVertical, float cellSizeHorizontal, float cellSizeVertical,
 						float originX, float originY, int posX, int posY, BoundaryType boundaries[],
-						std::string outputFileName, std::string bathymetryFileName = "", std::string displacementFileName = "");
+						std::string outputFileName, bool write, int iteration_count, std::string bathymetryFileName = "", std::string displacementFileName = "");
 		~SWE_DimensionalSplittingCharm();
 
 		// Charm++ entry methods
@@ -54,11 +54,12 @@ class SWE_DimensionalSplittingCharm : public CBase_SWE_DimensionalSplittingCharm
 		// Interface implementation
 		void setGhostLayer();
 
-		solver::Hybrid<float> solver;
+		solver::AugRie<float> solver;
 		float *checkpointInstantOfTime;
 		VtkWriter *writer;
 		float currentSimulationTime;
 		int currentCheckpoint;
+		int iteration_count;
 
 		// Temporary values after x-sweep and before y-sweep
 		Float2DNative hStar;
@@ -92,6 +93,7 @@ class SWE_DimensionalSplittingCharm : public CBase_SWE_DimensionalSplittingCharm
 		float computeTime;
 		float computeTimeWall;
 		float wallTime;
+		int iterations;
 };
 
 class copyLayer : public CMessage_copyLayer {

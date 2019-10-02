@@ -5,7 +5,7 @@
 SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(CkMigrateMessage *msg) {}
 
 SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(int nx, int ny, float dx, float dy, float originX, float originY, int posX, int posY,
-							BoundaryType boundaries[], std::string outputFilename, std::string bathymetryFilename, std::string displacementFilename) :
+							BoundaryType boundaries[], std::string outputFilename, bool write, int iteration_count, std::string bathymetryFilename, std::string displacementFilename) :
 		/*
 		 * Important note concerning grid allocations:
 		 * Since index shifts all over the place are bug-prone and maintenance unfriendly,
@@ -41,13 +41,15 @@ SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(int nx, int ny, flo
 		hNetUpdatesAbove(nx + 1, ny + 2),
 
 		hvNetUpdatesBelow(nx + 1, ny + 2),
-		hvNetUpdatesAbove(nx + 1, ny + 2) {
+		hvNetUpdatesAbove(nx + 1, ny + 2),
+		iteration_count(iteration_count) {
 
 	currentSimulationTime = 0.;
 	currentCheckpoint = 0;
 
 	computeTime = 0.;
 	wallTime = 0.;
+	iterations = 0;
 
 	neighbourIndex[BND_LEFT] = (posX > 0) ? thisIndex - blockCountY : -1;
 	neighbourIndex[BND_RIGHT] = (posX < blockCountX - 1) ? thisIndex + blockCountY : -1;
@@ -73,7 +75,12 @@ SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(int nx, int ny, flo
 
 	// Initialize writer
 	BoundarySize boundarySize = {{1, 1, 1, 1}};
-	writer = new VtkWriter(outputFilename, b, boundarySize, nx, ny, dx, dy, originX, originY);
+	if(write) {
+		writer = new VtkWriter(outputFilename, b, boundarySize, nx, ny, dx, dy, originX, originY);
+	}
+	else {
+		writer = NULL;
+	}
 
 	// output at t=0
 	writeTimestep();
@@ -81,7 +88,7 @@ SWE_DimensionalSplittingCharm::SWE_DimensionalSplittingCharm(int nx, int ny, flo
 	char hostname[HOST_NAME_MAX];
         gethostname(hostname, HOST_NAME_MAX);
 
-	CkPrintf("%i Spawned at %s\n", thisIndex, hostname);
+	//CkPrintf("%i Spawned at %s\n", thisIndex, hostname);
 }
 
 SWE_DimensionalSplittingCharm::~SWE_DimensionalSplittingCharm() {}
@@ -94,11 +101,11 @@ void SWE_DimensionalSplittingCharm::xSweep() {
 	// maximum (linearized) wave speed within one iteration
 	float maxHorizontalWaveSpeed = (float) 0.;
 
-	#pragma omp parallel private(solver)
+	//#pragma omp parallel private(solver)
 	{
 		// x-sweep, compute the actual domain plus ghost rows above and below
 		// iterate over cells on the x-axis, leave out the last column (two cells per computation)
-		#pragma omp for reduction(max : maxHorizontalWaveSpeed) collapse(2)
+		//#pragma omp for reduction(max : maxHorizontalWaveSpeed) collapse(2)
 		for (int x = 0; x < nx + 1; x++) {
 			// iterate over all rows, including ghost layer
 			for (int y = 0; y < ny + 2; y++) {
@@ -140,10 +147,10 @@ void SWE_DimensionalSplittingCharm::ySweep() {
 
 	float maxVerticalWaveSpeed = (float) 0.;
 
-	#pragma omp parallel private(solver)
+	//#pragma omp parallel private(solver)
 	{
 		// set intermediary Q* states
-		#pragma omp for collapse(2)
+		#pragma omp parallel for collapse(2)
 		for (int x = 1; x < nx + 1; x++) {
 			for (int y = 0; y < ny + 2; y++) {
 				hStar[x][y] = h[x][y] - (maxTimestep / dx) * (hNetUpdatesLeft[x][y] + hNetUpdatesRight[x][y]);
@@ -153,9 +160,9 @@ void SWE_DimensionalSplittingCharm::ySweep() {
 
 		// y-sweep
 		#ifndef NDEBUG
-		#pragma omp for
+		//#pragma omp for
 		#else
-		#pragma omp for reduction(max : maxVerticalWaveSpeed) collapse(2)
+		//#pragma omp for reduction(max : maxVerticalWaveSpeed) collapse(2)
 		#endif
 		for (int x = 1; x < nx + 1; x++) {
 			for (int y = 0; y < ny + 1; y++) {
@@ -171,7 +178,7 @@ void SWE_DimensionalSplittingCharm::ySweep() {
 		}
 
 		#ifndef NDEBUG
-		#pragma omp single
+		//#pragma omp single
 		{
 			// check if the cfl condition holds in the y-direction
 			assert(maxTimestep < (float) .5 * (dy / maxVerticalWaveSpeed));
@@ -362,7 +369,9 @@ void SWE_DimensionalSplittingCharm::sendCopyLayers(bool sendBathymetry) {
 }
 
 void SWE_DimensionalSplittingCharm::writeTimestep() {
-	writer->writeTimeStep(h, hu, hv, currentSimulationTime);
+	if(writer) {
+		writer->writeTimeStep(h, hu, hv, currentSimulationTime);
+	}
 }
 
 void SWE_DimensionalSplittingCharm::setGhostLayer() {

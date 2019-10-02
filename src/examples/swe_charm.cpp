@@ -56,6 +56,14 @@
 /* readonly */ float simulationDuration;
 /* readonly */ int checkpointCount;
 
+double getTime() {
+	struct timespec time;
+	clock_gettime(CLOCK_MONOTONIC, &time);
+	return (double) time.tv_sec + ((double)time.tv_nsec)/1E9;
+}
+
+double startTimeWhole;
+
 swe_charm::swe_charm(CkMigrateMessage *msg) {}
 
 swe_charm::swe_charm(CkArgMsg *msg) {
@@ -78,6 +86,10 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	args.addOption("resolution-horizontal", 'x', "Number of simulation cells in horizontal direction");
 	args.addOption("resolution-vertical", 'y', "Number of simulated cells in y-direction");
 	args.addOption("output-basepath", 'o', "Output base file name");
+	args.addOption("x-blockcount", 'i', "Block Count in x-direction", tools::Args::Required, false);
+	args.addOption("y-blockcount", 'j', "Block Count in y-direction", tools::Args::Required, false);
+	args.addOption("write", 'w', "Write results", tools::Args::Required, false);
+	args.addOption("iteration-count", 'i', "Iteration Count (Overrides t and n)", tools::Args::Required, false);
 
 
 	// Declare the variables needed to hold command line input
@@ -113,6 +125,15 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	displacementFilename = args.getArgument<std::string>("displacement-file");
 #endif
 	outputBasename = args.getArgument<std::string>("output-basepath");
+	bool write = false;
+	if(args.isSet("write") && args.getArgument<int>("write") == 1)
+		write = true;
+	int iteration_count = 1000000;
+	if(args.isSet("iteration-count")) {
+		iteration_count = args.getArgument<int>("iteration-count");
+		checkpointCount = 1;
+		simulationDuration = 1000000.0;
+	}
 
 	// Initialize Scenario
 #ifdef ASAGI
@@ -127,7 +148,7 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	 ****************************************/
 
 	// Spawn one chare per CPU
-	chareCount = CkNumPes();
+	//chareCount = CkNumPes();
 	mainProxy = thisProxy;
 
 	/*
@@ -144,9 +165,15 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 	CProxy_SWE_DimensionalSplittingCharm blocks = CProxy_SWE_DimensionalSplittingCharm::ckNew();
 
 	// number of SWE-Blocks in x- and y-direction
-	blockCountY = std::sqrt(chareCount);
-	while (chareCount % blockCountY != 0) blockCountY--;
-	blockCountX = chareCount / blockCountY;
+	blockCountY = 32;
+	if(args.isSet("y-blockcount"))
+		blockCountY = args.getArgument<int>("y-blockcount");
+	blockCountX = 32;
+	if(args.isSet("x-blockcount"))
+		blockCountX = args.getArgument<int>("x-blockcount");
+	assert(nxRequested % xBlockCount == 0);
+	assert(nyRequested % yBlockCount == 0);
+	chareCount = blockCountX*blockCountY;
 
 	int localBlockPositionX[chareCount];
 	int localBlockPositionY[chareCount];
@@ -187,19 +214,23 @@ swe_charm::swe_charm(CkArgMsg *msg) {
 		// Spawn chare for the current block and insert it into the proxy array
 #ifdef ASAGI
 		blocks[i].insert(nxLocal, nyLocal, dxSimulation, dySimulation, localOriginX, localOriginY, localBlockPositionX[i], localBlockPositionY[i],
-				 boundaries, outputFilename, bathymetryFilename, displacementFilename);
+				 boundaries, outputFilename, write, bathymetryFilename, displacementFilename);
 #else
 		blocks[i].insert(nxLocal, nyLocal, dxSimulation, dySimulation, localOriginX, localOriginY, localBlockPositionX[i], localBlockPositionY[i],
-				 boundaries, outputFilename, "", "");
+				 boundaries, outputFilename, write, iteration_count, "", "");
 #endif
 	}
 	blocks.doneInserting();
+	startTimeWhole = getTime();
 	blocks.compute();
 }
 
 void swe_charm::done(int index) {
-	if (--chareCount == 0)
+	if (--chareCount == 0){
+		double wallTimeWhole = getTime() - startTimeWhole;
+		CkPrintf("RESULT: %f\n", wallTimeWhole);
 		exit();
+	}
 }
 void swe_charm::exit() {
 	CkExit();

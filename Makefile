@@ -1,59 +1,73 @@
-all: test clean
+#run_smp:
+#	./build/SWE_gnu_release_none_omp_augrie -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/tohu_1m_new -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
 
-simulate_smp:
-	./build/SWE_gnu_release_none_omp_hybrid -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/tohu_1m_new -b /home/jurek/storage/tsunami/tohu_bath.nc -d /home/jurek/storage/tsunami/tohu_displ.nc
+run_upcxx:
+	${UPCXX_PATH}/bin/upcxx-run -n 4 ./build/SWE_gnu_release_upcxx_augrie -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/upcxx -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
+run_upcxx_asagi:
+	${UPCXX_PATH}/bin/upcxx-run -n 4 ./build/SWE_gnu_release_upcxx_augrie -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/upcxx -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
+run_upcxx_test:
+	${UPCXX_PATH}/bin/upcxx-run -n 4 ./build/SWE_gnu_release_upcxx_augrie -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/radial_upcxx
 
-simulate_upcxx:
-	${UPCXX_PATH}/bin/upcxx-run -n 4 ./build/SWE_gnu_release_upcxx_hybrid -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/upcxx -b /home/jurek/storage/tsunami/tohu_bath.nc -d /home/jurek/storage/tsunami/tohu_displ.nc
+run_mpi_single:
 
-simulate_upcxx_test:
-	${UPCXX_PATH}/bin/upcxx-run -n 4 ./build/SWE_gnu_release_upcxx_hybrid -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/radial_upcxx
+run_mpi:
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=12 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_mpi_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -i 200 
+run_mpi_asagi:
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=12 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_mpi_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -u 1 -v 1 -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
 
-simulate_mpi:
-	OMP_NUM_THREADS=1 mpirun -np 4 ./build/SWE_gnu_release_mpi_hybrid -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/mpi -b /home/jurek/storage/tsunami/tohu_bath.nc -d /home/jurek/storage/tsunami/tohu_displ.nc
+#run_ampi:
+#	./charmrun +p4 ./build/SWE_gnu_release_mpi_augrie -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/mpi -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
 
-simulate_ampi:
-	./charmrun +p4 ./build/SWE_gnu_release_mpi_hybrid -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/mpi -b /home/jurek/storage/tsunami/tohu_bath.nc -d /home/jurek/storage/tsunami/tohu_displ.nc
+run_charm:
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto mpiexec.hydra -np 24 ./build/SWE_intel_release_charm_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test
+run_charm_asagi:
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto mpiexec.hydra -np 24 ./build/SWE_intel_release_charm_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
+run_charm_test:
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto mpiexec.hydra -np 24 ./build/SWE_intel_release_charm_omp_augrie -t 0.01 -n 1 -x 320 -y 320 -o ./output/test -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
 
-simulate_charm:
-	./charmrun +p4 ./build/SWE_gnu_release_charm_omp_hybrid -t 3600 -n 20 -x 1000 -y 1000 -o ~/storage/tsunami/simulation/charm -b /home/jurek/storage/tsunami/tohu_bath.nc -d /home/jurek/storage/tsunami/tohu_displ.nc
+run_chameleon:
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=11 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_chameleon_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -i 200
+run_chameleon_asagi:
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=11 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_chameleon_omp_augrie -t 0.1 -n 1 -x 4096 -y 4096 -o ./output/test -u 1 -v 1 -b ~/master/data/tohoku/bath.nc -d ~/master/data/tohoku/displ.nc
+run_chameleon_test:
+	I_MPI_PIN=1 I_MPI_PIN_DOMAIN=auto OMP_NUM_THREADS=11 OMP_PLACES=cores OMP_PROC_BIND=close mpiexec.hydra -np 2 ./build/SWE_intel_release_chameleon_omp_augrie -t 0.01 -n 1 -x 320 -y 320 -o ./output/test
 
-simulate_charm_test:
-	./charmrun +p4 ./build/SWE_gnu_release_charm_hybrid -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/radial_charm
-
-simulate_chameleon:
-	OMP_NUM_THREADS=1 /home/simon/sw/intel/impi/2019.3.199/intel64/bin/mpiexec.hydra -np 2 ./build/SWE_intel_debug_chameleon_omp_hybrid -t 1 -n 1 -x 320 -y 320 -o ./output/test
-
-simulate_chameleon_test:
-	./build/SWE_gnu_release_chameleon_omp_hybrid -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/radial_charm
-
-debug_charm_test:
-	/home/jurek/repository/tum/ccs_tools/bin/charmdebug +p4 ./build/SWE_gnu_release_charm_hybrid -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/charm
+#debug_charm_test:
+#	/home/jurek/repository/tum/ccs_tools/bin/charmdebug +p4 ./build/SWE_gnu_release_charm_augrie -t 60 -n 10 -x 10 -y 10 -o ~/storage/tsunami/simulation/charm
 
 #ampi:
-#	scons writeNetCDF=True openmp=False solver=hybrid parallelization=ampi
+#	scons writeNetCDF=True openmp=False parallelization=ampi
 
 smp:
-	scons writeNetCDF=True openmp=True solver=hybrid parallelization=none asagi=true asagiDir=${ASAGI_PATH}
+	scons writeNetCDF=True openmp=True parallelization=none compiler=intel
+smp_asagi:
+	scons writeNetCDF=True openmp=True parallelization=none compiler=intel asagi=true asagiDir=${ASAGI_PATH}
 
-mpi_hybrid:
-	scons writeNetCDF=True openmp=True solver=hybrid parallelization=mpi compiler=intel
 mpi:
-	scons writeNetCDF=True openmp=false solver=hybrid parallelization=mpi asagi=true asagiDir=${ASAGI_PATH}
+	scons writeNetCDF=True openmp=True parallelization=mpi compiler=intel
+mpi_asagi:
+	scons writeNetCDF=True openmp=True parallelization=mpi compiler=intel asagi=true asagiDir=${ASAGI_PATH}
+#mpi_noopenmp:
+#	scons writeNetCDF=True openmp=false parallelization=mpi asagi=true asagiDir=${ASAGI_PATH}
 
-upcxx_hybrid:
-	scons writeNetCDF=True openmp=True solver=hybrid parallelization=upcxx asagi=true asagiDir=${ASAGI_PATH} netCDFDir=${NETCDF_BASE}
 upcxx:
-	scons openmp=false solver=hybrid parallelization=upcxx compiler=intel
+	scons writeNetCDF=True openmp=True parallelization=upcxx compiler=intel
+upcxx_asagi:
+	scons writeNetCDF=True openmp=True parallelization=upcxx compiler=intel asagi=true asagiDir=${ASAGI_PATH}
+#upcxx_noopenmp:
+#	scons openmp=false parallelization=upcxx compiler=intel
 
 charm:
-	scons openmp=true solver=hybrid parallelization=charm compiler=intel
+	scons openmp=true parallelization=charm compiler=intel
+charm_asagi:
+	scons openmp=true parallelization=charm compiler=intel asagi=true asagiDir=${ASAGI_PATH}
 
 chameleon:
-	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=chameleon
-
+	scons writeNetCDF=True compiler=intel openmp=true parallelization=chameleon
+chameleon_asagi:
+	scons writeNetCDF=True compiler=intel openmp=true parallelization=chameleon asagi=true asagiDir=${ASAGI_PATH}
 chameleon_debug:
-	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=chameleon compileMode=debug
+	scons writeNetCDF=True compiler=intel openmp=true parallelization=chameleon compileMode=debug
 
 starpu:
 	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=starpu
@@ -62,41 +76,6 @@ starpu_debug:
 	scons writeNetCDF=True compiler=intel openmp=true solver=hybrid parallelization=starpu compileMode=debug
 
 
-test: test/runner ncgen_test
-	-./test/runner
-
-valgrind: test/runner.cpp
-	g++ -o test/mem -I$CXXTEST -Isrc -g -O0 test/runner.cpp src/blocks/SWE_DimensionalSplitting.cpp src/blocks/SWE_Block.cpp src/reader/netCdfReader.cpp -lnetcdf -fopenmp
-	valgrind --leak-check=yes ./test/mem 2> ./test/valgrind.output
-	rm -f test/mem
-
-gdb: test/runner.cpp
-	g++ -o test/gdb -I$CXXTEST -Isrc -g -O0 test/runner.cpp src/blocks/SWE_DimensionalSplitting.cpp src/blocks/SWE_Block.cpp src/reader/netCdfReader.cpp -lnetcdf -fopenmp
-
-test/runner: test/runner.cpp
-	g++ -o test/runner -I$CXXTEST -Isrc test/runner.cpp src/blocks/SWE_DimensionalSplitting.cpp src/blocks/SWE_Block.cpp src/reader/netCdfReader.cpp -lnetcdf -fopenmp
-
-test/runner.cpp: test/*.h
-	cxxtestgen --error-printer -o test/runner.cpp test/*.h
-
-ncgen_test:
-	ncgen -o test/testZero.nc test/res/testZero.cdl
-	ncgen -o test/testOne.nc test/res/testOne.cdl
-	ncgen -o test/testData.nc test/res/testData.cdl
-	ncgen -o test/testDataLarge.nc test/res/testDataLarge.cdl
-	ncgen -o test/testData_displacementZero.nc test/res/testData_displacementZero.cdl
-	ncgen -o test/testSnapToGrid_displacementZero.nc test/res/testSnapToGrid_displacementZero.cdl
-	ncgen -o test/testSnapToGrid.nc test/res/testSnapToGrid.cdl
-	ncgen -o test/testData_displacementNotZero.nc test/res/testData_displacementNotZero.cdl
-	ncgen -o test/testData_displacementUnequalToBath.nc test/res/testData_displacementUnequalToBath.cdl
-	ncgen -o test/testDisplacedGrid.nc test/res/testDisplacedGrid.cdl
-	ncgen -o test/testResumeable.nc test/res/testResumeable.cdl
-	ncgen -o test/testFriction.nc test/res/testFriction.cdl
-
 clean:
-	rm -f test/runner
-	rm -f test/gdb
-	rm -f test/*.cpp
-	rm -f test/*.nc
-
-.PHONY: clean valgrind ncgen_test artificial netcdf
+	rm -rf ./build/SWE_*
+	rm -rf ./build/build_*

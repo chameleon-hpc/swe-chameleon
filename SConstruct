@@ -181,6 +181,11 @@ vars.AddVariables(
         # FLOP measuring
         BoolVariable('countflops',
                      'enable flop counting; defines the macro COUNTFLOPS',
+                     False),
+
+        # ITT interface
+        BoolVariable('itt',
+                     'enable itt api interface',
                      False)
 )
 
@@ -286,6 +291,7 @@ if env['parallelization'] in ['charm', 'ampi']:
                            suffix='.decl.h',
                            src_suffix='.ci')
     env.Append(BUILDERS={'charmBuilder': charmBuilder})
+    env.Append(CCFLAGS=['-balancer GreedyLB -g'])
 
 ################################
 # Chameleon specific
@@ -555,6 +561,10 @@ if env['asagi']:
     if 'asagiInputDir' in env:
         env.Append(CPPFLAGS=['\'-DASAGI_INPUT_DIR="'
                              + env['asagiInputDir'] + '"\''])
+
+if env['itt']:
+    env.Append(CPPDEFINES=['ITT'])
+    env.Append(LIBS=['ittnotify'])
 
 # xml runtime parameters
 if env['xmlRuntime']:  # TODO

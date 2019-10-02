@@ -32,7 +32,11 @@
 #include <time.h>
 #include <unistd.h>
 #include <limits.h>
+#include <omp.h>
 
+#ifdef ITT
+#include <ittnotify.h>
+#endif
 #include "tools/args.hh"
 
 #ifdef WRITENETCDF
@@ -70,6 +74,7 @@ int main(int argc, char** argv) {
 	args.addOption("resolution-horizontal", 'x', "Number of simulation cells in horizontal direction");
 	args.addOption("resolution-vertical", 'y', "Number of simulated cells in y-direction");
 	args.addOption("output-basepath", 'o', "Output base file name");
+	args.addOption("write", 'w', "Write results", tools::Args::Required, false);
 
 
 	// Declare the variables needed to hold command line input
@@ -101,6 +106,9 @@ int main(int argc, char** argv) {
 	nxRequested = args.getArgument<int>("resolution-horizontal");
 	nyRequested = args.getArgument<int>("resolution-vertical");
 	outputBaseName = args.getArgument<std::string>("output-basepath");
+	bool write = false;
+	if(args.isSet("write") && args.getArgument<int>("write") == 1)
+		write = true;
 
 	// Initialize Scenario
 #ifdef ASAGI
@@ -158,7 +166,8 @@ int main(int argc, char** argv) {
 	outputFileName = outputBaseName;
 #ifdef WRITENETCDF
 	// Construct a netCDF writer
-	NetCdfWriter writer(
+	NetCdfWriter* writer;
+	writer = new NetCdfWriter(
 			outputFileName,
 			simulation.getBathymetry(),
 			boundarySize,
@@ -181,11 +190,13 @@ int main(int argc, char** argv) {
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	writer.writeTimeStep(
-			simulation.getWaterHeight(),
-			simulation.getMomentumHorizontal(),
-			simulation.getMomentumVertical(),
-			(float) 0.);
+	if(write) {
+		writer->writeTimeStep(
+				simulation.getWaterHeight(),
+				simulation.getMomentumHorizontal(),
+				simulation.getMomentumVertical(),
+				(float) 0.);
+	}
 
 
 	/********************
@@ -208,6 +219,16 @@ int main(int argc, char** argv) {
 
 	float timestep;
 	unsigned int iterations = 0;
+
+	// warm up
+	#pragma omp parallel
+	{
+		omp_get_num_threads();
+	}	
+
+#ifdef ITT
+	__itt_resume();	
+#endif
 	// loop over the count of requested checkpoints
 	for(int i = 0; i < numberOfCheckPoints; i++) {
 		// Simulate until the checkpoint is reached
@@ -251,13 +272,17 @@ int main(int argc, char** argv) {
 		printf("Write timestep (%fs)\n", t);
 
 		// write output
-		writer.writeTimeStep(
-				simulation.getWaterHeight(),
-				simulation.getMomentumHorizontal(),
-				simulation.getMomentumVertical(),
-				t);
+		if(write) {
+			writer->writeTimeStep(
+					simulation.getWaterHeight(),
+					simulation.getMomentumHorizontal(),
+					simulation.getMomentumVertical(),
+					t);
+		}
 	}
-
+#ifdef ITT
+	__itt_detach();	
+#endif
 
 	/************
 	 * FINALIZE *
@@ -265,6 +290,7 @@ int main(int argc, char** argv) {
 
 
 	printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", simulation.computeTime, simulation.computeTimeWall, wallTime); 
+	printf("RESULT: %f\n", wallTime); 
 
 	return 0;
 }

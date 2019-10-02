@@ -1,0 +1,13 @@
+#!/usr/local_rwth/bin/bash
+COMMANDLINE_ARGS=("$@")
+COMMAND=""
+for ARG in "${COMMANDLINE_ARGS[@]}"; do
+  COMMAND="$COMMAND $ARG"
+done
+
+TASKSET_OUTPUT=$(taskset -cp $$)
+HOSTNAME=$(hostname)
+TASKSET_OUTPUT="$HOSTNAME: $TASKSET_OUTPUT"
+echo $TASKSET_OUTPUT
+#echo $COMMAND
+$COMMAND

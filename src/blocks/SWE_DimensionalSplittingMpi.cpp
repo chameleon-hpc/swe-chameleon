@@ -324,7 +324,7 @@ void SWE_DimensionalSplittingMpi::computeNumericalFluxes () {
 	{
 		// x-sweep, compute the actual domain plus ghost rows above and below
 		// iterate over cells on the x-axis, leave out the last column (two cells per computation)
-		#pragma omp for reduction(max : maxHorizontalWaveSpeed) collapse(2)
+		#pragma omp for reduction(max : maxHorizontalWaveSpeed)
 		for (int x = 0; x < nx + 1; x++) {
 			// iterate over all rows, including ghost layer
 			for (int y = 0; y < ny + 2; y++) {
@@ -360,7 +360,7 @@ void SWE_DimensionalSplittingMpi::computeNumericalFluxes () {
 	#pragma omp parallel private(solver)
 	{
 		// set intermediary Q* states
-		#pragma omp for collapse(2)
+		#pragma omp for
 		for (int x = 1; x < nx + 1; x++) {
 			for (int y = 0; y < ny + 2; y++) {
 				hStar[x][y] = h[x][y] - (maxTimestep / dx) * (hNetUpdatesLeft[x][y] + hNetUpdatesRight[x][y]);
@@ -372,7 +372,7 @@ void SWE_DimensionalSplittingMpi::computeNumericalFluxes () {
 		#ifndef NDEBUG
 		#pragma omp for
 		#else
-		#pragma omp for reduction(max : maxVerticalWaveSpeed) collapse(2)
+		#pragma omp for reduction(max : maxVerticalWaveSpeed)
 		#endif
 		for (int x = 1; x < nx + 1; x++) {
 			for (int y = 0; y < ny + 1; y++) {
@@ -419,6 +419,7 @@ void SWE_DimensionalSplittingMpi::updateUnknowns (float dt) {
 	// this assertion has to hold since the intermediary star states were calculated internally using a timestep width of maxTimestep
 	assert(std::abs(dt - maxTimestep) < 0.00001);
 	//update cell averages with the net-updates
+	#pragma omp parallel for
 	for (int x = 1; x < nx+1; x++) {
 		for (int y = 1; y < ny + 1; y++) {
 			h[x][y] = hStar[x][y] - (maxTimestep / dx) * (hNetUpdatesBelow[x][y] + hNetUpdatesAbove[x][y]);

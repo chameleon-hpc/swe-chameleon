@@ -73,6 +73,9 @@ int main(int argc, char** argv) {
 	args.addOption("resolution-horizontal", 'x', "Number of simulation cells in horizontal direction");
 	args.addOption("resolution-vertical", 'y', "Number of simulated cells in y-direction");
 	args.addOption("output-basepath", 'o', "Output base file name");
+	args.addOption("x-imbalance", 'u', "Imbalance in x-direction", tools::Args::Required, false);
+	args.addOption("y-imbalance", 'v', "Imbalance in y-direction", tools::Args::Required, false);
+	args.addOption("write", 'w', "Write results", tools::Args::Required, false);
 
 
 	// Declare the variables needed to hold command line input
@@ -104,6 +107,9 @@ int main(int argc, char** argv) {
 	nxRequested = args.getArgument<int>("resolution-horizontal");
 	nyRequested = args.getArgument<int>("resolution-vertical");
 	outputBaseName = args.getArgument<std::string>("output-basepath");
+	bool write = false;
+	if(args.isSet("write") && args.getArgument<int>("write") == 1)
+		write = true;
 
 	// Initialize Scenario
 #ifdef ASAGI
@@ -257,7 +263,8 @@ int main(int argc, char** argv) {
 	outputFileName = generateBaseFileName(outputBaseName, localBlockPositionX, localBlockPositionY);
 #ifdef WRITENETCDF
 	// Construct a netCDF writer
-	NetCdfWriter writer(
+	NetCdfWriter* writer;
+	writer = new NetCdfWriter(
 			outputFileName,
 			simulation.getBathymetry(),
 			boundarySize,
@@ -280,7 +287,7 @@ int main(int argc, char** argv) {
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	writer.writeTimeStep(
+	writer->writeTimeStep(
 			simulation.getWaterHeight(),
 			simulation.getMomentumHorizontal(),
 			simulation.getMomentumVertical(),
@@ -331,18 +338,20 @@ int main(int argc, char** argv) {
 			t += timestep;
 			iterations++;
 			upcxx::barrier();
+			if(myUpcxxRank == 0) {
+				printf("Step, current time:%f\n", t);
+			}
 		}
 
-		if(myUpcxxRank == 0) {
-			printf("Write timestep (%fs)\n", t);
-		}
+		if(write) {
+			// write output
+			writer->writeTimeStep(
+					simulation.getWaterHeight(),
+					simulation.getMomentumHorizontal(),
+					simulation.getMomentumVertical(),
+					t);
 
-		// write output
-		writer.writeTimeStep(
-				simulation.getWaterHeight(),
-				simulation.getMomentumHorizontal(),
-				simulation.getMomentumVertical(),
-				t);
+		}
 	}
 
 
@@ -351,7 +360,11 @@ int main(int argc, char** argv) {
 	 ************/
 
 	printf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", myUpcxxRank, simulation.computeTime, simulation.computeTimeWall, wallTime); 
+	printf("RESULT: %f\n", wallTime); 
 
+	if(write) {
+		delete writer;
+	}
 	upcxx::finalize();
 
 	return 0;

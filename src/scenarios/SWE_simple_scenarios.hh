@@ -40,12 +40,21 @@
 class SWE_RadialDamBreakScenario : public SWE_Scenario {
 
   public:
+    float dryFraction = 0.0f;
+    SWE_RadialDamBreakScenario() {
+      if(const char* env = std::getenv("DRY_FRACTION")) {
+        dryFraction = atof(env);
+        printf("dryFraction: %f \n", dryFraction);
+      }
+    };
 
     float getBathymetry(float x, float y) {
        return 0.f;
     };
 
     float getWaterHeight(float x, float y) { 
+       if(x < 1000.0 * dryFraction)
+          return 0.f;
        return ( sqrt( (x-500.f)*(x-500.f) + (y-500.f)*(y-500.f) ) < 100.f ) ? 15.f: 10.0f;
     };
 

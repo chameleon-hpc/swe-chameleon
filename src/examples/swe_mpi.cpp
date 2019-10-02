@@ -54,6 +54,12 @@
 #include "blocks/SWE_DimensionalSplittingMpi.hh"
 #include <mpi.h>
 
+double getTime() {
+	struct timespec time;
+	clock_gettime(CLOCK_MONOTONIC, &time);
+	return (double) time.tv_sec + ((double)time.tv_nsec)/1E9;
+}
+
 int main(int argc, char** argv) {
 
 
@@ -74,6 +80,10 @@ int main(int argc, char** argv) {
 	args.addOption("resolution-horizontal", 'x', "Number of simulation cells in horizontal direction");
 	args.addOption("resolution-vertical", 'y', "Number of simulated cells in y-direction");
 	args.addOption("output-basepath", 'o', "Output base file name");
+	args.addOption("x-imbalance", 'u', "Imbalance in x-direction", tools::Args::Required, false);
+	args.addOption("y-imbalance", 'v', "Imbalance in y-direction", tools::Args::Required, false);
+	args.addOption("write", 'w', "Write results", tools::Args::Required, false);
+	args.addOption("iteration-count", 'i', "Iteration Count (Overrides t and n)", tools::Args::Required, false);
 
 
 	// Declare the variables needed to hold command line input
@@ -105,6 +115,15 @@ int main(int argc, char** argv) {
 	nxRequested = args.getArgument<int>("resolution-horizontal");
 	nyRequested = args.getArgument<int>("resolution-vertical");
 	outputBaseName = args.getArgument<std::string>("output-basepath");
+	bool write = false;
+	if(args.isSet("write") && args.getArgument<int>("write") == 1)
+		write = true;
+	int iteration_count = 1000000;
+	if(args.isSet("iteration-count")) {
+		iteration_count = args.getArgument<int>("iteration-count");
+		numberOfCheckPoints = 1;
+		simulationDuration = 1000000.0;
+	}
 
 	// Initialize scenario
 #ifdef ASAGI
@@ -221,16 +240,19 @@ int main(int argc, char** argv) {
 	outputFileName = generateBaseFileName(outputBaseName, localBlockPositionX, localBlockPositionY);
 #ifdef WRITENETCDF
 	// Construct a netCDF writer
-	NetCdfWriter writer(
-			outputFileName,
-			simulation.getBathymetry(),
-			boundarySize,
-			nxLocal,
-			nyLocal,
-			dxSimulation,
-			dySimulation,
-			simulation.getOriginX(),
-			simulation.getOriginY());
+	NetCdfWriter* writer;
+	if(write) {
+		writer = new NetCdfWriter(
+				outputFileName,
+				simulation.getBathymetry(),
+				boundarySize,
+				nxLocal,
+				nyLocal,
+				dxSimulation,
+				dySimulation,
+				simulation.getOriginX(),
+				simulation.getOriginY());
+	}
 #else
 	// Construct a vtk writer
 	VtkWriter writer(
@@ -244,12 +266,13 @@ int main(int argc, char** argv) {
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	writer.writeTimeStep(
-			simulation.getWaterHeight(),
-			simulation.getMomentumHorizontal(),
-			simulation.getMomentumVertical(),
-			(float) 0.);
-
+	if(write) {
+		writer->writeTimeStep(
+				simulation.getWaterHeight(),
+				simulation.getMomentumHorizontal(),
+				simulation.getMomentumVertical(),
+				(float) 0.);
+	}
 
 	/********************
 	 * START SIMULATION *
@@ -261,15 +284,16 @@ int main(int argc, char** argv) {
 	struct timespec endTime;
 
 	float wallTime = 0.;
+	double startTimeWhole = getTime();
 
 	t = 0.0;
 
 	float timestep;
-	unsigned int iterations = 0;
+	int iterations = 0;
 	// loop over the count of requested checkpoints
 	for(int i = 0; i < numberOfCheckPoints; i++) {
 		// Simulate until the checkpoint is reached
-		while(t < checkpointInstantOfTime[i]) {
+		while(t < checkpointInstantOfTime[i] && iterations < iteration_count) {
 			// Start measurement
 			clock_gettime(CLOCK_MONOTONIC, &startTime);
 
@@ -295,18 +319,19 @@ int main(int argc, char** argv) {
 			t += timestep;
 			iterations++;
 			MPI_Barrier(MPI_COMM_WORLD);
-		}
-
-		if(myMpiRank == 0) {
-			printf("Write timestep (%fs)\n", t);
+			if(myMpiRank == 0) {
+				printf("Step, current time:%f\n", t);
+			}
 		}
 
 		// write output
-		writer.writeTimeStep(
-				simulation.getWaterHeight(),
-				simulation.getMomentumHorizontal(),
-				simulation.getMomentumVertical(),
-				t);
+		if(write) {
+			writer->writeTimeStep(
+					simulation.getWaterHeight(),
+					simulation.getMomentumHorizontal(),
+					simulation.getMomentumVertical(),
+					t);
+		}
 	}
 
 
@@ -314,8 +339,15 @@ int main(int argc, char** argv) {
 	 * FINALIZE *
 	 ************/
 
-	printf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", myMpiRank, simulation.computeTime, simulation.computeTimeWall, wallTime); 
+	double wallTimeWhole = getTime() - startTimeWhole;
+	//printf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", myMpiRank, simulation.computeTime, simulation.computeTimeWall, wallTimeWhole); 
+	if(myMpiRank == 0)
+		printf("Iterations: %d\n", iterations);
+	printf("RESULT: %f\n", wallTimeWhole); 
 
+	if(write) {
+		delete writer;
+	}
 	simulation.freeMpiType();
 	MPI_Finalize();
 

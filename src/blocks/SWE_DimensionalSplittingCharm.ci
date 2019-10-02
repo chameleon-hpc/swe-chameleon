@@ -15,7 +15,7 @@ module SWE_DimensionalSplittingCharm {
 
 	array [1D] SWE_DimensionalSplittingCharm {
 		entry SWE_DimensionalSplittingCharm(int nx, int ny, float dy, float dx, float originX, float originY, int posX, int posY,
-							BoundaryType boundaries[4], std::string outputFilename, std::string bathymetryFile, std::string displacementFile);
+							BoundaryType boundaries[4], std::string outputFilename, bool write, int iteration_count, std::string bathymetryFile, std::string displacementFile);
 
 		entry void compute() {
 			serial {
@@ -47,6 +47,7 @@ module SWE_DimensionalSplittingCharm {
 				}
 				serial {
 					// The xSweep will trigger the reduction and accumulate compute time
+					iterations++;
 					xSweep();
 				}
 				when reductionTrigger()
@@ -64,18 +65,19 @@ module SWE_DimensionalSplittingCharm {
 						wallTime += (endTime.tv_sec - startTime.tv_sec);
 						wallTime += (float) (endTime.tv_nsec - startTime.tv_nsec) / 1E9;
 
-						if(thisIndex == 0) {
-							CkPrintf("Write timestep (%fs)\n", currentSimulationTime);
+						if(write) {
+							writeTimestep();
 						}
-						writeTimestep();
 						currentCheckpoint++;
 
 						// Restart wall clock
 						clock_gettime(CLOCK_MONOTONIC, &startTime);
 					}
-
+					if(thisIndex == 0) {
+						CkPrintf("Step, current time:%f\n", currentSimulationTime);
+					}
 					// If there is an iteration to go, propagate copy layers anew
-					if (currentSimulationTime < simulationDuration) {
+					if (currentSimulationTime < simulationDuration && iterations < iteration_count) {
 						sendCopyLayers(false);
 						setGhostLayer();
 					} else {
@@ -84,7 +86,10 @@ module SWE_DimensionalSplittingCharm {
 						wallTime += (endTime.tv_sec - startTime.tv_sec);
 						wallTime += (float) (endTime.tv_nsec - startTime.tv_nsec) / 1E9;
 
-						CkPrintf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", thisIndex, computeTime, computeTimeWall, wallTime); 
+						//CkPrintf("Rank %i : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", thisIndex, computeTime, computeTimeWall, wallTime);
+						//CkPrintf("RESULT: %f\n", wallTime);
+						if(originX <= 0.0001 && originY <= 0.0001)
+							CkPrintf("Iterations: %d\n", iterations);
 						mainProxy.done(thisIndex);
 					}
 				}

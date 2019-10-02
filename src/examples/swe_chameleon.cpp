@@ -38,6 +38,9 @@
 #include <vector>
 #include <numeric>
 
+#ifdef ITT
+#include <ittnotify.h>
+#endif
 #include "tools/args.hh"
 
 #ifdef WRITENETCDF
@@ -53,12 +56,6 @@
 #endif
 
 #include "blocks/SWE_DimensionalSplittingChameleon.hh"
-
-double getTime() {
-	struct timespec time;
-	clock_gettime(CLOCK_MONOTONIC, &time);
-	return (double) time.tv_sec + ((double)time.tv_nsec)/1E9;
-}
 
 int main(int argc, char** argv) {
 
@@ -83,6 +80,8 @@ int main(int argc, char** argv) {
 	args.addOption("y-blockcount", 'j', "Block Count in y-direction", tools::Args::Required, false);
 	args.addOption("x-imbalance", 'u', "Imbalance in x-direction", tools::Args::Required, false);
 	args.addOption("y-imbalance", 'v', "Imbalance in y-direction", tools::Args::Required, false);
+	args.addOption("write", 'w', "Write results", tools::Args::Required, false);
+	args.addOption("iteration-count", 'i', "Iteration Count (Overrides t and n)", tools::Args::Required, false);
 
 	// Parse command line arguments
 	tools::Args::Result ret = args.parse(argc, argv);
@@ -101,6 +100,15 @@ int main(int argc, char** argv) {
 	int nxRequested = args.getArgument<int>("resolution-horizontal");
 	int nyRequested = args.getArgument<int>("resolution-vertical");
 	std::string outputBaseName = args.getArgument<std::string>("output-basepath");
+	bool write = false;
+	if(args.isSet("write") && args.getArgument<int>("write") == 1)
+		write = true;
+	int iteration_count = 1000000;
+	if(args.isSet("iteration-count")) {
+		iteration_count = args.getArgument<int>("iteration-count");
+		numberOfCheckPoints = 1;
+		simulationDuration = 1000000.0;
+	}
 
 	// Initialize Scenario
 #ifdef ASAGI
@@ -172,7 +180,7 @@ int main(int argc, char** argv) {
 		xWeights = imbalanceVectors[args.getArgument<int>("x-imbalance")];
 	std::vector<float> yWeights = imbalanceVectors[0];
 	if(args.isSet("y-imbalance"))
-		xWeights = imbalanceVectors[args.getArgument<int>("y-imbalance")];
+		yWeights = imbalanceVectors[args.getArgument<int>("y-imbalance")];
 	float xSum = std::accumulate(xWeights.begin(), xWeights.begin()+xRankCount, 0);
 	float ySum = std::accumulate(yWeights.begin(), yWeights.begin()+yRankCount, 0);
 
@@ -288,7 +296,8 @@ int main(int argc, char** argv) {
 	boundaries[BND_RIGHT] = scenario.getBoundaryType(BND_RIGHT);
 	boundaries[BND_TOP] = scenario.getBoundaryType(BND_TOP);
 	boundaries[BND_BOTTOM] = scenario.getBoundaryType(BND_BOTTOM);
-	writeBlock.initScenario(scenario, boundaries);
+	if(write && myRank == 0)
+		writeBlock.initScenario(scenario, boundaries);
 
 	// Prepare writeBlock for usage with One-Sided Communication
   	MPI_Win writeBlockWin_h;
@@ -305,7 +314,7 @@ int main(int argc, char** argv) {
 	// Construct a netCDF writer
 	std::string outputFileName = outputBaseName;
 	NetCdfWriter* writer;
-	if(myRank == 0) {
+	if(write && myRank == 0) {
 		writer = new NetCdfWriter(
 			outputFileName,
 			writeBlock.getBathymetry(),
@@ -332,7 +341,7 @@ int main(int argc, char** argv) {
 #endif // WRITENETCDF
 
 	// Write the output at t = 0
-	if(myRank == 0) {
+	if(write && myRank == 0) {
 		writer->writeTimeStep(
 			writeBlock.getWaterHeight(),
 			writeBlock.getMomentumHorizontal(),
@@ -379,12 +388,16 @@ int main(int argc, char** argv) {
 
 	float t = 0.0;
 	float timestep;
-	unsigned int iterations = 0;
+	int iterations = 0;
 
+	double startTimeWhole = getTime();
+#ifdef ITT
+	__itt_resume();	
+#endif
 	// loop over the count of requested checkpoints
 	for(int i = 0; i < numberOfCheckPoints; i++) {
 		// Simulate until the checkpoint is reached
-		while(t < checkpointInstantOfTime[i]) {
+		while(t < checkpointInstantOfTime[i] && iterations < iteration_count) {
 
 			// Start measurement
 			clock_gettime(CLOCK_MONOTONIC, &startTime);
@@ -395,9 +408,11 @@ int main(int argc, char** argv) {
 
 			//TODO: exchange bathymetry
 
-			//#pragma omp parallel for
-			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+			int xLower = xBounds[myXRank]; int xUpper = xBounds[myXRank+1];
+			int yLower = yBounds[myYRank]; int yUpper = yBounds[myYRank+1];
+			//#pragma omp parallel for collapse(2)
+			for(int x = xLower; x < xUpper; x++) {
+				for(int y = yLower; y < yUpper; y++) {
 					// set values in ghost cells.
 					// we need to sync here since block boundaries get exchanged over ranks
 					blocks[x][y]->setGhostLayer();
@@ -407,9 +422,9 @@ int main(int argc, char** argv) {
 			setGhostLayerTime += getTime()-lastTime; lastTime = getTime();
 
 			//if(myRank == 0) printf("After setGhostLayer() %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
-			//#pragma omp parallel for
-			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+			//#pragma omp parallel for collapse(2)
+			for(int x = xLower; x < xUpper; x++) {
+				for(int y = yLower; y < yUpper; y++) {
 					blocks[x][y]->receiveGhostLayer();
 				}
 			}
@@ -424,9 +439,11 @@ int main(int argc, char** argv) {
 
 			#pragma omp parallel 
 			{
+				int xLower = xBounds[myXRank]; int xUpper = xBounds[myXRank+1];
+				int yLower = yBounds[myYRank]; int yUpper = yBounds[myYRank+1];
 				#pragma omp for
-				for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-					for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+				for(int x = xLower; x < xUpper; x++) {
+					for(int y = yLower; y < yUpper; y++) {
 						// compute numerical flux on each edge
 						blocks[x][y]->computeNumericalFluxesHorizontal();
 					}
@@ -454,9 +471,11 @@ int main(int argc, char** argv) {
 			reductionTime += getTime()-lastTime; lastTime = getTime();
 			#pragma omp parallel
 			{
+				int xLower = xBounds[myXRank]; int xUpper = xBounds[myXRank+1];
+				int yLower = yBounds[myYRank]; int yUpper = yBounds[myYRank+1];
 				#pragma omp for
-				for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-					for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+				for(int x = xLower; x < xUpper; x++) {
+					for(int y = yLower; y < yUpper; y++) {
 						// compute numerical flux on each edge
 						blocks[x][y]->maxTimestep = timestep;
 						blocks[x][y]->computeNumericalFluxesVertical();
@@ -471,8 +490,8 @@ int main(int argc, char** argv) {
 			//if(myRank == 0) printf("After computeNumericalFluxesVertical() Task Wait %f\n", (float)(clock() - commClock) / CLOCKS_PER_SEC);
 			
 			#pragma omp parallel for
-			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+			for(int x = xLower; x < xUpper; x++) {
+				for(int y = yLower; y < yUpper; y++) {
 					// update the cell values
 					blocks[x][y]->updateUnknowns(timestep);
 				}
@@ -492,48 +511,64 @@ int main(int argc, char** argv) {
 			t += timestep;
 			iterations++;
 
-			MPI_Barrier(MPI_COMM_WORLD);
-			printf("%d: Step, current time:%f\n", myRank, t);
+			if(myRank == 0)
+				printf("Step, current time:%f\n", t);
 		}
-
-		//printf("Write timestep to rank 0 (%fs)\n", t);
 
 		// write output
-		MPI_Win_fence(0, writeBlockWin_h);
-		MPI_Win_fence(0, writeBlockWin_hu);
-		MPI_Win_fence(0, writeBlockWin_hv);
-		for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
-			for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
-				// Send all data to rank 0, which will write it to a single file
-				// send each column separately
-				for(int j=1; j<blocks[x][y]->nx+1; j++) {
-					int x_pos = x*x_blocksize;
-					int y_pos = y*y_blocksize;
-					MPI_Put(blocks[x][y]->h.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
-						0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_h);
-					MPI_Put(blocks[x][y]->hu.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
-						0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_hu);
-					MPI_Put(blocks[x][y]->hv.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
-						0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_hv);
+		if(write) {
+			MPI_Win_fence(0, writeBlockWin_h);
+			MPI_Win_fence(0, writeBlockWin_hu);
+			MPI_Win_fence(0, writeBlockWin_hv);
+			for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+				for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+					// Send all data to rank 0, which will write it to a single file
+					// send each column separately
+					for(int j=1; j<blocks[x][y]->nx+1; j++) {
+						int x_pos = x*x_blocksize;
+						int y_pos = y*y_blocksize;
+						MPI_Put(blocks[x][y]->h.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
+							0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_h);
+						MPI_Put(blocks[x][y]->hu.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
+							0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_hu);
+						MPI_Put(blocks[x][y]->hv.getRawPointer()+1+(blocks[x][y]->ny+2)*j, blocks[x][y]->ny, MPI_FLOAT,
+							0, 1+(nyRequested+2)*(1+j+x_pos)+y_pos, blocks[x][y]->ny, MPI_FLOAT, writeBlockWin_hv);
+					}
 				}
 			}
+			MPI_Win_fence(0, writeBlockWin_h);
+			MPI_Win_fence(0, writeBlockWin_hu);
+			MPI_Win_fence(0, writeBlockWin_hv);
 		}
-		MPI_Win_fence(0, writeBlockWin_h);
-		MPI_Win_fence(0, writeBlockWin_hu);
-		MPI_Win_fence(0, writeBlockWin_hv);
 
-		if(myRank == 0) {
-			//printf("Write timestep (%fs)\n", t);
+		if(write && myRank == 0) {
 			writer->writeTimeStep(
 				writeBlock.getWaterHeight(),
 				writeBlock.getMomentumHorizontal(),
 				writeBlock.getMomentumVertical(),
 				t);
 		}
-		MPI_Barrier(MPI_COMM_WORLD);
+		if(write)
+			MPI_Barrier(MPI_COMM_WORLD);
 	}
+#ifdef ITT
+	__itt_detach();	
+#endif
 
-
+	// temporary stats
+	float minTime=1000000.; float maxTime=0.;float avgTime=0.; int blockCount = 0;
+	for(int x = xBounds[myXRank]; x < xBounds[myXRank+1]; x++) {
+		for(int y = yBounds[myYRank]; y < yBounds[myYRank+1]; y++) {
+			if(blocks[x][y]->computeTimeWall < minTime)
+				minTime = blocks[x][y]->computeTimeWall;
+			if(blocks[x][y]->computeTimeWall > maxTime)
+				maxTime = blocks[x][y]->computeTimeWall;
+			avgTime += blocks[x][y]->computeTimeWall;
+			blockCount++;
+		}
+	}
+	avgTime /= blockCount;
+	printf("%d: min:%F, max:%f, avg:%f\n", myRank, minTime, maxTime, avgTime); 
 	/************
 	 * FINALIZE *
 	 ************/
@@ -542,7 +577,10 @@ int main(int argc, char** argv) {
 	//TODO: Get times
 
 	//printf("SMP : Compute Time (CPU): %fs - (WALL): %fs | Total Time (Wall): %fs\n", blocks[xBounds[myXRank]][myYRank]->computeTime, blocks[xBounds[myXRank]][myYRank]->computeTimeWall, wallTime);
-	printf("Chameleon: Computation ended, walltime:%f\n", wallTime);
+	double wallTimeWhole = getTime() - startTimeWhole;
+	if(myRank == 0)
+		printf("Iterations: %d\n", iterations);
+	printf("RESULT: Chameleon: Computation ended, walltime:%f\n", wallTimeWhole);
 
 	printf("%d: setGhostLayerTime=%f\n", myRank, (float)setGhostLayerTime);
 	printf("%d: receiveGhostLayerTime=%f\n", myRank, (float)receiveGhostLayerTime);
@@ -568,7 +606,7 @@ int main(int argc, char** argv) {
     }
     chameleon_finalize();
 
-	if(myRank == 0)
+	if(write && myRank == 0)
 		delete writer;
 	MPI_Finalize();
 

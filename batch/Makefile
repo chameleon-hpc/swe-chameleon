@@ -1,2 +1,2 @@
 default: ./interference/main.cpp
-	mpiicpc -O3 -g -qopenmp ./interference/main.cpp -o ./interference/main 
+	icpc -O3 -g -qopenmp --std=c++11 ./interference/main.cpp -o ./interference/main 
