@@ -32,7 +32,7 @@ if [ "$EXTRA" != "none" ]
 then
 	NODES=`scontrol show hostnames $SLURM_JOB_NODELIST`
 	echo $NODES
-	for NODE in `echo $NODES`
+	for NODE in `echo $NODES | head -n 1`
 	do
 		echo $NODE
 		INTERFERENCE_COMMAND="ssh -f $NODE export OMP_NUM_THREADS=24 OMP_PLACES=cores OMP_PROC_BIND=close; ~/master/swe-benchmark/batch/interference/main $EXTRA"
